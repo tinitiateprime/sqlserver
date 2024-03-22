@@ -12,6 +12,7 @@
 * The OVER clause can include 'PARTITION BY' or 'ORDER BY' specifications to control the behavior of the window function.
 * The 'PARTITION BY' clause is used to divide the result set of a query into partitions to which the function is applied independently.
 * The 'ORDER BY' clause is used to sort the result set of a query into the orders specified to which the function is applied independently.
+* For some analytical functions 'PARTITION BY' clause must be used including 'ORDER BY' clause.
 
 ## Analytical functions in SQL Server:
 ### Aggregate Functions:
