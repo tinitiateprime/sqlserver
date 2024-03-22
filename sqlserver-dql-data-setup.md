@@ -1,6 +1,6 @@
-![SQLServer Tinitiate Image](sqlserver_tinitiate.png)
+![SQL Server Tinitiate Image](sqlserver_tinitiate.png)
 
-# SQLServer
+# SQL Server
 &copy; TINITIATE.COM
 
 ##### [Back To Context](./README.md)
@@ -9,7 +9,7 @@
 * Data Query Language (DQL) is a powerful tool used to retrieve and manipulate data within a database management system.
 * Before diving into querying data that is to going into the details of Data Query Language (DQL) commands, it's essential to have a properly structured dataset to work with.
 * This preliminary step lays the groundwork for a comprehensive understanding of DQL operations, enabling users to effectively utilize DQL commands to query and manipulate data within a database management system.
-* In this tutorial, we'll walk through the process of setting up DQL data, step by step.
+* In this tutorial, we'll walk through the process of setting up Employees DQL data, step by step.
 
 ## Create tables
 * Create dataset under **EMPLOYEES** schema

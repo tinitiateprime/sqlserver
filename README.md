@@ -27,8 +27,8 @@
     * Group By
     * Having
     * Order By
-    * Limit
-* ### [DQL - Basic Operators](postgresql-dql-basic-operators.md)
+    * Top
+* ### [DQL - Basic Operators](sqlserver-dql-basic-operators.md)
     * Equality Operator (=)
     * Inequality Operator (<>)
     * IN Operator
@@ -42,47 +42,44 @@
     * Less Than or Equal To (<=)
     * EXISTS Operator
     * NOT EXISTS Operator
-* ### [DQL - Set Operations](postgresql-dql-set-operations.md)
+* ### [DQL - Set Operations](sqlserver-dql-set-operations.md)
     * Union
     * Intersect
-    * EXCEPT (or MINUS)
-* ### [DQL - Joins](postgresql-dql-joins.md)
+    * EXCEPT
+* ### [DQL - Joins](sqlserver-dql-joins.md)
     * Inner Join
     * Left Join (or Left Outer Join)
     * Right Join (or Right Outer Join)
     * Full Join (or Full Outer Join)
     * Cross Join
-* ### [DQL - String Functions](postgresql-dql-string-functions.md)
-    * Length Function (LENGTH)
+* ### [DQL - String Functions](sqlserver-dql-string-functions.md)
+    * Length Function (LEN)
     * Substring Function (SUBSTRING)
-    * Concatenation Operator (||)
+    * Concatenation Operator (+)
     * Lower Function (LOWER)
     * Upper Function (UPPER)
     * Trim Function (TRIM)
     * Ltrim Function (LTRIM)
     * Rtrim Function (RTRIM)
-    * Position Function (POSITION)
+    * Charindex Function (CHARINDEX)
     * Left Function (LEFT)
     * Right Function (RIGHT)
     * Reverse Function (REVERSE)
     * Replace Function (REPLACE)
-* ### [DQL - Date Functions](postgresql-dql-date-functions.md)
-    * Current Date (CURRENT_DATE)
-    * Current Timestamp (CURRENT_TIMESTAMP)
-    * Extract Function (EXTRACT)
-    * Age Function (AGE)
-    * Date Trunc Function (DATE_TRUNC)
-    * Date Part Function (DATE_PART)
+* ### [DQL - Date Functions](sqlserver-dql-date-functions.md)
+    * Current Date and time (GETDATE)
+    * Date Part Function (DATEPART)
+    * Date Difference Function (DATEDIFF)
     * Date Addition/Subtraction
-    * Date Formatting (TO_CHAR)
-    * Weekday Function (EXTRACT and DATE_PART)
-* ### [DQL - Aggregate Functions](postgresql-dql-aggregate-functions.md)
+    * Date Formatting (FORMAT)
+    * Weekday Function (DATEPART)
+* ### [DQL - Aggregate Functions](sqlserver-dql-aggregate-functions.md)
     * Count
     * Sum
     * Avg
     * Max
     * Min
-* ### [DQL - Analytical Functions](postgresql-dql-analytical-functions.md)
+* ### [DQL - Analytical Functions](sqlserver-dql-analytical-functions.md)
     * Aggregate Functions
     * ROW_NUMBER()
     * RANK()
