@@ -45,7 +45,7 @@
 * ### [DQL - Set Operations](sqlserver-dql-set-operations.md)
     * Union
     * Intersect
-    * EXCEPT
+    * Except
 * ### [DQL - Joins](sqlserver-dql-joins.md)
     * Inner Join
     * Left Join (or Left Outer Join)
