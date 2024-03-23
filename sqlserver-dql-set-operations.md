@@ -8,7 +8,7 @@
 # DQL - Set Operations
 * Set operations in SQL are used to combine or compare the results of two or more queries.
 * These are essential for manipulating and combining data from multiple tables.
-* The main set operations include UNION, INTERSECT, and EXCEPT (or MINUS in some databases).
+* The main set operations include UNION, INTERSECT, and EXCEPT.
 
 ## Set Operations in SQL Server:
 ### UNION:
