@@ -50,6 +50,15 @@ SELECT FORMAT(hiredate, 'yyyy-MM-dd') FROM employees.emp;
 -- the 'hiredate' column
 SELECT DATEPART(WEEKDAY, hiredate) FROM employees.emp;
 ```
+### Date to String (Various formats)
+### DateTime to String (Various formats)
+### DateTime TimeZone to String (Various formats)
+### String to Date (Various formats)
+### String to DateTime (Various formats)
+### String to DateTime TimeZone (Various formats)
+
+
+
 
 ##### [Back To Context](./README.md)
 ***
