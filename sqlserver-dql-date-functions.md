@@ -50,15 +50,100 @@ SELECT FORMAT(hiredate, 'yyyy-MM-dd') FROM employees.emp;
 -- the 'hiredate' column
 SELECT DATEPART(WEEKDAY, hiredate) FROM employees.emp;
 ```
-### Date to String (Various formats)
+### Date to String (Various formats):
+* You can convert a date to a string in various formats using the `CONVERT(arg1, arg2, arg3)` function.
+* You can replace the first argument with datatype, second argument(arg2) with date column name or a specific date value you want to convert and the third argument(arg3) specifies the format code.
+```sql
+-- YYYY-MM-DD:
+SELECT empno, ename, CONVERT(varchar, hiredate, 23) AS hiredate
+FROM employees.emp;
+
+-- MM/DD/YYYY:
+SELECT empno, ename, CONVERT(varchar, hiredate, 101) AS hiredate
+FROM employees.emp;
+
+-- DD/MM/YYYY:
+SELECT empno, ename, CONVERT(varchar, hiredate, 103) AS hiredate
+FROM employees.emp;
+
+-- Mon DD, YYYY:
+SELECT empno, ename, CONVERT(varchar, hiredate, 107) AS hiredate
+FROM employees.emp;
+
+-- YYYYMMDD:
+SELECT empno, ename, CONVERT(varchar, hiredate, 112) AS hiredate
+FROM employees.emp;
+
+-- DD-MM-YYYY:
+SELECT empno, ename, CONVERT(varchar, hiredate, 105) AS hiredate
+FROM employees.emp;
+
+-- YYYY/MM/DD:
+SELECT empno, ename, CONVERT(varchar, hiredate, 111) AS hiredate
+FROM employees.emp;
+
+-- DD MMM YYYY:
+SELECT empno, ename, CONVERT(varchar, hiredate, 106) AS hiredate
+FROM employees.emp;
+```
 ### DateTime to String (Various formats)
-### DateTime TimeZone to String (Various formats)
+* To convert a datetime to a string in various formats in SQL Server, you can use the `CONVERT(arg1, arg2, arg3)` function, same like date to a string but with different format codes.
+```sql
+-- YYYY-MM-DD HH:MI:SS:
+SELECT empno, ename, CONVERT(varchar, hiredate, 120) AS hiredate
+FROM employees.emp;
+-- hiredata doesn't have time inserts, so time won't show up
+-- Using GETDATE()
+SELECT CONVERT(varchar, GETDATE(), 120) AS datetimetostring;
+
+-- YYYY-MM-DD HH:MI:SS:MMM:
+SELECT CONVERT(varchar, GETDATE(), 121) AS datetimetostring;
+
+-- DD Mon YYYY HH:MI:SS:MMM:
+SELECT CONVERT(varchar, GETDATE(), 113) AS datetimetostring;
+
+-- Mon DD YYYY HH:MI:SS:MMMAM (or PM):
+SELECT CONVERT(varchar, GETDATE(), 109) AS datetimetostring;
+```
 ### String to Date (Various formats)
+* You can convert a string in various formats to a date using the `CONVERT(date, arg2, arg3)` function.
+* Replace the second argument(arg2) in the CONVERT function with the string you want to convert and the third argument with the format code that matches the format of your string.
+```sql
+-- YYYY-MM-DD:
+SELECT CONVERT(date, '2023-04-15', 23) AS date;
+
+-- MM/DD/YYYY:
+SELECT CONVERT(date, '04/15/2023', 101) AS date;
+
+-- DD.MM.YYYY:
+SELECT CONVERT(date, '15.04.2023', 104) AS date;
+
+-- Mon DD, YYYY:
+SELECT CONVERT(date, 'Apr 15, 2023', 107) AS date;
+
+-- YYYYMMDD:
+SELECT CONVERT(date, '20230415', 112) AS date;
+```
 ### String to DateTime (Various formats)
+* You can convert a string in various formats to a datetime using the `CONVERT(datetime, arg2, arg3)` function, same like string to date but with different format codes.
+```sql
+-- YYYY-MM-DD HH:MI:SS:
+SELECT CONVERT(datetime, '2023-04-15 13:30:45', 120) AS datetime;
+
+-- MM/DD/YYYY HH:MI:SS:
+SELECT CONVERT(datetime, '04/15/2023 13:30:45', 101) AS datetime;
+
+-- DD.MM.YYYY HH:MI:SS:
+SELECT CONVERT(datetime, '15.04.2023 13:30:45', 104) AS datetime;
+
+-- Mon DD YYYY HH:MI:SS:MMM:
+SELECT CONVERT(datetime, 'Apr 15 2023 01:30:45:375', 109) AS datetime;
+
+-- YYYYMMDD HH:MI:SS:
+SELECT CONVERT(datetime, '20230415 13:30:45', 112) AS datetime;
+```
+### DateTime TimeZone to String (Various formats)
 ### String to DateTime TimeZone (Various formats)
-
-
-
 
 ##### [Back To Context](./README.md)
 ***
