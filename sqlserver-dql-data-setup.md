@@ -57,11 +57,18 @@ CREATE TABLE employees.emp
   deptno     INT NOT NULL,
   
 );
+
+alter table employees.emp add constraint pk_empno primary key(empno);
+
+alter table employees.emp add constraint fk_deptno foreign key(deptno)
+references employees.dept(deptno);
+
 ```
 * Create `employees.salgrade` table
 ```sql
 -- Create table employees.salgrade
 CREATE TABLE employees.salgrade
+
 ( 
   grade INT NOT NULL,
   losal INT,
