@@ -1,5 +1,9 @@
-![Tinitiate SQLSERVER Training](../images/sqlserver.png)
+![Tinitiate SQLSERVER Training](./sqlserver_tinitiate.png)
 
+# T-SQL Server
+&copy; TINITIATE.COM
+
+##### [Back To Context](./README.md)
 We are declaring and initializing variables, performing a simple addition operation, and then printing and selecting the result. Here's a breakdown of the script
 
 Variable Declaration and Initialization:

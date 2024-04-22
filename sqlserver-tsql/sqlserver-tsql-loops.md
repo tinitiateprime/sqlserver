@@ -1,5 +1,9 @@
-![Tinitiate SQLSERVER Training](../images/sqlserver.png)
+![Tinitiate SQLSERVER Training](./sqlserver_tinitiate.png)
 
+# T-SQL Server
+&copy; TINITIATE.COM
+
+##### [Back To Context](./README.md)
 # Loops in SQL Server
 In SQL Server, loops are used to execute a block of code repeatedly based on a condition. 
 

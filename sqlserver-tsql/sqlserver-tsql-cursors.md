@@ -1,4 +1,9 @@
-![Tinitiate SQLSERVER Training](../images/sqlserver.png)
+![Tinitiate SQLSERVER Training](./sqlserver_tinitiate.png)
+
+# T-SQL Server
+&copy; TINITIATE.COM
+
+##### [Back To Context](./README.md)
 # SQLSERVER Cursors
  In SQL Server, cursors are used to fetch and process rows from a result set one at a time. They are particularly useful when you need to perform row-by-row operations. Here are examples of how to use cursors with the billing and product tables:
 

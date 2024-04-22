@@ -1,5 +1,9 @@
-![Tinitiate SQLSERVER Training](../images/sqlserver.png)
+![Tinitiate SQLSERVER Training](./sqlserver_tinitiate.png)
 
+# T-SQL Server
+&copy; TINITIATE.COM
+
+##### [Back To Context](./README.md)
 # Conditional Statements in SQL Server 
 
 * Conditional statements in SQL Server, such as IF...ELSE, CASE, and IIF, are useful for executing different SQL statements based on specific conditions. Here's how you can use these statements with the emp, dept, and sal tables:

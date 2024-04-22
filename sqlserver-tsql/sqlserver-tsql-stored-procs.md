@@ -1,4 +1,11 @@
-![Tinitiate SQLSERVER Training](../images/sqlserver.png)
+![Tinitiate SQLSERVER Training](./sqlserver_tinitiate.png)
+
+# T-SQL Server
+&copy; TINITIATE.COM
+
+##### [Back To Context](./README.md)
+
+
 # Stored Procedures
 
 ## Procedure with no parameters

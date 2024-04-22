@@ -1,4 +1,10 @@
-![Tinitiate SQLSERVER Training](images/sqlserver.png)
+![Tinitiate SQLSERVER Training](./sqlserver_tinitiate.png)
+
+# T-SQL Server
+&copy; TINITIATE.COM
+
+##### [Back To Context](./README.md)
+
 # SQL SERVER VIEWS
 
 * In SQL SERVER, a view is a virtual table based on the result-set of an SQL statement. Views contain rows and columns, just like a real table, and the fields in a view are fields from one or more real tables in the database. You can use views to simplify complex queries, enhance security by restricting access to underlying tables, and abstract data in a way that users find natural or intuitive.
@@ -16,11 +22,11 @@ Key Characteristics of Views:
 Here is how you can create a simple view in SQL Server:
 
 ```sql
-  CREATE VIEW vw_EmployeeInfo
-  AS
-  SELECT emp_id, emp_name, job_title, dept_id
-  FROM emp
-  WHERE job_title LIKE '%Manager%';
+CREATE VIEW vw_AllEmployees
+AS
+SELECT emp_id, emp_name, job_title, salary, dept_id
+FROM emp;
+
 ```
 This view vw_EmployeeInfo shows a list of employees who are managers.
 
@@ -28,27 +34,28 @@ This view vw_EmployeeInfo shows a list of employees who are managers.
 Once a view is created, you can use it just like you would use a table. Here’s how you can query the view:
 
 ```sql
-  SELECT * FROM vw_EmployeeInfo;
-```
-## Modifying Views
+SELECT * FROM vw_AllEmployees;
 
-To change a view after it has been created, you can use the ALTER VIEW statement:
+```
+
+ 
+
+## Updating Views
+If you need to modify a view, you can use the ALTER VIEW statement. For example, if you want to add a new column to vw_EmployeeDepartments, you would drop and recreate it or use ALTER VIEW:
 
 ```sql
-  ALTER VIEW vw_EmployeeInfo
-  AS
-  SELECT emp_id, emp_name, job_title, dept_id, status
-  FROM emp
-  WHERE job_title LIKE '%Manager%' AND status = 'Active';
+ALTER VIEW vw_EmployeeDepartments
+AS
+SELECT e.emp_id, e.emp_name, e.job_title, e.salary, d.dept_name, d.dept_id
+FROM emp e
+JOIN dept d ON e.dept_id = d.dept_id;
 ```
-
-This modification adds a filter to display only active managers.
 
 ## Dropping Views
 If you no longer need a view, you can remove it using the DROP VIEW statement:
 
 ```sql
-  DROP VIEW vw_EmployeeInfo;
+  DROP VIEW vw_AllEmployees;
 ```
 ## Complex Views
 
@@ -158,3 +165,8 @@ For complex views, you can use INSTEAD OF triggers to specify custom actions to 
   WHERE emp_id = 1;
 ```
 In this scenario, vw_EmployeeDept includes a join, making it complex and typically not updatable directly. The INSTEAD OF trigger, trg_UpdateEmployeeDept, intercepts update operations on the view and provides the necessary SQL commands to update the underlying emp table accordingly.
+
+## Benefits of Using Views
+* Security: By exposing only certain columns or rows from the underlying tables, views can help to enforce data security.
+* Simplicity: Views can encapsulate complex queries with joins, aggregations, and filters, presenting a simpler interface to the users or applications.
+* Consistency: Views can serve as a consistent, read-only interface to the data, which can protect underlying data structures from changes in business logic or user interfaces.
