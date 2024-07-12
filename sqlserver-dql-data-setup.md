@@ -56,13 +56,13 @@ CREATE TABLE employees.emp
   commission NUMERIC(7,2),
   deptno     INT NOT NULL,
   
+  -- Primary Key constraint for employees.emp on empno
+  CONSTRAINT pk_empno PRIMARY KEY (empno),
+  
+  -- Foreign key constraint for
+  -- employees.emp.deptno referring employees.dept.deptno
+  CONSTRAINT fk_deptno FOREIGN KEY (deptno) REFERENCES employees.dept (deptno)
 );
-
-alter table employees.emp add constraint pk_empno primary key(empno);
-
-alter table employees.emp add constraint fk_deptno foreign key(deptno)
-references employees.dept(deptno);
-
 ```
 * Create `employees.salgrade` table
 ```sql
