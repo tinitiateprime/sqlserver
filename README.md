@@ -66,6 +66,9 @@
     * Right Function (RIGHT)
     * Reverse Function (REVERSE)
     * Replace Function (REPLACE)
+    * Case Statement (CASE)
+    * ISNULL Function (ISNULL)
+    * Coalesce Function (COALESCE)
 * ### [DQL - Date Functions](sqlserver-dql-date-functions.md)
     * Current Date and time (GETDATE)
     * Date Part Function (DATEPART)
@@ -73,6 +76,19 @@
     * Date Addition/Subtraction
     * Date Formatting (FORMAT)
     * Weekday Function (DATEPART)
+    * Date to String (Various formats)
+    * DateTime to String (Various formats)
+    * String to Date (Various formats)
+    * String to DateTime (Various formats)
+    * DateTime and TimeZone
+        * Date, Timezones, UTC, and Offsets
+            * Date and Time
+            * Timezones
+            * UTC
+            * Offsets
+            * Applying an Offset to a Date Datatype Column
+        * Cast a DateTime to DateTime with Timezone (in UTC, EST and IST TimeZones)
+        * Cast a DateTime Timezone to another TimeZone
 * ### [DQL - Aggregate Functions](sqlserver-dql-aggregate-functions.md)
     * Count
     * Sum

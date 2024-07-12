@@ -86,7 +86,7 @@ FROM employees.emp;
 SELECT empno, ename, CONVERT(varchar, hiredate, 106) AS hiredate
 FROM employees.emp;
 ```
-### DateTime to String (Various formats)
+### DateTime to String (Various formats):
 * To convert a datetime to a string in various formats in SQL Server, you can use the `CONVERT(arg1, arg2, arg3)` function, same like date to a string but with different format codes.
 ```sql
 -- YYYY-MM-DD HH:MI:SS:
@@ -105,7 +105,7 @@ SELECT CONVERT(varchar, GETDATE(), 113) AS datetimetostring;
 -- Mon DD YYYY HH:MI:SS:MMMAM (or PM):
 SELECT CONVERT(varchar, GETDATE(), 109) AS datetimetostring;
 ```
-### String to Date (Various formats)
+### String to Date (Various formats):
 * You can convert a string in various formats to a date using the `CONVERT(date, arg2, arg3)` function.
 * Replace the second argument(arg2) in the CONVERT function with the string you want to convert and the third argument with the format code that matches the format of your string.
 ```sql
@@ -124,7 +124,7 @@ SELECT CONVERT(date, 'Apr 15, 2023', 107) AS date;
 -- YYYYMMDD:
 SELECT CONVERT(date, '20230415', 112) AS date;
 ```
-### String to DateTime (Various formats)
+### String to DateTime (Various formats):
 * You can convert a string in various formats to a datetime using the `CONVERT(datetime, arg2, arg3)` function, same like string to date but with different format codes.
 ```sql
 -- YYYY-MM-DD HH:MI:SS:
@@ -142,8 +142,8 @@ SELECT CONVERT(datetime, 'Apr 15 2023 01:30:45:375', 109) AS datetime;
 -- YYYYMMDD HH:MI:SS:
 SELECT CONVERT(datetime, '20230415 13:30:45', 112) AS datetime;
 ```
-### DateTime and TimeZone
-#### Date, Timezones, UTC, and Offsets
+### DateTime and TimeZone:
+#### Date, Timezones, UTC, and Offsets:
 * **Date and Time**: In computing, dates and times are represented using various data types. A common approach is to use a datetime data type that includes both date and time information.
 * **Timezones**: Timezones are regions of the Earth that have the same standard time. Each timezone is usually offset from Coordinated Universal Time (UTC) by a certain number of hours and minutes. For example, Eastern Standard Time (EST) is UTC-5, meaning it is 5 hours behind UTC.
 * **UTC**: Coordinated Universal Time (UTC) is the primary time standard by which the world regulates clocks and time. It is not adjusted for daylight saving time. UTC is often used as a reference point for converting between different timezones.
@@ -154,8 +154,7 @@ SELECT CONVERT(datetime, '20230415 13:30:45', 112) AS datetime;
 SELECT DATEADD(HOUR, 5, hiredate) AS adjusted_datetime
 FROM employees.emp;
 ```
-
-#### Cast a DateTime to DateTime with Timezone (in UTC, EST and IST TimeZones)
+#### Cast a DateTime to DateTime with Timezone (in UTC, EST and IST TimeZones):
 * Create a date time variable and cast it as a DateTime with TimeZone data type
 * Here we cast it at different TimeZones (UTC, EST and IST)
 * Demonstration in SQL
@@ -187,8 +186,7 @@ BEGIN
     PRINT 'ISTDateTime: ' + CONVERT(VARCHAR, @istDateTime, 120);
 END
 ```
-
-#### Cast a DateTime Timezone to another TimeZone
+#### Cast a DateTime Timezone to another TimeZone:
 * As SQL
 ```sql
 SELECT 
@@ -207,8 +205,6 @@ BEGIN
     PRINT 'ESTDateTime: ' + CONVERT(VARCHAR, @estDateTime, 120);
 END
 ```
-
-
 
 ##### [Back To Context](./README.md)
 ***

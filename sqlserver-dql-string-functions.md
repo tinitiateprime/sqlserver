@@ -101,6 +101,31 @@ SELECT REVERSE(ename) FROM employees.emp;
 -- Replace 'a' with 'X' in the 'dname' column of the departments table
 SELECT REPLACE(dname, 'a', 'X') FROM employees.dept;
 ```
+### Case Statement (CASE):
+* Evaluates conditions and returns a value when the first condition is met.
+```sql
+-- Decode the value 'clerk' to 'Clerk', 'salesman' to 'Salesman' in the 'job' column
+SELECT CASE job
+           WHEN 'clerk' THEN 'Clerk'
+           WHEN 'salesman' THEN 'Salesman'
+           ELSE 'Unknown'
+       END AS job_title
+FROM employees.emp;
+```
+### ISNULL Function (ISNULL):
+* Replaces null values with a specified replacement value.
+```sql
+-- Replace nulls in the 'commission' column with 0
+SELECT ename, ISNULL(commission , 0) AS comm
+FROM employees.emp;
+```
+### Coalesce Function (COALESCE):
+* Replaces NULL with a specified value or returns the first non-NULL value in a list of arguments.
+```sql
+-- Return the first non-null value among 'comm', 'bonus', and 0
+SELECT ename, COALESCE(commission , mgr, 0) AS compensation
+FROM employees.emp;
+```
 
 ##### [Back To Context](./README.md)
 ***
