@@ -151,8 +151,8 @@ SELECT CONVERT(datetime, '20230415 13:30:45', 112) AS datetime;
 * **Applying an Offset to a Date Datatype Column**: To apply an offset to a date datatype column in SQL Server, you can use the DATEADD function to add or subtract a specific number of hours to/from the column value. For example, to add 5 hours to a datetime column named my_datetime_column, you can use the following query:
 ```sql
 -- This query will return the value of my_datetime_column adjusted by 5 hours. 
-SELECT DATEADD(HOUR, 5, my_datetime_column) AS adjusted_datetime
-FROM my_table;
+SELECT DATEADD(HOUR, 5, hiredate) AS adjusted_datetime
+FROM employees.emp;
 ```
 
 #### Cast a DateTime to DateTime with Timezone (in UTC, EST and IST TimeZones)
