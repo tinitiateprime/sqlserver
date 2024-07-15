@@ -88,9 +88,8 @@ ALTER TABLE emp.EmpProjects
 ADD CONSTRAINT pk_empprojects PRIMARY KEY (EP_ID);
 
 -- We can also specify this constraint while table creation; for example
-CREATE TABLE orders (
-    order_id INT PRIMARY KEY,
-    customer_id INT,
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
     order_date DATE
 );
 ```
