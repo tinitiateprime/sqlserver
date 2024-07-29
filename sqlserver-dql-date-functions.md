@@ -187,23 +187,10 @@ BEGIN
 END
 ```
 #### Cast a DateTime Timezone to another TimeZone:
-* As SQL
 ```sql
 SELECT 
     'UTCDateTime: ' + CONVERT(VARCHAR, '2024-04-17 15:30:00', 120) AS UTCDateTime,
     'ESTDateTime: ' + CONVERT(VARCHAR, CAST('2024-04-17 15:30:00' AT TIME ZONE 'Eastern Standard Time' AS DATETIME), 120) AS ESTDateTime;
-```
-* As code block
-```sql
-BEGIN
-    DECLARE @utcDateTime DATETIME = '2024-04-17 15:30:00';
-    DECLARE @estDateTime DATETIME;
-
-    SET @estDateTime = CAST(@utcDateTime AT TIME ZONE 'Eastern Standard Time' AS DATETIME);
-
-    PRINT 'UTCDateTime: ' + CONVERT(VARCHAR, @utcDateTime, 120);
-    PRINT 'ESTDateTime: ' + CONVERT(VARCHAR, @estDateTime, 120);
-END
 ```
 
 ##### [Back To Context](./README.md)
