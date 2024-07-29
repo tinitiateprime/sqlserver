@@ -21,10 +21,10 @@
 -- All aggregation functions for each department
 SELECT  deptno
         ,count(sal) AS count_dept_sal
-       ,max(sal) AS max_dept_sal
-       ,min(sal) AS min_dept_sal
-       ,sum(sal) AS tot_dept_sal
-       ,avg(sal) AS avg_dept_sal
+        ,max(sal) AS max_dept_sal
+        ,min(sal) AS min_dept_sal
+        ,sum(sal) AS tot_dept_sal
+        ,avg(sal) AS avg_dept_sal
 FROM  employees.emp e
 GROUP BY deptno;
 
