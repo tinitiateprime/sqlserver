@@ -151,59 +151,27 @@ SELECT CONVERT(datetime, '20230415 13:30:45', 112) AS datetime;
 * **Applying an Offset to a Date Datatype Column**: To apply an offset to a date datatype column in SQL Server, you can use the DATEADD function to add or subtract a specific number of hours to/from the column value. For example, to add 5 hours to a datetime column named my_datetime_column, you can use the following query:
 ```sql
 -- This query will return the value of my_datetime_column adjusted by 5 hours. 
-SELECT DATEADD(HOUR, 5, hiredate) AS adjusted_datetime
+SELECT DATEADD(HOUR, 5, CAST(hiredate AS DATETIME)) AS adjusted_datetime
 FROM employees.emp;
 ```
+
 #### Cast a DateTime to DateTime with Timezone (in UTC, EST and IST TimeZones):
 * Create a date time variable and cast it as a DateTime with TimeZone data type
 * Here we cast it at different TimeZones (UTC, EST and IST)
-* Demonstration in SQL
 ```sql
 SELECT 
     '2024-04-17 15:30:00' AS OriginalDateTime,
-    CAST('2024-04-17 15:30:00' AT TIME ZONE 'UTC' AS DATETIME) AS UTCDateTime,
-    CAST('2024-04-17 15:30:00' AT TIME ZONE 'Eastern Standard Time' AS DATETIME) AS ESTDateTime,
-    CAST('2024-04-17 15:30:00' AT TIME ZONE 'India Standard Time' AS DATETIME) AS ISTDateTime;
-```
-* Demonstration in Code block [begin..end]
-```sql
-BEGIN
-    -- Create Variables
-    DECLARE @datetime DATETIME = '2024-04-17 15:30:00';
-    DECLARE @utcDateTime DATETIME;
-    DECLARE @estDateTime DATETIME;
-    DECLARE @istDateTime DATETIME;
-
-    -- Cast the variables to UTC, EST and IST
-    SET @utcDateTime = CAST(@datetime AT TIME ZONE 'UTC' AS DATETIME);
-    SET @estDateTime = CAST(@datetime AT TIME ZONE 'Eastern Standard Time' AS DATETIME);
-    SET @istDateTime = CAST(@datetime AT TIME ZONE 'India Standard Time' AS DATETIME);
-
-    -- Print the output
-    PRINT 'OriginalDateTime: ' + CONVERT(VARCHAR, @datetime, 120);
-    PRINT 'UTCDateTime: ' + CONVERT(VARCHAR, @utcDateTime, 120);
-    PRINT 'ESTDateTime: ' + CONVERT(VARCHAR, @estDateTime, 120);
-    PRINT 'ISTDateTime: ' + CONVERT(VARCHAR, @istDateTime, 120);
-END
+    (CAST('2024-04-17 15:30:00' AS DATETIME) AT TIME ZONE 'UTC') AS UTCDateTime,
+    SWITCHOFFSET(CAST('2024-04-17 15:30:00' AS DATETIME) AT TIME ZONE 'UTC', DATEPART(TZOFFSET, SYSDATETIMEOFFSET() AT TIME ZONE 'Eastern Standard Time')) AS ESTDateTime,
+    SWITCHOFFSET(CAST('2024-04-17 15:30:00' AS DATETIME) AT TIME ZONE 'UTC', DATEPART(TZOFFSET, SYSDATETIMEOFFSET() AT TIME ZONE 'India Standard Time')) AS ISTDateTime;
 ```
 #### Cast a DateTime Timezone to another TimeZone:
-* As SQL
 ```sql
 SELECT 
     'UTCDateTime: ' + CONVERT(VARCHAR, '2024-04-17 15:30:00', 120) AS UTCDateTime,
-    'ESTDateTime: ' + CONVERT(VARCHAR, CAST('2024-04-17 15:30:00' AT TIME ZONE 'Eastern Standard Time' AS DATETIME), 120) AS ESTDateTime;
-```
-* As code block
-```sql
-BEGIN
-    DECLARE @utcDateTime DATETIME = '2024-04-17 15:30:00';
-    DECLARE @estDateTime DATETIME;
-
-    SET @estDateTime = CAST(@utcDateTime AT TIME ZONE 'Eastern Standard Time' AS DATETIME);
-
-    PRINT 'UTCDateTime: ' + CONVERT(VARCHAR, @utcDateTime, 120);
-    PRINT 'ESTDateTime: ' + CONVERT(VARCHAR, @estDateTime, 120);
-END
+    'ESTDateTime: ' + CONVERT(VARCHAR, 
+        CAST(CAST('2024-04-17 15:30:00' AS DATETIME) AT TIME ZONE 'UTC' AT TIME ZONE 'Eastern Standard Time' AS DATETIME), 
+        120) AS ESTDateTime;
 ```
 
 ##### [Back To Context](./README.md)
