@@ -1,4 +1,4 @@
-![SQL Server Tinitiate Image](sqlserver_tinitateicon_color.jpg)
+![SQL Server Tinitiate Image](sqlserver_tinitateicon.jpg)
 
 # SQL Server
 &copy; TINITIATE.COM
