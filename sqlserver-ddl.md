@@ -1,6 +1,6 @@
 ![SQL Server Tinitiate Image](sqlserver_tinitiateicon.jpg)
 
-# SQL Server
+
 &copy; TINITIATE.COM
 
 ##### [Back To Context](./README.md)
