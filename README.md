@@ -1,4 +1,5 @@
 ![SQLServer Tinitiate Image](sqlserver_tinitiateicon.jpg)
+
 # SQLServer Tutorial
 &copy; TINITIATE.COM
 
