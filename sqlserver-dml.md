@@ -66,7 +66,7 @@ UPDATE employees.emp SET sal = 6200.00 WHERE empno = 101;
 
 -- Update project end date
 UPDATE employees.Emp_Projects SET End_Date = '2024-06-01'
- WHERE ProjectID = 1 AND empno = 101;
+ WHERE emp_projectno  = 1 AND empno = 101;
 ```
 
 ### DELETE:
