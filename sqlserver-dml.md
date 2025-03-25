@@ -65,7 +65,7 @@ INSERT INTO employees.emp (empno, ename, sal, deptno)
 UPDATE employees.emp SET sal = 6200.00 WHERE empno = 101;
 
 -- Update project end date
-UPDATE employees.EmpProjects SET EndDate = '2024-06-01'
+UPDATE employees.Emp_Projects SET End_Date = '2024-06-01'
  WHERE ProjectID = 1 AND empno = 101;
 ```
 
