@@ -60,10 +60,7 @@ CREATE TABLE employees.salgrade
 ( 
   grade INT NOT NULL,
   losal INT,
-  hisal INT,
-  
-  -- Primary Key constraint for employees.salgrade on grade
-  CONSTRAINT pk_grade PRIMARY KEY (grade)
+  hisal INT
 );
 ```
 * Create `employees.projects` table
