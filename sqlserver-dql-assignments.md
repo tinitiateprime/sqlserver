@@ -1,5 +1,11 @@
+![SQL Server Tinitiate Image](sqlservericon.jpg)
+
+# SQL Server
+&copy; TINITIATE.COM
+
+##### [Back To Context](./README.md)
+
 # Employee DB Assignments
-(c) TINITIATE:
 
 ## Select Queries
 * Select all employees names and salaries.
