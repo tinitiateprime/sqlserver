@@ -1,4 +1,4 @@
-![SQL Server Tinitiate Image](sqlserver_tinitiateicon.jpg)
+![SQL Server Tinitiate Image](sqlservericon.jpg)
 
 
 
@@ -28,34 +28,64 @@ ALTER AUTHORIZATION ON SCHEMA::emp TO ti;
 ALTER USER ti WITH DEFAULT_SCHEMA = emp;
 
 -- DDL Create Command
--- Create dept table
-CREATE TABLE emp.dept (
-    deptid  int,
-    dname   varchar(100)
+* Create `employees.dept` table
+```sql
+-- Create table employees.dept
+CREATE TABLE employees.dept
+( 
+  deptno INT NOT NULL,
+  dname VARCHAR(14),
+  loc VARCHAR(13)
 );
-
--- Create emp table
-CREATE TABLE emp.emp (
-    empid    int,
-    ename    varchar(100),
-    sal      numeric(7,2),
-    deptid   int
+```
+* Create `employees.emp` table
+```sql
+-- Create table employees.emp
+CREATE TABLE employees.emp
+( 
+  empno      INT NOT NULL,
+  ename      VARCHAR(10),
+  job        VARCHAR(9),
+  mgr        NUMERIC(4)
+  sal        NUMERIC(7,2),
+  commission NUMERIC(7,2),
+  deptno     INT NOT NULL
 );
+```
+* Create `employees.salgrade` table
+```sql
+-- Create table employees.salgrade
+CREATE TABLE employees.salgrade
 
--- Create projects table
-CREATE TABLE emp.projects (
-    ProjectID      int,
-    ProjectName    varchar(100),
-    ProjectBudget  numeric(12,2)
+( 
+  grade INT NOT NULL,
+  losal INT,
+  hisal INT,
+  
+  -- Primary Key constraint for employees.salgrade on grade
+  CONSTRAINT pk_grade PRIMARY KEY (grade)
 );
-
--- Create empprojects table
-CREATE TABLE emp.EmpProjects (
-    EP_ID       int,
-    EmpID       int,
-    ProjectID   int,
-    StartDate   date,
-    EndDate     date
+```
+* Create `employees.projects` table
+```sql
+-- Create table employees.projects
+CREATE TABLE employees.projects
+( 
+  projectno           INT NOT NULL,
+  budget              NUMERIC(7,2),
+  monthly_commission  NUMERIC(7,2)
+);
+```
+* Create `employees.emp_projects` table
+```sql
+-- Create table employees.emp_projects
+CREATE TABLE employees.emp_projects
+( 
+  emp_projectno  INT NOT NULL,
+  empno          INT NOT NULL,
+  projectno      INT NOT NULL,
+  start_date     DATE,
+  end_date       DATE
 );
 ```
 
@@ -68,15 +98,15 @@ ALTER TABLE emp.emp ADD hire_date DATE;
 ALTER TABLE emp.emp DROP COLUMN hire_date;
 
 -- Alter table "projects":
--- Change the data type of the column "ProjectBudget" to DECIMAL(12,2).
-ALTER TABLE emp.projects ALTER COLUMN ProjectBudget DECIMAL(12,2);
+-- Change the data type of the column "budget" to DECIMAL(12,2).
+ALTER TABLE emp.projects ALTER COLUMN budget DECIMAL(12,2);
 -- To change back to previous
-ALTER TABLE emp.projects ALTER COLUMN ProjectBudget NUMERIC(12,2);
+ALTER TABLE emp.projects ALTER COLUMN budget NUMERIC(12,2);
 
--- Alter table "EmpProjects": Drop the column "EndDate".
-ALTER TABLE emp.EmpProjects DROP COLUMN EndDate;
+-- Alter table "emp_projects": Drop the column "end_date".
+ALTER TABLE emp.emp_projects DROP COLUMN end_date;
 -- To change back to previous
-ALTER TABLE emp.EmpProjects ADD EndDate DATE;
+ALTER TABLE emp.emp_projects ADD end_date DATE;
 ```
 
 ### DROP:
@@ -87,7 +117,7 @@ DROP TABLE emp.dept;
 
 -- To again create it
 CREATE TABLE emp.dept (
-    deptid  INT,
+    deptno  INT,
     dname   VARCHAR(100)
 );
 ```
