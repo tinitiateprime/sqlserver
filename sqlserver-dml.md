@@ -15,18 +15,18 @@
 * You can specify the values to be inserted into each column of the table.
 ```sql
 -- Insert with column created order
-INSERT INTO emp.dept (deptid, dname) VALUES (1000, 'PRODUCTION');
-INSERT INTO emp.emp (empid, ename, sal, deptid)
+INSERT INTO employees.dept (deptno, dname) VALUES (1000, 'PRODUCTION');
+INSERT INTO employees.emp (empno, ename, sal, deptno)
  VALUES (101, 'John Doe', 5000.00, 1000);
 
 -- Insert with column names, use positional values
-INSERT INTO emp.dept (deptid, dname) VALUES (2000, 'FOUNDRY');
+INSERT INTO employees.dept (deptno, dname) VALUES (2000, 'FOUNDRY');
 
 -- Insert with column names, different order
-INSERT INTO emp.dept (dname, deptid) VALUES ('STORES', 3000);
+INSERT INTO employees.dept (dname, deptno) VALUES ('STORES', 3000);
 
 -- Insert all, Insert more data in single insert
-INSERT INTO emp.dept (deptid, dname)
+INSERT INTO employees.dept (deptno, dname)
 VALUES 
     (111, 'TECHNOLOGY'),
     (211, 'FACTORY'),
@@ -34,26 +34,26 @@ VALUES
 
 -- Insert with select statement (Copy data from another table)
 -- Create table dept1
-CREATE TABLE emp.dept1 (
-    deptid INT,
+CREATE TABLE employees.dept1 (
+    deptno INT,
     dname VARCHAR(100)
 );
 -- Insert data from dept into dept1
-INSERT INTO emp.dept1 (deptid, dname)
-SELECT deptid, dname
-FROM emp.dept;
+INSERT INTO employees.dept1 (deptno, dname)
+SELECT deptno, dname
+FROM employees.dept;
 
 -- Incorrect data violations
 -- Primary Key violation
-INSERT INTO emp.dept (deptid, dname) VALUES (3000, 'MARKETING');
+INSERT INTO employees.dept (deptno, dname) VALUES (3000, 'MARKETING');
 
 -- DataType Size violation
-INSERT INTO emp.dept (deptid, dname) 
+INSERT INTO employees.dept (deptno, dname) 
 VALUES (6, 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
 
 -- Foreign Key violation
-INSERT INTO emp.emp (empid, ename, sal, deptid)
+INSERT INTO employees.emp (empno, ename, sal, deptno)
  VALUES (15, '4F', 12000.00, 5000);
 ```
 
@@ -62,21 +62,21 @@ INSERT INTO emp.emp (empid, ename, sal, deptid)
 * You can update one or more columns of existing rows based on a specified condition.
 ```sql
 -- Update salary of an employee
-UPDATE emp.emp SET sal = 6200.00 WHERE empid = 101;
+UPDATE employees.emp SET sal = 6200.00 WHERE empno = 101;
 
 -- Update project end date
-UPDATE emp.EmpProjects SET EndDate = '2024-06-01'
- WHERE ProjectID = 1 AND EmpID = 101;
+UPDATE employees.EmpProjects SET EndDate = '2024-06-01'
+ WHERE ProjectID = 1 AND empno = 101;
 ```
 
 ### DELETE:
 * This command is used to remove one or more rows from a table based on a specified condition.
 ```sql
 -- Delete a dept
-DELETE FROM emp.dept WHERE deptid = 3000;
+DELETE FROM employees.dept WHERE deptno = 3000;
 
 -- Remove an employee
-DELETE FROM emp.emp WHERE empid = 101;
+DELETE FROM employees.emp WHERE empno = 101;
 ```
 
 ##### [Back To Context](./README.md)
