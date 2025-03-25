@@ -20,12 +20,12 @@
 USE DATABASE tinitiate;
 
 -- Schema DDL
-CREATE SCHEMA emp;
+CREATE SCHEMA employees;
 CREATE USER ti WITH PASSWORD = 'Tinitiate!23';
-ALTER AUTHORIZATION ON SCHEMA::emp TO ti;
+ALTER AUTHORIZATION ON SCHEMA::employees TO ti;
 
 -- Set the schema where you want to create the DB objects
-ALTER USER ti WITH DEFAULT_SCHEMA = emp;
+ALTER USER ti WITH DEFAULT_SCHEMA = employees;
 
 -- DDL Create Command
 * Create `employees.dept` table
