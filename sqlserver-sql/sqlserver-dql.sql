@@ -1,19 +1,14 @@
-![SQL Server Tinitiate Image](sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : DQL - Data Query Language
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server
-&copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
 
-# DQL - Data Query Language
-* In SQL Server, DQL (Data Query Language) refers to the subset of SQL (Structured Query Language) specifically designed for querying and retrieving data from a SQL Server database.
-* DQL primarily involves the use of SELECT statements to extract information from one or more tables within the database.
-
-## SELECT Statement
-* The fundamental component of DQL is the SELECT statement, which is used to retrieve data from one or more tables in the database.
-* It allows users to specify the columns they want to retrieve from one or more tables in the database.
-* SELECT statements can also include various clauses for filtering, sorting, and grouping the data.
-```sql
+-- SELECT Statement:
 -- Retrieve all columns from the emp table
 SELECT * FROM employees.emp;
 
@@ -25,15 +20,10 @@ SELECT DISTINCT job FROM employees.emp;
 
 -- Using alias to display column name as per requirement
 SELECT DISTINCT job AS employeejob FROM employees.emp;
-```
 
-## Commonly used clauses in SQL Server:
-* In SQL Server DQL, clauses are components of SQL statements that provide additional instructions or conditions to control the behavior of the query.
-* Clauses can be used in various SQL statements such as SELECT, INSERT, UPDATE, DELETE, and more.
-* These clauses allow users to filter, manipulate, and organize data according to specific requirements.
-### WHERE Clause:
-* The WHERE clause is used to filter rows based on specified conditions.
-```sql
+
+
+-- WHERE Clause:
 -- Retrieve employees with a specific job title
 SELECT * FROM employees.emp WHERE job = 'manager';
 
@@ -42,10 +32,10 @@ SELECT * FROM employees.emp WHERE hiredate > '1982-01-01';
 
 -- Retrieve employees with a salary higher than a certain amount
 SELECT * FROM employees.emp WHERE sal > 2000;
-```
-### GROUP BY Clause:
-* The GROUP BY clause is used to group rows that have the same values into summary rows.
-```sql
+
+
+
+-- GROUP BY Clause:
 -- Calculate the total salary expense for each dept
 SELECT deptno, SUM(sal) AS total_salary
 FROM employees.emp
@@ -60,10 +50,10 @@ GROUP BY job;
 SELECT deptno, AVG(commission) AS avg_commission
 FROM employees.emp
 GROUP BY deptno;
-```
-### HAVING Clause:
-* The HAVING clause is used to filter groups of rows returned by a GROUP BY clause.
-```sql
+
+
+
+-- HAVING Clause:
 -- Retrieve departments with more than two employees
 SELECT deptno, COUNT(*) AS num_employees
 FROM employees.emp
@@ -81,10 +71,10 @@ SELECT deptno, SUM(sal) AS total_salary
 FROM employees.emp
 GROUP BY deptno
 HAVING SUM(sal) > 10000;
-```
-### ORDER BY Clause:
-* The ORDER BY clause is used to sort the result set based on specified columns.
-```sql
+
+
+
+-- ORDER BY Clause:
 -- Retrieve employees sorted by salary in descending order
 SELECT *
 FROM employees.emp
@@ -100,10 +90,10 @@ ORDER BY hiredate ASC;
 SELECT *
 FROM employees.emp
 ORDER BY deptno ASC, sal DESC;
-```
-### TOP Clause:
-* The TOP clause is used to limit the number of rows returned by a query.
-```sql
+
+
+
+-- TOP Clause:
 -- Retrieve the first 5 employees
 SELECT TOP 5 *
 FROM employees.emp;
@@ -112,9 +102,3 @@ FROM employees.emp;
 SELECT TOP 10 *
 FROM employees.emp
 ORDER BY sal DESC;
-```
-
-##### [Back To Context](./README.md)
-***
-| &copy; TINITIATE.COM |
-|----------------------|

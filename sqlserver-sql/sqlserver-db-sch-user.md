@@ -1,4 +1,4 @@
-![SQL Server Tinitiate Image](sqlservericon.png)
+![SQL Server Tinitiate Image](sqlserver.png)
 
 # SQL Server
 &copy; TINITIATE.COM
@@ -6,31 +6,30 @@
 ##### [Back To Context](./README.md)
 
 # Database, Schema, and User
-* In SQL Server, a database serves as a structured collection of data.
-* A schema, acts as a logical container for organizing and grouping database objects, such as tables, views, and stored procedures.
-* Lastly, a user in SQL Server is an entity that holds access rights to interact with the SQL Server system and its databases.
-* To make it even short:
-    * SQL Server software is called the instance
-    * In an instance we can create multiple databases
-    * Each database has logical grouping of database objects called Schema
-    * The schema within a database can be accessed by users, which are the individual user logins.
+* In SQL Server, a **database** represents a structured and organized collection of data.
+* A **schema** acts as a logical container used to group related database objects such as tables, views, and stored procedures.
+* A **user** refers to an identity that holds permission to interact with databases and access objects based on assigned roles.
+
+* To summarize:
+    * The SQL Server application instance is referred to as the **instance**.
+    * An instance can host **multiple databases**.
+    * Each database contains **schemas**, which are logical groupings of related objects.
+    * **Users** can be created to access these schemas and their contents.
+
 ## Database:
-* In SQL Server, a database is a structured collection of data that is organized and managed for easy access and retrieval.
-* It stores tables, views, stored procedures, and other objects that define the schema and structure of the data.
-* Within a SQL Server instance, you can create multiple databases to organize your data.
+* A database in SQL Server organizes and stores data for efficient access, management, and retrieval.
+* It contains core objects like tables, views, and stored procedures that define how the data is structured.
+* You can create multiple databases under a single SQL Server instance to manage separate data environments.
 ```sql
 -- Create database tinitiate
 CREATE DATABASE tinitiate;
-
--- Alter database tinitiate to set containment
-ALTER DATABASE [tinitiate] SET CONTAINMENT = PARTIAL;
 -- SQL Server commands are generally case-insensitive
 -- We can use uppercase or lowercase or mix of both for commands
 -- But for best practice stick to any one format
 ```
 ## User:
-* In SQL Server, users are individual logins that can access the database objects within a schema.
-* These users are granted permissions to interact with specific databases and schemas as per the database administrator's configuration.
+* Users in SQL Server are login identities with permissions to interact with database objects.
+* Each user can be granted specific rights within a schema to access, modify, or manage data based on security roles.
 ```sql
 -- Step 1:
 -- Use the Database where you want to create the USER
@@ -47,6 +46,7 @@ RECONFIGURE;
 -- Step 4:
 -- Set the database containment to partial to allow contained database users
 ALTER DATABASE [tinitiate] SET CONTAINMENT = PARTIAL;
+-- Allows the use of contained database users, which do not require server logins
 
 -- Step 5:
 -- Create a user named 'tiuser' with the password 'Tinitiate!23'
@@ -55,8 +55,8 @@ CREATE USER tiuser WITH PASSWORD = 'Tinitiate!23';
 CREATE USER developer WITH PASSWORD = 'Tinitiate!23';
 ```
 ## Schema:
-* In SQL Server, each database contains a logical grouping of database objects called schemas.
-* Schemas provide a way to organize and namespace database objects within a database.
+* A schema in SQL Server is a logical namespace within a database to help organize objects efficiently.
+* Schemas make it easier to manage permissions, object naming, and grouping.
 ```sql
 -- Use the Database where you want to create the SCHEMA
 USE tinitiate;

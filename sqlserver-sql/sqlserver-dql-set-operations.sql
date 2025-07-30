@@ -1,20 +1,14 @@
-![SQL Server Tinitiate Image](sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : DQL - Set Operations
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server
-&copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
 
-# DQL - Set Operations
-* Set operations in SQL are used to combine or compare the results of two or more queries.
-* These are essential for manipulating and combining data from multiple tables.
-* The main set operations include UNION, INTERSECT, and EXCEPT.
-
-## Set Operations in SQL Server:
-### UNION:
-* The UNION operator is used to combine the results of two or more SELECT statements into a single result set.
-* It returns all distinct rows from both result sets. It removes duplicate rows by default.
-```sql
+-- UNION:
 -- Retrieve unique department numbers from both the employees
 -- and projects tables
 SELECT deptno FROM employees.emp
@@ -40,10 +34,10 @@ SELECT CAST(projectno AS VARCHAR) AS name FROM employees.projects;
 SELECT deptno FROM employees.emp
 UNION ALL
 SELECT projectno AS deptno FROM employees.projects;
-```
-### INTERSECT:
-* The INTERSECT operator is used to retrieve the common rows that appear in the result sets of two or more SELECT statements. It removes duplicate rows by default.
-```sql
+
+
+
+-- INTERSECT:
 -- Retrieve grade number that exist in salgrade
 -- and projects tables
 SELECT grade FROM employees.salgrade
@@ -55,10 +49,10 @@ SELECT projectno AS grade FROM employees.projects;
 SELECT empno FROM employees.emp
 INTERSECT
 SELECT empno FROM employees.emp_projects;
-```
-### EXCEPT:
-* The EXCEPT operator is used to retrieve the rows that appear in the first result set but not in the result sets of one or more subsequent SELECT statements. It removes duplicate rows by default.
-```sql
+
+
+
+-- EXCEPT:
 -- Retrieve empno numbers from the employees table that
 -- do not exist in the employee projects table
 SELECT empno FROM employees.emp
@@ -70,9 +64,3 @@ SELECT empno FROM employees.emp_projects;
 SELECT grade FROM employees.salgrade
 EXCEPT
 SELECT projectno AS grade FROM employees.projects;
-```
-
-##### [Back To Context](./README.md)
-***
-| &copy; TINITIATE.COM |
-|----------------------|

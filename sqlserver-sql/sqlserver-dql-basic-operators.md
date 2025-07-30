@@ -1,4 +1,4 @@
-![SQL Server Tinitiate Image](sqlservericon.png)
+![SQL Server Tinitiate Image](sqlserver.png)
 
 # SQL Server
 &copy; TINITIATE.COM
@@ -34,7 +34,7 @@ WHERE job <> 'manager';
 -- Retrieve employees from departments 10 and 20
 SELECT *
 FROM employees.emp
-WHERE deptno IN (10, 20);
+WHERE deptno IN (10, 20, 30);
 ```
 ### NOT IN Operator:
 * The NOT IN operator is the negation of the IN operator.
@@ -43,7 +43,7 @@ WHERE deptno IN (10, 20);
 -- Retrieve employees not from departments 10 and 20
 SELECT *
 FROM employees.emp
-WHERE deptno NOT IN (10, 20);
+WHERE deptno NOT IN (10, 20, 30);
 ```
 ### LIKE Operator:
 * The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.

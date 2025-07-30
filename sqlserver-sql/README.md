@@ -1,14 +1,6 @@
-![SQLServer Tinitiate Image](sqlservericon.png)
+![SQL Server Tinitiate Image](sqlserver.png)
 
-
-
-
-
-
-
-
-# SQLServer Tutorial
-
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
 ## CONTEXT

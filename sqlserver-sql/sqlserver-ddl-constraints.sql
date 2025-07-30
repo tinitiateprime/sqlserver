@@ -1,19 +1,14 @@
-![SQL Server Tinitiate Image](sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : DDL - Constraints
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server
-&copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
 
-# DDL - Constraints
-* In SQL Server, Data Definition Language (DDL) constraints are also used to enforce rules on the structure of a database table, ensuring data integrity and consistency by enforcing certain conditions on the data being inserted, updated, or deleted in the table.
-* These constraints are applied to columns when the table is created or altered.
-
-## Here are the common types of DDL constraints in SQL Server:
-### NOT NULL Constraint:
-* This constraint ensures that a column cannot contain NULL values.
-* It enforces that every row in the table must have a value for that column.
-```sql
+-- NOT NULL Constraint:
 -- NOT NULL Constraint on empno column in the emp table
 ALTER TABLE employees.emp
 ALTER COLUMN empno INT NOT NULL;
@@ -33,11 +28,10 @@ CREATE TABLE staff (
     name VARCHAR(255) NOT NULL,
     age INT
 );
-```
 
-### UNIQUE Constraint:
-* This constraint ensures that the values in a column (or a group of columns) are unique across all rows in the table.
-```sql
+
+
+-- UNIQUE Constraint:
 -- UNIQUE Constraint to the empno column in the emp table
 ALTER TABLE employees.emp
 ADD CONSTRAINT unique_empno UNIQUE (empno);
@@ -51,12 +45,10 @@ CREATE TABLE students (
 -- We can also add unique constraint across group of columns
 ALTER TABLE students
 ADD CONSTRAINT unique_ename UNIQUE (email, name);
-```
 
-### CHECK Constraint:
-* This constraint specifies a condition that must be satisfied for each row in the table.
-* It allows you to define custom rules for data validation.
-```sql
+
+
+-- CHECK Constraint:
 -- CHECK Constraint on budget column in the projects table
 ALTER TABLE employees.projects
 ADD CONSTRAINT chk_budget CHECK (budget > 0);
@@ -69,11 +61,10 @@ CREATE TABLE products (
     quantity INT,
     CONSTRAINT chk_price_quantity CHECK (price > 0 AND quantity >= 0)
 );
-```
 
-### PRIMARY KEY Constraint:
-* This constraint uniquely identifies each record in a table and ensures that there are no duplicate values in the specified column(s).
-```sql
+
+
+-- PRIMARY KEY Constraint:
 -- PRIMARY KEY Constraint on deptno column in the dept table
 ALTER TABLE employees.dept
 ADD CONSTRAINT pk_dept PRIMARY KEY (deptno);
@@ -95,12 +86,10 @@ CREATE TABLE customers (
     customer_id INT PRIMARY KEY,
     order_date DATE
 );
-```
 
-### FOREIGN KEY Constraint:
-* This constraint establishes a relationship between two tables.
-* It ensures referential integrity by enforcing a link between the data in the foreign key column(s) and the primary key or unique key in another table.
-```sql
+
+
+-- FOREIGN KEY Constraint:
 -- FOREIGN KEY Constraint on deptno column in the emp table referencing the
 -- deptno column in the dept table
 ALTER TABLE employees.emp
@@ -121,9 +110,3 @@ CREATE TABLE orders (
     customer_id INT REFERENCES customers(customer_id),
     order_date DATE
 );
-```
-
-##### [Back To Context](./README.md)
-***
-| &copy; TINITIATE.COM |
-|----------------------|

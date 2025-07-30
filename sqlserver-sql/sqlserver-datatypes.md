@@ -1,4 +1,4 @@
-![SQL Server Tinitiate Image](sqlservericon.png)
+![SQL Server Tinitiate Image](sqlserver.png)
 
 # SQL Server
 &copy; TINITIATE.COM
@@ -56,7 +56,7 @@
     
     * **UNIQUEIDENTIFIER** - Stores a globally unique identifier. 
         * **Example:** `session_id UNIQUEIDENTIFIER`.
-    * **BIT** - Stores true or false values. 
+    * **BIT** - Stores true or false values(Boolean - 0 or 1). 
         * **Example:** `is_active BIT`.
     * **MONEY** - Stores monetary values. 
         * **Example:** `salary MONEY`.
@@ -66,11 +66,11 @@
         * **Example:** `location GEOGRAPHY`.
     * **GEOMETRY** - Stores geometric data.
         * **Example:** `shape GEOMETRY`.
-    * **HIERARCHYID** - Stores a hierarchical identifier.
+    * **HIERARCHYID** - Stores a hierarchical data, like organization structures.
         * **Example:** `node_hierarchy HIERARCHYID`.
-    * **ROWVERSION** - Stores a version identifier.
+    * **ROWVERSION** - Stores a unique binary number for versioning rows.
         * **Example:** `row_version ROWVERSION`.
-    * **CURSOR** - Stores a cursor.
+    * **CURSOR** - Stores a cursor which is used to reference a cursor object for row-by-row operations.
         * **Example:** `cursor_data CURSOR`.
 
 ##### [Back To Context](./README.md)

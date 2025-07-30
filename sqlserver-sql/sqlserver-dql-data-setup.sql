@@ -1,49 +1,39 @@
-![SQL Server Tinitiate Image](sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : DQL Data Setup
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server
-&copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
 
-# DQL Data Setup
-* Data Query Language (DQL) is a powerful tool used to retrieve and manipulate data within a database management system.
-* Before diving into querying data that is to going into the details of Data Query Language (DQL) commands, it's essential to have a properly structured dataset to work with.
-* This preliminary step lays the groundwork for a comprehensive understanding of DQL operations, enabling users to effectively utilize DQL commands to query and manipulate data within a database management system.
-* In this tutorial, we'll walk through the process of setting up Employees DQL data, step by step.
-
-## Create tables
-* Create dataset under **EMPLOYEES** schema
-```sql
+-- CREATE TABLES:
+-- Create dataset under 'EMPLOYEES' schema
 -- Switch to the tinitiate database
 USE tinitiate;
 
 -- Set the default schema for your user to employees
 ALTER USER tiuser WITH DEFAULT_SCHEMA = employees;
-```
-*  Drop tables if exists
-```sql
+
 -- Drop tables from the "employees" schema if any exists
+DROP TABLE employees.emp_projects;
+DROP TABLE employees.projects;
+DROP TABLE employees.salgrade;
 DROP TABLE employees.emp;
 DROP TABLE employees.dept;
-DROP TABLE employees.salgrade;
-DROP TABLE employees.projects;
-DROP TABLE employees.emp_projects;
-```
-* Create `employees.dept` table
-```sql
+
 -- Create table employees.dept
 CREATE TABLE employees.dept
 ( 
   deptno INT NOT NULL,
   dname VARCHAR(14),
   loc VARCHAR(13),
-  
+
   -- Primary Key constraint for employees.dept on deptno
   CONSTRAINT pk_dept PRIMARY KEY (deptno)
 );
-```
-* Create `employees.emp` table
-```sql
+
 -- Create table employees.emp
 CREATE TABLE employees.emp
 ( 
@@ -63,9 +53,7 @@ CREATE TABLE employees.emp
   -- employees.emp.deptno referring employees.dept.deptno
   CONSTRAINT fk_deptno FOREIGN KEY (deptno) REFERENCES employees.dept (deptno)
 );
-```
-* Create `employees.salgrade` table
-```sql
+
 -- Create table employees.salgrade
 CREATE TABLE employees.salgrade
 ( 
@@ -76,9 +64,7 @@ CREATE TABLE employees.salgrade
   -- Primary Key constraint for employees.salgrade on grade
   CONSTRAINT pk_grade PRIMARY KEY (grade)
 );
-```
-* Create `employees.projects` table
-```sql
+
 -- Create table employees.projects
 CREATE TABLE employees.projects
 ( 
@@ -89,9 +75,7 @@ CREATE TABLE employees.projects
   -- Primary Key constraint for employees.projects on projectno
   CONSTRAINT pk_projectno PRIMARY KEY (projectno)
 );
-```
-* Create `employees.emp_projects` table
-```sql
+
 -- Create table employees.emp_projects
 CREATE TABLE employees.emp_projects
 ( 
@@ -113,11 +97,10 @@ CREATE TABLE employees.emp_projects
   CONSTRAINT fk_projectno FOREIGN KEY (projectno)
    REFERENCES employees.projects (projectno)
 );
-```
 
-## Insert data into the tables
-* Inserts for `employees.dept`
-```sql
+
+
+-- INSERT DATA INTO THE TABLES:
 -- Insert data into employees.dept
 INSERT INTO employees.dept (deptno, dname, loc)
 VALUES 
@@ -127,9 +110,7 @@ VALUES
     (40, 'operations', 'boston'),
     (50, 'techsupport', 'seattle'),
     (60, 'PRODUCTION', 'dover');
-```
-* Inserts for `employees.salgrade`
-```sql
+
 -- Insert data into employees.salgrade
 INSERT INTO employees.salgrade (grade, losal, hisal)
 VALUES 
@@ -139,9 +120,7 @@ VALUES
     (4, 2001, 3000),
     (5, 3001, 9999),
     (6, 10000, 20000);
-```
-* Inserts for `employees.emp`
-```sql
+
 -- Insert data into employees.emp
 INSERT INTO employees.emp (
     empno, ename, job, mgr, hiredate, sal, commission, deptno)
@@ -190,9 +169,7 @@ VALUES
     (8026, 'eve', 'support', NULL, '1989-03-01', 500, NULL, 50),
     (8027, 'halen', 'support', NULL, '1989-04-05', 500, NULL, 50),
     (8028, 'lin', 'support', NULL, '1989-04-21', 500, NULL, 50);
-```
-* Inserts for `employees.projects`
-```sql
+
 -- Insert data into employees.projects
 INSERT INTO employees.projects (projectno, budget, monthly_commission)
 VALUES 
@@ -201,9 +178,7 @@ VALUES
     (3, 30000, 300),
     (4, 40000, 400),
     (5, 50000, 500);
-```
-* Inserts for `employees.emp_projects`
-```sql
+
 -- Insert data into employees.emp_projects
 INSERT INTO employees.emp_projects (
     emp_projectno, empno, projectno, start_date, end_date)
@@ -232,9 +207,3 @@ VALUES
     (22, 8008, 2, '1987-01-15', NULL),
     (23, 8009, 5, '1983-10-01', '1984-10-01'),
     (24, 8010, 2, '1983-12-15', '1984-12-15');
-```
-
-##### [Back To Context](./README.md)
-***
-| &copy; TINITIATE.COM |
-|----------------------|
