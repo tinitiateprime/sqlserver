@@ -1,18 +1,14 @@
-![SQL Server Tinitiate Image](sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : DQL - Common Table Expressions (CTEs)
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server
-&copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
 
-# DQL - Common Table Expressions (CTEs)
-* In SQL Server, a Common Table Expression (CTE) is a temporary result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE statement.
-* CTEs provide a way to write more readable and maintainable queries by breaking down complex queries into simpler parts.
-* CTEs are defined using the `WITH` keyword.
-
-## Creating a CTE
-* To create a CTE, you use the `WITH` keyword.
-```sql
+-- Creating a CTE:
 -- Define a CTE to get employees with job title 'manager'
 WITH Managers AS (
     SELECT empno, ename, job, sal
@@ -72,10 +68,10 @@ WITH RunningTotal AS (
 )
 SELECT empno, ename, deptno, sal, running_total
 FROM RunningTotal;
-```
-## Using Multiple CTEs
-* You can define multiple CTEs in a single query, separated by commas.
-```sql
+
+
+
+-- Using Multiple CTEs:
 -- Define CTEs to calculate total salary and average salary by department
 WITH TotalSalary AS (
     SELECT deptno, SUM(sal) AS total_sal
@@ -92,6 +88,7 @@ SELECT t.deptno, t.total_sal, a.avg_sal
 FROM TotalSalary t
 JOIN AvgSalary a ON t.deptno = a.deptno;
 
+-- Define CTEs to calculate total salary and total project budget by department
 WITH TotalSalary AS (
     SELECT deptno, SUM(sal) AS total_sal
     FROM employees.emp d 
@@ -108,11 +105,10 @@ TotalBudget AS (
 SELECT ts.deptno, ts.total_sal, tb.total_budget
 FROM TotalSalary ts
 JOIN TotalBudget tb ON ts.deptno = tb.deptno;
-```
-## Recursive CTEs
-* Recursive CTEs are used to perform operations like traversing hierarchical data or generating sequences.
-* Recursive CTEs consist of two parts: an anchor member and a recursive member.
-```sql
+
+
+
+-- Recursive CTEs:
 -- Define a recursive CTE to generate a sequence of numbers
 WITH Sequence AS (
     -- Anchor member
@@ -143,18 +139,3 @@ WITH EmpHierarchy AS (
 -- Retrieve the management hierarchy
 SELECT *
 FROM EmpHierarchy;
-```
-## Common Use Cases for CTEs
-* Breaking down complex queries into simpler, more manageable parts.
-* Improving readability and maintainability of SQL code.
-* Recursively traversing hierarchical data.
-* Generating sequences or performing iterative calculations.
-## Benefits of Using CTEs
-* Enhanced code readability and organization.
-* Ability to reference the same CTE multiple times in a query.
-* Simplified complex queries by breaking them into smaller, logical components.
-
-##### [Back To Context](./README.md)
-***
-| &copy; TINITIATE.COM |
-|----------------------|

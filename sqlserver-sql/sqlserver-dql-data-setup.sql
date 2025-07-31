@@ -138,14 +138,14 @@ VALUES
     (7876, 'adams', 'clerk', 7788, '1983-01-12', 1100, NULL, 20),
     (7900, 'james', 'clerk', 7698, '1981-12-03', 950, NULL, 30),
     (7902, 'ford', 'analyst', 7566, '1981-12-03', 3000, NULL, 20),
-    (7934, 'miller', 'clerk', 7782, '1982-01-23', 1300, NULL, 10),
+    (7934, 'miller', 'clerk', 7782, '1982-01-23', 1300, 150, 10),
     (7937, 'jimmy', 'clerk', 7782, '1990-04-23', 1000, NULL, NULL),
-    (8000, 'newhire', 'clerk', 7782, '1982-01-23', 1300, NULL, 10),
+    (8000, 'newhire', 'clerk', 7782, '1982-01-23', 1300, 150, 10),
     (8001, 'parker', 'clerk', 7566, '1985-03-15', 900, NULL, 20),
     (8002, 'natasha', 'salesman', 7698, '1985-06-01', 1600, 300, 30),
     (8003, 'tony', 'manager', 7839, '1984-11-11', 2900, NULL, 10),
     (8004, 'steve', 'analyst', 7566, '1986-05-10', 3100, NULL, 20),
-    (8005, 'bruce', 'clerk', 7782, '1986-07-25', 1000, NULL, 10),
+    (8005, 'bruce', 'clerk', 7782, '1986-07-25', 1000, 150, 10),
     (8006, 'wanda', 'salesman', 7698, '1984-08-13', 1450, 250, 30),
     (8007, 'bucky', 'salesman', 7698, '1984-12-01', 1500, 500, 30),
     (8008, 'vision', 'clerk', NULL, '1987-01-10', 950, NULL, 20),
@@ -157,8 +157,8 @@ VALUES
     (8014, 'jerry', 'intern', 8013, '1986-09-25', 600, NULL, 20),
     (8015, '  sIMON  ', 'salesman', 7698, '1987-01-01', 1300, 200, 30),
     (8016, 'Dr. GOOD', 'analyst', 7566, '1987-02-01', 3200, NULL, 20),
-    (8017, 'mario', 'clerk', NULL, '1987-03-01', 900, NULL, 10),
-    (8018, 'LUIGI', 'clerk', 8017, '1987-03-02', 850, NULL, 10),
+    (8017, 'mario', 'clerk', NULL, '1987-03-01', 900, 150, 10),
+    (8018, 'LUIGI', 'clerk', 8017, '1987-03-02', 850, 150, 10),
     (8019, 'tintin', 'analyst', 7566, '1960-01-01', 2700, NULL, 20),
     (8020, 'futureman', 'manager', NULL, '2050-12-31', 4500, NULL, 10),
     (8021, 'rank1', 'clerk', NULL, '1989-01-01', 1500, NULL, 30),
@@ -166,9 +166,9 @@ VALUES
     (8023, 'rank3', 'clerk', NULL, '1989-03-01', 1500, NULL, 30),
     (8024, 'bob', 'operator', NULL, '1989-01-01', 1250, NULL, 40),
     (8025, 'richard', 'operator', NULL, '1989-02-01', 1300, NULL, 40),
-    (8026, 'eve', 'support', NULL, '1989-03-01', 500, NULL, 50),
-    (8027, 'halen', 'support', NULL, '1989-04-05', 500, NULL, 50),
-    (8028, 'lin', 'support', NULL, '1989-04-21', 500, NULL, 50);
+    (8026, 'eve', 'support', NULL, '1989-03-01', 500, 50, 50),
+    (8027, 'halen', 'support', NULL, '1989-04-05', 500, 50, 50),
+    (8028, 'lin', 'support', NULL, '1989-04-21', 500, 50, 50);
 
 -- Insert data into employees.projects
 INSERT INTO employees.projects (projectno, budget, monthly_commission)

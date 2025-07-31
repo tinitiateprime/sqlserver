@@ -1,19 +1,14 @@
-![SQL Server Tinitiate Image](sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : DQL - Aggregate Functions
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server
-&copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
 
-# DQL - Aggregate Functions
-* Aggregate functions in SQL Server are used to perform calculations on a set of values and return a single value as a result.
-* They allow you to derive summary statistics or perform calculations across multiple rows in a table.
-* These functions can be combined with other clauses like GROUP BY, HAVING, and DISTINCT to perform more sophisticated analysis and summarization of data in SQL Server.
-
-## Aggregate functions in SQL Server:
-### COUNT:
-* Counts the number of rows in a result set.
-```sql
+-- COUNT:
 -- Counts the number of rows in a emp table
 SELECT COUNT(*) AS total_employees FROM employees.emp;
 
@@ -34,10 +29,10 @@ HAVING COUNT(*) > 3;
 SELECT YEAR(hiredate) AS hire_year, COUNT(*) AS num_employees 
 FROM employees.emp 
 GROUP BY YEAR(hiredate);
-```
-### SUM:
-* Calculates the sum of values in a numeric column.
-```sql
+
+
+
+-- SUM:
 -- Calculate the sum of salary of all employees
 SELECT SUM(sal) AS total_salary FROM employees.emp;
 
@@ -65,10 +60,10 @@ FROM employees.emp
 GROUP BY deptno
 HAVING SUM(commission) > 500
 ORDER BY total_commission DESC;
-```
-### AVG:
-* Computes the average of values in a numeric column.
-```sql
+
+
+
+-- AVG:
 -- Calculates the average value of sal column
 SELECT AVG(sal) AS avg_salary FROM employees.emp;
 
@@ -94,10 +89,10 @@ SELECT TOP 1 job, AVG(sal) AS avg_salary
 FROM employees.emp 
 GROUP BY job
 ORDER BY avg_salary DESC;
-```
-### MAX:
-* Retrieves the maximum value in a column.
-```sql
+
+
+
+-- MAX:
 -- Retrieves the maximum value in sal column
 SELECT MAX(sal) AS max_salary FROM employees.emp;
 
@@ -115,10 +110,10 @@ JOIN (
     GROUP BY deptno
 ) AS max_salaries ON e.deptno = max_salaries.deptno
  AND e.sal = max_salaries.max_salary;
-```
-### MIN:
-* Retrieves the minimum value in a column.
-```sql
+
+
+
+-- MIN:
 -- Retrieves the minimum value in sal column
 SELECT MIN(sal) AS min_salary FROM employees.emp;
 
@@ -185,9 +180,3 @@ JOIN (
     GROUP BY deptno
 ) AS salary_extremes ON e.deptno = salary_extremes.deptno 
 AND (e.sal = salary_extremes.max_salary OR e.sal = salary_extremes.min_salary);
-```
-
-##### [Back To Context](./README.md)
-***
-| &copy; TINITIATE.COM |
-|----------------------|

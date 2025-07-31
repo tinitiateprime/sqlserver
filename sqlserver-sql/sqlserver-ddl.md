@@ -30,7 +30,7 @@ ALTER USER ti WITH DEFAULT_SCHEMA = employees;
 -- Create table employees.dept
 CREATE TABLE employees.dept
 ( 
-  deptno INT ,
+  deptno INT,
   dname VARCHAR(14),
   loc VARCHAR(13)
 );
@@ -40,7 +40,7 @@ CREATE TABLE employees.dept
 -- Create table employees.emp
 CREATE TABLE employees.emp
 ( 
-  empno      INT ,
+  empno      INT,
   ename      VARCHAR(10),
   job        VARCHAR(9),
   mgr        NUMERIC(4),
@@ -54,7 +54,7 @@ CREATE TABLE employees.emp
 -- Create table employees.salgrade
 CREATE TABLE employees.salgrade
 ( 
-  grade INT ,
+  grade INT,
   losal INT,
   hisal INT
 );
@@ -64,7 +64,7 @@ CREATE TABLE employees.salgrade
 -- Create table employees.projects
 CREATE TABLE employees.projects
 ( 
-  projectno           INT ,
+  projectno           INT,
   budget              NUMERIC(7,2),
   monthly_commission  NUMERIC(7,2)
 );
@@ -74,9 +74,9 @@ CREATE TABLE employees.projects
 -- Create table employees.emp_projects
 CREATE TABLE employees.emp_projects
 ( 
-  emp_projectno  INT ,
-  empno          INT  ,
-  projectno      INT ,
+  emp_projectno  INT,
+  empno          INT,
+  projectno      INT,
   start_date     DATE,
   end_date       DATE
 );
@@ -111,7 +111,8 @@ DROP TABLE employees.dept;
 -- To again create it
 CREATE TABLE employees.dept (
     deptno  INT,
-    dname   VARCHAR(100)
+    dname   VARCHAR(100),
+    loc VARCHAR(13)
 );
 ```
 

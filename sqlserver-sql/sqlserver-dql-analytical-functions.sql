@@ -1,23 +1,14 @@
-![SQL Server Tinitiate Image](sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : DQL - Analytical Functions
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server
-&copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
 
-# DQL - Analytical Functions
-* Analytical functions in SQL Server are used to perform calculations on a group of rows and return a single result set for each group, based on the values in one or more columns, often within a specified window or partition.
-* They enable performing advanced calculations and aggregations on your data for advanced data analysis and reports.
-* These functions are typically used in conjunction with the 'OVER' clause to define the window or subset of rows over which the function should operate.
-* The OVER clause can include 'PARTITION BY' or 'ORDER BY' specifications to control the behavior of the window function.
-* The 'PARTITION BY' clause is used to divide the result set of a query into partitions to which the function is applied independently.
-* The 'ORDER BY' clause is used to sort the result set of a query into the orders specified to which the function is applied independently.
-* For some analytical functions 'PARTITION BY' clause must be used including 'ORDER BY' clause.
-
-## Analytical functions in SQL Server:
-### Aggregate Functions:
-* Aggregate functions with Analytical functions, extends the analytical capability of SQL queries by allowing aggregations to be computed over specific partitions or ordered subsets of data, providing deeper insights and flexibility in analyzing relational datasets.
-```sql
+-- Aggregate Functions:
 -- All aggregation functions for each department
 SELECT  deptno
         ,count(sal) AS count_dept_sal
@@ -37,10 +28,10 @@ SELECT  e.*
        ,avg(sal) OVER (PARTITION BY deptno) AS avg_dept_sal
        ,count(1) OVER (PARTITION BY deptno) AS emp_count_by_dept
 FROM   employees.emp e;
-```
-### ROW_NUMBER():
-* Assigns a unique sequential number to each row, starting with 1.
-```sql
+
+
+
+-- ROW_NUMBER():
 -- Assigns a unique integer to each row to establish the row's position within
 -- the partition of a result set.
 SELECT empno, ename, ROW_NUMBER() OVER (ORDER BY empno) AS row_num
@@ -83,10 +74,10 @@ SELECT  row_number() OVER (PARTITION BY deptno ORDER BY sal)
         e.*
 FROM    employees.emp e
 ORDER BY deptno;
-```
-### RANK():
-* Assigns a unique rank to each row, with the same rank for rows with equal values.
-```sql
+
+
+
+-- RANK():
 -- Assigns a unique integer to each distinct row within the partition of a
 -- result set, leaving gaps between the ranks if there are ties.
 SELECT ename, sal, RANK() OVER (ORDER BY sal DESC) AS rank
@@ -96,10 +87,10 @@ FROM employees.emp;
 SELECT deptno, ename, sal,
        RANK() OVER (PARTITION BY deptno ORDER BY sal DESC) AS rank
 FROM employees.emp;
-```
-### DENSE_RANK():
-* Assigns a unique rank to each row, without gaps, with the same rank for rows with equal values.
-```sql
+
+
+
+-- DENSE_RANK():
 -- Assigns a unique integer to each distinct row within the partition of a
 -- result set, without gaps in the ranking sequence.
 SELECT ename, sal, DENSE_RANK() OVER (ORDER BY sal DESC) AS dense_rank
@@ -124,10 +115,10 @@ SELECT  e.*,
         DENSE_RANK() OVER (PARTITION BY deptno ORDER BY sal DESC) AS dense_rank,
         ROW_NUMBER() OVER (PARTITION BY deptno ORDER BY sal DESC) AS rn
 FROM    employees.emp e;
-```
-### NTILE(n):
-* Divides the result set into 'n' groups, assigning a group number to each row.
-```sql
+
+
+
+-- NTILE(n):
 -- Divides the result set into a specified number of roughly equal
 -- groups or "tiles".
 SELECT ename, sal, NTILE(4) OVER (ORDER BY sal DESC) AS quartile
@@ -137,10 +128,10 @@ FROM employees.emp;
 SELECT deptno, ename, sal,
        NTILE(4) OVER (PARTITION BY deptno ORDER BY sal DESC) AS quartile
 FROM employees.emp;
-```
-### LAG():
-* Accesses data from a previous row in the result set.
-```sql
+
+
+
+-- LAG():
 -- Retrieves employee names and salaries, along with the
 -- previous salary for each employee.
 SELECT ename, sal,
@@ -151,10 +142,10 @@ FROM employees.emp;
 SELECT empno, ename, hiredate, sal,
        LAG(sal) OVER (ORDER BY hiredate) AS prev_sal
 FROM employees.emp;
-```
-### LEAD():
-* Accesses data from a following row in the result set.
-```sql
+
+
+
+-- LEAD():
 -- Retrieves employee names and salaries, along with
 -- the next salary for each employee.
 SELECT ename, sal,
@@ -180,10 +171,10 @@ SELECT deptno, ename, sal,
        LEAD(sal) OVER (PARTITION BY deptno ORDER BY sal) - sal
         AS sal_diff_with_next
 FROM employees.emp;
-```
-### FIRST_VALUE():
-* Returns the first value in an ordered set of values.
-```sql
+
+
+
+-- FIRST_VALUE():
 -- Retrieves employee names and salaries, along with
 -- the first salary in the sorted order.
 SELECT ename, sal,
@@ -197,10 +188,10 @@ SELECT empno, ename, deptno, sal,
        sal - FIRST_VALUE(sal) OVER (PARTITION BY deptno ORDER BY hiredate)
         AS sal_diff_with_first
 FROM employees.emp;
-```
-### LAST_VALUE():
-* Returns the last value in an ordered set of values.
-```sql
+
+
+
+-- LAST_VALUE():
 -- Retrieves employee names and salaries,
 -- along with the last salary in the sorted order.
 SELECT ename, sal,
@@ -226,9 +217,3 @@ SELECT deptno, ename, sal,
         sal ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) - sal
          AS sal_diff_with_last
 FROM employees.emp;
-```
-
-##### [Back To Context](./README.md)
-***
-| &copy; TINITIATE.COM |
-|----------------------|
