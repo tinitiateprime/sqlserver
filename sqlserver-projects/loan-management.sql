@@ -1,33 +1,19 @@
-# Loan Data Model
-## Borrowers Table
-* **borrower_id**: A unique identifier for each borrower (primary key).
-* **full_name**: The borrower’s full name.
-* **contact_info**: Contact details (email or phone) for the borrower.
-* **address**: The borrower’s mailing address.
-* **date_of_birth**: The borrower’s date of birth.
-## Loans Table
-* **loan_id**: A unique identifier for each loan (primary key).
-* **borrower_id**: Foreign key referencing borrowers.borrower_id, indicating which borrower took out the loan.
-* **loan_type**: The category of the loan (e.g., Personal, Mortgage, Auto, Student, Business).
-* **principal**: The original amount borrowed.
-* **interest_rate**: Annual interest rate (e.g., 0.050 = 5.0%).
-* **start_date**: The date the loan was originated.
-* **term_months**: Loan duration in months.
-* **status**: Current status of the loan (e.g., Active, Closed).
-## Loan_Payments Table
-* **payment_id**: A unique identifier for each payment record (primary key).
-* **loan_id**: Foreign key referencing loans.loan_id, indicating which loan the payment is for.
-* **payment_date**: The date the payment was made.
-* **amount**: Total payment amount.
-* **principal_component**: Portion of the payment applied to principal.
-* **interest_component**: Portion of the payment applied to interest.
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : Loan Management Data Model
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-The borrowers table holds personal and contact details for each loan customer. The loans table captures every loan’s key attributes—amount, rate, term, type, and status—linked to a borrower. The loan_payments table records each installment made against a loan, breaking it down into principal and interest portions. Together, these relationships (via foreign keys) enable comprehensive tracking of loan origination, repayment schedules, outstanding balances, and aging analyses.
 
-## DDL Syntax
-```sql
+
+-- DDL Syntax:
+-- Create 'loan_management' schema
+CREATE SCHEMA loan_management;
+
 -- Create 'borrowers' table
-CREATE TABLE borrowers (
+CREATE TABLE loan_management.borrowers (
     borrower_id   INT PRIMARY KEY,
     full_name     VARCHAR(100) NOT NULL,
     contact_info  VARCHAR(200),
@@ -36,7 +22,7 @@ CREATE TABLE borrowers (
 );
 
 -- Create 'loans' table
-CREATE TABLE loans (
+CREATE TABLE loan_management.loans (
     loan_id         INT PRIMARY KEY,
     borrower_id     INT NOT NULL,
     loan_type       VARCHAR(50) NOT NULL,       -- e.g. 'Personal', 'Mortgage', 'Auto', 'Student', 'Business'
@@ -45,24 +31,25 @@ CREATE TABLE loans (
     start_date      DATE         NOT NULL,
     term_months     INT          NOT NULL,      -- duration in months
     status          VARCHAR(20)  NOT NULL,      -- e.g. 'Active', 'Closed'
-    FOREIGN KEY (borrower_id) REFERENCES borrowers(borrower_id)
+    FOREIGN KEY (borrower_id) REFERENCES loan_management.borrowers(borrower_id)
 );
 
 -- Create 'loan_payments' table
-CREATE TABLE loan_payments (
+CREATE TABLE loan_management.loan_payments (
     payment_id         INT PRIMARY KEY,
     loan_id            INT NOT NULL,
     payment_date       DATE        NOT NULL,
     amount             DECIMAL(12,2) NOT NULL,  -- total payment
     principal_component DECIMAL(12,2) NOT NULL,
     interest_component  DECIMAL(12,2) NOT NULL,
-    FOREIGN KEY (loan_id) REFERENCES loans(loan_id)
+    FOREIGN KEY (loan_id) REFERENCES loan_management.loans(loan_id)
 );
-```
 
-# DML Syntax
-```sql
-INSERT INTO borrowers (borrower_id, full_name, contact_info, address, date_of_birth)
+
+
+-- DML Syntax:
+-- Insert records for 'borrowers'
+INSERT INTO loan_management.borrowers (borrower_id, full_name, contact_info, address, date_of_birth)
 VALUES
   ( 1, 'Alice Johnson',     'alice.johnson@example.com', '12 Oak St, Springfield', '1985-04-12'),
   ( 2, 'Bob Smith',         'bob.smith@example.com',     '34 Maple Ave, Centerville','1978-11-30'),
@@ -80,8 +67,8 @@ VALUES
   (14, 'Noah Lee',          'noah.lee@example.com',      '369 Cypress Ave, Pinecrest','1984-06-07'),
   (15, 'Olivia Harris',     'olivia.harris@example.com', '159 Dogwood St, Brookhaven','1996-11-11');
 
--- 3) DML: Populate loans
-INSERT INTO loans (loan_id, borrower_id, loan_type, principal, interest_rate, start_date, term_months, status)
+-- Insert records for 'loans'
+INSERT INTO loan_management.loans (loan_id, borrower_id, loan_type, principal, interest_rate, start_date, term_months, status)
 VALUES
   ( 1,  1, 'Personal',   10000.00, 0.050, '2023-01-15',  24, 'Active'),
   ( 2,  2, 'Mortgage',  250000.00, 0.035, '2022-06-01', 360, 'Active'),
@@ -96,8 +83,8 @@ VALUES
   (11, 11, 'Personal',    8000.00, 0.050, '2024-01-01',  12, 'Active'),
   (12, 12, 'Auto',       18000.00, 0.047, '2024-02-15',  48, 'Active');
 
--- 4) DML: Populate loan_payments (35 rows)
-INSERT INTO loan_payments (payment_id, loan_id, payment_date, amount, principal_component, interest_component)
+-- Insert records for 'loan_payments'
+INSERT INTO loan_management.loan_payments (payment_id, loan_id, payment_date, amount, principal_component, interest_component)
 VALUES
   (  1,  1, '2023-01-15', 458.34, 416.67,  41.67),
   (  2,  1, '2023-02-15', 458.34, 416.67,  41.67),
@@ -134,4 +121,3 @@ VALUES
   ( 33,  9, '2023-10-01',178.75,125.00,53.75),
   ( 34, 10, '2021-05-15',1404.17,1041.67,362.50),
   ( 35, 10, '2021-06-15',1404.17,1041.67,362.50);
-  ```

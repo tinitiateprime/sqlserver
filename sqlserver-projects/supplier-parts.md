@@ -1,26 +1,33 @@
-# Supplier - Parts Data Model
+![SQLServer Tinitiate Image](../sqlserver-sql/sqlserver.png)
+
+# SQL Server Tutorial
+
+&copy; TINITIATE.COM
+
+# Supplier Parts Data Model
+The `suppliers` table stores information about the suppliers, including their contact details and address. The `parts` table stores information about the parts, including their description and price. The relationship between the two tables is established through the supplier_id foreign key in the parts table, which links each part to its supplier. This structure allows for easy retrieval of supplier information for each part.
+
 ## Suppliers Table
-* supplier_id: A unique identifier for each supplier. It is the primary key of the table.
-* supplier_name: The name of the supplier.
-* contact_name: The name of the contact person at the supplier.
-* contact_email: The email address of the contact person.
-* phone_number: The phone number of the supplier.
-address: The physical address of the supplier.
+* **supplier_id**: A unique identifier for each supplier. It is the primary key of the table.
+* **supplier_name**: The name of the supplier.
+* **contact_name**: The name of the contact person at the supplier.
+* **contact_email**: The email address of the contact person.
+* **phone_number**: The phone number of the supplier.
+* **address**: The physical address of the supplier.
 ## Parts Table
-* part_id: A unique identifier for each part. It is the primary key of the table.
-* part_name: The name of the part.
-* part_description: A brief description of the part.
-* unit_price: The price of the part per unit.
-* supplier_id: A foreign key that references the supplier_id in the suppliers table. It indicates which supplier provides the part.
-
-The suppliers table stores information about the suppliers, including their contact details and address. The parts table stores information about the parts, including their description and price. The relationship between the two tables is established through the supplier_id foreign key in the parts table, which links each part to its supplier. This structure allows for easy retrieval of supplier information for each part.
-
-
+* **part_id**: A unique identifier for each part. It is the primary key of the table.
+* **part_name**: The name of the part.
+* **part_description**: A brief description of the part.
+* **unit_price**: The price of the part per unit.
+* **supplier_id**: A foreign key that references the supplier_id in the suppliers table. It indicates which supplier provides the part.
 
 ## DDL Syntax
 ```sql
+-- Create 'supplier_parts' schema
+CREATE SCHEMA supplier_parts;
+
 -- Create 'suppliers' table
-CREATE TABLE suppliers (
+CREATE TABLE supplier_parts.suppliers (
     supplier_id INT PRIMARY KEY,
     supplier_name VARCHAR(100) NOT NULL,
     contact_name VARCHAR(100),
@@ -30,20 +37,19 @@ CREATE TABLE suppliers (
 );
 
 -- Create 'parts' table
-CREATE TABLE parts (
+CREATE TABLE supplier_parts.parts (
     part_id INT PRIMARY KEY,
     part_name VARCHAR(100) NOT NULL,
     part_description VARCHAR(200),
     unit_price DECIMAL(10, 2) NOT NULL,
     supplier_id INT,
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier_parts.suppliers(supplier_id)
 );
 ```
 
 ## DML Syntax
-
--- Insert records into 'suppliers'
 ```sql
+-- Insert records into 'suppliers'
 INSERT INTO suppliers (supplier_id, supplier_name, contact_name, contact_email, phone_number, address) VALUES
 (1, 'Acme Corporation', 'John Doe', 'john.doe@acme.com', '123-456-7890', '123 Main St, Anytown, USA'),
 (2, 'Global Parts Inc.', 'Jane Smith', 'jane.smith@globalparts.com', '234-567-8901', '456 Elm St, Anytown, USA'),
@@ -55,9 +61,8 @@ INSERT INTO suppliers (supplier_id, supplier_name, contact_name, contact_email, 
 (8, 'Supply Chain Services', 'Jessica Jones', 'jessica.jones@supplychainservices.com', '890-123-4567', '505 Cherry St, Anytown, USA'),
 (9, 'Component Central', 'Chris Miller', 'chris.miller@componentcentral.com', '901-234-5678', '606 Walnut St, Anytown, USA'),
 (10, 'Material Masters', 'Amanda Martinez', 'amanda.martinez@materialmasters.com', '012-345-6789', '707 Spruce St, Anytown, USA');
-```
+
 -- Insert records into 'parts'
-```sql
 INSERT INTO parts (part_id, part_name, part_description, unit_price, supplier_id) VALUES
 (1, 'Widget', 'A small widget', 10.99, 1),
 (2, 'Gadget', 'A useful gadget', 15.99, 1),
@@ -95,3 +100,7 @@ INSERT INTO parts (part_id, part_name, part_description, unit_price, supplier_id
 (49, 'Tool', 'A versatile tool', 9.99, 10),
 (50, 'Instrument', 'A precise instrument', 20.99, 10);
 ```
+
+***
+| &copy; TINITIATE.COM |
+|----------------------|

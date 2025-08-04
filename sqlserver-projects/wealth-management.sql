@@ -1,55 +1,19 @@
-# Wealth Management Data Model
-## Clients Table
-* **client_id**: Unique identifier for each client (primary key).
-* **first_name**, last_name: Client’s name.
-* **email**: Unique contact email.
-* **phone**: Contact phone number.
-* **date_of_birth**: Client’s birth date.
-* **join_date**: Date the client joined the platform.
-## Accounts Table
-* **account_id**: Unique identifier for each account (primary key).
-* **client_id**: Foreign key → clients.client_id.
-* **account_type**: e.g. “Checking”, “Savings”, “Brokerage”.
-* **opened_date**: When the account was opened.
-* **status**: e.g. “Active”, “Closed”.
-## Portfolios Table
-* **portfolio_id**: Unique identifier for each portfolio (primary key).
-* **client_id**: Foreign key → clients.client_id.
-* **name**: Custom name for the portfolio.
-* **created_date**: When the portfolio was created.
-## Assets Table
-* **asset_id**: Unique identifier for each asset (primary key).
-* **symbol**: Ticker or code (e.g. “AAPL”, “GOOG”).
-* **asset_type**: e.g. “Stock”, “Bond”, “ETF”, “Mutual Fund”.
-* **name**: Full asset name.
-## Portfolio_Assets Table
-* **portfolio_id**: Foreign key → portfolios.portfolio_id.
-* **asset_id**: Foreign key → assets.asset_id.
-* **quantity**: Units held.
-* **acquisition_date**: Date purchased.
-* **acquisition_price**: Price per unit at purchase.
-* PRIMARY KEY (portfolio_id, asset_id).
-## Transactions Table
-* **txn_id**: Unique identifier for each transaction (primary key).
-* **account_id**: Foreign key → accounts.account_id.
-* **txn_date**: Date of transaction.
-* **txn_type**: e.g. “Deposit”, “Withdrawal”, “Buy”, “Sell”.
-* **amount**: Transaction amount (positive for credit, negative for debit).
-* **description**: Optional notes.
-## Financial_Goals Table
-* **goal_id**: Unique identifier for each goal (primary key).
-* **client_id**: Foreign key → clients.client_id.
-* **goal_name**: e.g. “Retirement Fund”, “College Savings”.
-* **target_amount**: Amount aimed for.
-* **target_date**: Deadline for goal.
-* **current_amount**: Amount saved so far.
-* **status**: e.g. “In Progress”, “Achieved”, “Paused”.
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : Wealth Management Data Model
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-This Personal Wealth Management model captures everything needed to support a full-service advisory platform: it begins by storing each client’s profile and contact details, then tracks all of the cash and investment accounts they hold. Clients can organize their holdings into named portfolios, and each portfolio links to specific financial assets (stocks, bonds, ETFs, etc.) along with purchase dates and prices. All cash movements and trades flow through a unified transactions ledger tied to the relevant account. Finally, the model includes financial goals—each with targets, deadlines and current progress—so advisors and clients can measure performance against personalized objectives. By weaving together clients, accounts, portfolios, assets, transactions and goals via carefully defined foreign‐key relationships, this schema enables rich analyses (e.g., performance attribution, goal‐tracking, cash flow reporting, and risk assessments) across the full spectrum of wealth management activities.
 
-## DDL Syntax
-```sql
-CREATE TABLE clients (
+
+-- DDL Syntax:
+-- Create 'wealth_management' schema
+CREATE SCHEMA wealth_management;
+
+-- Create 'clients' table
+CREATE TABLE wealth_management.clients (
   client_id       INT PRIMARY KEY,
   first_name      VARCHAR(50) NOT NULL,
   last_name       VARCHAR(50) NOT NULL,
@@ -59,52 +23,58 @@ CREATE TABLE clients (
   join_date       DATE NOT NULL
 );
 
-CREATE TABLE accounts (
+-- Create 'accounts' table
+CREATE TABLE wealth_management.accounts (
   account_id      INT PRIMARY KEY,
   client_id       INT NOT NULL,
   account_type    VARCHAR(20) NOT NULL,
   opened_date     DATE NOT NULL,
   status          VARCHAR(20) NOT NULL,
-  FOREIGN KEY (client_id) REFERENCES clients(client_id)
+  FOREIGN KEY (client_id) REFERENCES wealth_management.clients(client_id)
 );
 
-CREATE TABLE portfolios (
+-- Create 'portfolios' table
+CREATE TABLE wealth_management.portfolios (
   portfolio_id    INT PRIMARY KEY,
   client_id       INT NOT NULL,
   name            VARCHAR(100),
   created_date    DATE NOT NULL,
-  FOREIGN KEY (client_id) REFERENCES clients(client_id)
+  FOREIGN KEY (client_id) REFERENCES wealth_management.clients(client_id)
 );
 
-CREATE TABLE assets (
+-- Create 'assets' table
+CREATE TABLE wealth_management.assets (
   asset_id        INT PRIMARY KEY,
   symbol          VARCHAR(20) UNIQUE NOT NULL,
   asset_type      VARCHAR(20) NOT NULL,
   name            VARCHAR(100)
 );
 
-CREATE TABLE portfolio_assets (
+-- Create 'portfolio_assets' table
+CREATE TABLE wealth_management.portfolio_assets (
   portfolio_id      INT NOT NULL,
   asset_id          INT NOT NULL,
   quantity          DECIMAL(18,4) NOT NULL,
   acquisition_date  DATE NOT NULL,
   acquisition_price DECIMAL(18,4) NOT NULL,
   PRIMARY KEY (portfolio_id, asset_id),
-  FOREIGN KEY (portfolio_id) REFERENCES portfolios(portfolio_id),
-  FOREIGN KEY (asset_id) REFERENCES assets(asset_id)
+  FOREIGN KEY (portfolio_id) REFERENCES wealth_management.portfolios(portfolio_id),
+  FOREIGN KEY (asset_id) REFERENCES wealth_management.assets(asset_id)
 );
 
-CREATE TABLE transactions (
+-- Create 'transactions' table
+CREATE TABLE wealth_management.transactions (
   txn_id         INT PRIMARY KEY,
   account_id     INT NOT NULL,
   txn_date       DATE NOT NULL,
   txn_type       VARCHAR(20) NOT NULL,
   amount         DECIMAL(18,2) NOT NULL,
   description    VARCHAR(200),
-  FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+  FOREIGN KEY (account_id) REFERENCES wealth_management.accounts(account_id)
 );
 
-CREATE TABLE financial_goals (
+-- Create 'financial_goals' table
+CREATE TABLE wealth_management.financial_goals (
   goal_id        INT PRIMARY KEY,
   client_id      INT NOT NULL,
   goal_name      VARCHAR(100) NOT NULL,
@@ -112,14 +82,14 @@ CREATE TABLE financial_goals (
   target_date    DATE NOT NULL,
   current_amount DECIMAL(18,2) DEFAULT 0,
   status         VARCHAR(20) NOT NULL,
-  FOREIGN KEY (client_id) REFERENCES clients(client_id)
+  FOREIGN KEY (client_id) REFERENCES wealth_management.clients(client_id)
 );
-```
 
-## DML Syntax
-```sql
--- 1) Clients (20 rows)
-INSERT INTO clients (client_id, first_name, last_name, email, phone, date_of_birth, join_date) VALUES
+
+
+-- DML Syntax:
+-- Insert records into 'clients'
+INSERT INTO wealth_management.clients (client_id, first_name, last_name, email, phone, date_of_birth, join_date) VALUES
  ( 1,'Alice','Green','alice.green@example.com','555-0101','1980-04-10','2022-01-15'),
  ( 2,'Bob','Lee','bob.lee@example.com','555-0102','1975-08-22','2021-06-30'),
  ( 3,'Carol','Ng','carol.ng@example.com','555-0103','1990-11-05','2023-03-12'),
@@ -141,65 +111,45 @@ INSERT INTO clients (client_id, first_name, last_name, email, phone, date_of_bir
  (19,'Steve','Lopez','steve.lopez@example.com','555-0119','1978-09-14','2019-09-09'),
  (20,'Tina','Wright','tina.wright@example.com','555-0120','1994-02-28','2022-07-07');
 
--- 2) Accounts (40 rows; 1–3 per client)
-INSERT INTO accounts (account_id, client_id, account_type, opened_date, status) VALUES
--- Client 1
+-- Insert records into 'accounts'
+INSERT INTO wealth_management.accounts (account_id, client_id, account_type, opened_date, status) VALUES
  (101,  1,'Checking','2022-01-15','Active'),
  (102,  1,'Brokerage','2022-01-15','Active'),
--- Client 2
  (103,  2,'Savings','2021-06-30','Active'),
  (104,  2,'Brokerage','2021-07-01','Active'),
--- Client 3
  (105,  3,'Checking','2023-03-12','Active'),
--- Client 4
  (106,  4,'Savings','2020-07-01','Closed'),
  (107,  4,'Brokerage','2020-07-02','Active'),
--- Client 5
  (108,  5,'Checking','2022-05-20','Active'),
  (109,  5,'Savings','2022-05-21','Active'),
  (110,  5,'Retirement','2022-06-01','Active'),
--- Client 6
  (111,  6,'Checking','2019-11-11','Closed'),
  (112,  6,'Savings','2019-11-12','Active'),
--- Client 7
  (113,  7,'Brokerage','2021-02-14','Active'),
--- Client 8
  (114,  8,'Checking','2020-12-01','Active'),
  (115,  8,'Education','2021-01-05','Active'),
--- Client 9
  (116,  9,'Savings','2023-07-01','Active'),
--- Client 10
  (117, 10,'Brokerage','2020-03-03','Closed'),
  (118, 10,'Checking','2020-03-04','Active'),
--- Client 11
  (119, 11,'Savings','2023-01-20','Active'),
  (120, 11,'Retirement','2023-01-22','Active'),
--- Client 12
  (121, 12,'Checking','2022-09-15','Active'),
--- Client 13
  (122, 13,'Brokerage','2023-05-05','Active'),
  (123, 13,'Savings','2023-05-06','Active'),
--- Client 14
  (124, 14,'Checking','2021-08-08','Active'),
--- Client 15
  (125, 15,'Brokerage','2022-11-11','Active'),
  (126, 15,'Education','2022-11-12','Active'),
--- Client 16
  (127, 16,'Checking','2020-10-10','Active'),
--- Client 17
  (128, 17,'Savings','2023-02-22','Active'),
  (129, 17,'Brokerage','2023-02-23','Active'),
--- Client 18
  (130, 18,'Checking','2021-12-12','Closed'),
  (131, 18,'Retirement','2021-12-13','Active'),
--- Client 19
  (132, 19,'Savings','2019-09-09','Active'),
--- Client 20
  (133, 20,'Checking','2022-07-07','Active'),
  (134, 20,'Brokerage','2022-07-08','Active');
 
--- 3) Portfolios (30 rows; 1–2 per client)
-INSERT INTO portfolios (portfolio_id, client_id, name, created_date) VALUES
+-- Insert records into 'portfolios'
+INSERT INTO wealth_management.portfolios (portfolio_id, client_id, name, created_date) VALUES
  (201,  1,'Retirement Mix','2022-01-20'),
  (202,  1,'Growth Stocks','2022-02-01'),
  (203,  2,'College Fund','2021-07-10'),
@@ -231,8 +181,8 @@ INSERT INTO portfolios (portfolio_id, client_id, name, created_date) VALUES
  (229, 13,'Sector Rotation','2023-06-01'),
  (230, 15,'Fixed Income','2022-12-01');
 
--- 4) Assets (25 rows)
-INSERT INTO assets (asset_id, symbol, asset_type, name) VALUES
+-- Insert records into 'assets'
+INSERT INTO wealth_management.assets (asset_id, symbol, asset_type, name) VALUES
  (301,'AAPL','Stock','Apple Inc.'),
  (302,'GOOG','Stock','Alphabet Inc.'),
  (303,'MSFT','Stock','Microsoft Corp.'),
@@ -259,104 +209,73 @@ INSERT INTO assets (asset_id, symbol, asset_type, name) VALUES
  (324,'AMD','Stock','Advanced Micro Devices'),
  (325,'SPY','ETF','SPDR S&P 500 ETF');
 
--- 5) Portfolio_Assets (50 rows; mix portfolios & assets)
-INSERT INTO portfolio_assets (portfolio_id, asset_id, quantity, acquisition_date, acquisition_price) VALUES
--- Portfolio 201
+-- Insert records into 'portfolio_assets'
+INSERT INTO wealth_management.portfolio_assets (portfolio_id, asset_id, quantity, acquisition_date, acquisition_price) VALUES
  (201,301,100,'2022-01-20',130.00),
  (201,302, 50,'2022-02-01',2400.00),
  (201,317,200,'2022-03-01',55.00),
--- Portfolio 202
  (202,303, 80,'2022-02-05',250.00),
  (202,304, 10,'2022-02-10',3200.00),
  (202,325,150,'2022-03-01',420.00),
--- Portfolio 203
  (203,305, 30,'2021-07-10',620.00),
  (203,309, 40,'2021-07-15',180.00),
--- Portfolio 204
  (204,307,100,'2021-08-01',165.00),
  (204,308,120,'2021-08-05',150.00),
--- Portfolio 205
  (205,311,200,'2023-03-15',140.00),
  (205,312,150,'2023-03-20',85.00),
--- Portfolio 206
  (206,303, 50,'2020-07-10',200.00),
  (206,323, 20,'2020-08-01',500.00),
--- Portfolio 207
  (207,310,300,'2022-06-10',30.00),
  (207,318,250,'2022-06-15',45.00),
--- Portfolio 208
  (208,324,100,'2022-07-01',100.00),
  (208,305, 40,'2022-07-05',700.00),
--- Portfolio 209
  (209,319, 60,'2019-11-20',75.00),
  (209,320, 80,'2019-12-01',55.00),
--- Portfolio 210
  (210,306, 25,'2021-02-20',480.00),
  (210,308,150,'2021-03-01',155.00),
--- Portfolio 211
  (211,301, 70,'2021-01-10',128.00),
  (211,325, 90,'2021-01-20',415.00),
--- Portfolio 212
  (212,304, 15,'2023-07-05',3300.00),
  (212,309, 30,'2023-07-10',185.00),
--- Portfolio 213
  (213,303,100,'2020-03-10',210.00),
  (213,323, 50,'2020-03-20',480.00),
--- Portfolio 214
  (214,302, 80,'2023-01-25',2450.00),
  (214,317,220,'2023-02-01',57.00),
--- Portfolio 215
  (215,325,120,'2022-09-20',425.00),
  (215,314,150,'2022-10-01',155.00),
--- Portfolio 216
  (216,301, 60,'2023-05-10',135.00),
  (216,306, 30,'2023-05-15',470.00),
--- Portfolio 217
  (217,320, 90,'2021-08-15',58.00),
  (217,308,100,'2021-09-01',152.00),
--- Portfolio 218
  (218,302, 50,'2022-11-20',2500.00),
  (218,310,200,'2022-12-01',32.00),
--- Portfolio 219
  (219,311,300,'2020-10-15',138.00),
  (219,323, 40,'2020-11-01',490.00),
--- Portfolio 220
  (220,305, 25,'2023-02-28',710.00),
  (220,325, 60,'2023-03-05',420.00),
--- Portfolio 221
  (221,317,180,'2021-12-18',56.00),
  (221,319,100,'2022-01-01',78.00),
--- Portfolio 222
  (222,312,120,'2019-09-15',88.00),
  (222,314, 70,'2019-10-01',158.00),
--- Portfolio 223
  (223,303, 90,'2022-07-15',255.00),
  (223,308,110,'2022-08-01',149.00),
--- Portfolio 224
  (224,306, 35,'2023-04-01',495.00),
  (224,325, 80,'2023-04-05',430.00),
--- Portfolio 225
  (225,301,100,'2020-08-01',132.00),
  (225,307,150,'2020-08-10',170.00),
--- Portfolio 226
  (226,312,200,'2019-12-01',90.00),
  (226,324, 50,'2020-01-01',98.00),
--- Portfolio 227
  (227,325,130,'2021-02-01',430.00),
  (227,303, 60,'2021-03-01',215.00),
--- Portfolio 228
  (228,314,180,'2023-01-30',160.00),
  (228,318,120,'2023-02-01',48.00),
--- Portfolio 229
  (229,302, 70,'2023-06-01',2480.00),
  (229,323, 40,'2023-06-10',475.00),
--- Portfolio 230
  (230,301, 55,'2022-12-01',137.00),
  (230,319, 90,'2022-12-10',80.00);
 
--- 6) Transactions (60 rows; varied types)
-INSERT INTO transactions (txn_id, account_id, txn_date, txn_type, amount, description) VALUES
-  -- A mix of deposits, withdrawals, buys, sells across accounts 101–134
+-- Insert records into 'transactions'
+INSERT INTO wealth_management.transactions (txn_id, account_id, txn_date, txn_type, amount, description) VALUES
  (401,101,'2022-01-16','Deposit', 5000.00,'Initial deposit'),
  (402,101,'2022-02-15','Buy',   6500.00,'Bought AAPL shares'),
  (403,102,'2022-02-20','Buy',  12000.00,'Acquired GOOG shares'),
@@ -418,8 +337,8 @@ INSERT INTO transactions (txn_id, account_id, txn_date, txn_type, amount, descri
  (459,122,'2023-05-10','Buy',   1400.00,'Growth asset'),
  (460,123,'2023-05-08','Deposit', 500.00,'Small top-up');
 
--- 7) Financial_Goals (20 rows)
-INSERT INTO financial_goals (goal_id, client_id, goal_name, target_amount, target_date, current_amount, status) VALUES
+-- Insert records into 'financial_goals'
+INSERT INTO wealth_management.financial_goals (goal_id, client_id, goal_name, target_amount, target_date, current_amount, status) VALUES
  (1001,  1,'Retirement Fund',1000000.00,'2045-12-31',150000.00,'In Progress'),
  (1002,  1,'Vacation Home',   300000.00,'2030-06-30',  50000.00,'In Progress'),
  (1003,  2,'College Tuition',  200000.00,'2035-08-01',  40000.00,'In Progress'),
@@ -440,4 +359,3 @@ INSERT INTO financial_goals (goal_id, client_id, goal_name, target_amount, targe
  (1018, 17,'Child’s College', 120000.00,'2039-06-01',   20000.00,'In Progress'),
  (1019, 18,'Mortgage Payoff', 400000.00,'2032-03-01',  100000.00,'In Progress'),
  (1020, 19,'Retirement Boost',750000.00,'2042-11-30',  200000.00,'In Progress');
-```
