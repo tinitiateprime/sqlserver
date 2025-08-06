@@ -7,76 +7,76 @@
 # DQL Assignments
 
 ## Select
-1. List all products.
-2. Retrieve only product_name and price for every product.
-3. Show customer_id and customer_name for all customers.
-4. Display bill_id, bill_date and total_amount from all bills.
-5. Show every column from billdetails.
-6. List each line item’s billdetail_id, product_name and line_total.
-7. Show customer_name with each bill_date.
-8. List distinct customer_id values from the bill table.
-9. Concatenate customer_name and contact_info into one column called contact_card.
-10. Show product_name, price, and (price * 2) as double_price.
+1. List all clients with their IDs and full names.
+2. List all accounts with account_id, client_id, and type.
+3. List all portfolios with portfolio names and creation dates.
+4. List all assets with symbol and asset_type.
+5. List portfolio assets entries with portfolio_id, asset_id, and quantity.
+6. List all transactions showing txn_id, account_id, txn_date, txn_type, and amount.
+7. List all financial goals with goal_name and status.
+8. List client contact details: full name, email, phone.
+9. List accounts opened after 2021-01-01.
+10. List each client's name and number of portfolios they have.
 
 ## WHERE
-1. List products priced above 500.
-2. List products with price between 100 and 500.
-3. Find customers whose names start with 'J'.
-4. Show bills issued after June 1, 2023.
-5. List bills where total_amount is at least 1000.
-6. Show billdetails having quantity greater than 2.
-7. List billdetails where line_total is less than the product’s price.
-8. Show all bills for customer_id = 3.
-9. Find products whose name contains 'phone'.
-10. List billdetails for bills in March 2023.
+1. Find clients born before 1990-01-01.
+2. Get active accounts.
+3. Portfolios created in 2022.
+4. Assets of type 'Stock'.
+5. Portfolio assets with quantity > 100.
+6. 'Buy' transactions.
+7. Transactions with negative amount.
+8. Financial goals in progress.
+9. Accounts opened between 2020-01-01 and 2021-12-31.
+10. Clients with emails ending in 'example.com'.
 
 ## GROUP BY
-1. Count total number of products.
-2. Count how many bills each customer has.
-3. Sum total_amount per customer.
-4. Sum of line_total by product (show product_name).
-5. Count line items per bill.
-6. Total quantity sold per product_id.
-7. Average line_total per bill.
-8. Count distinct products per bill.
-9. Sum of total_amount per month.
-10. Count of customers.
+1. Count clients by join year.
+2. Number of accounts per client.
+3. Number of portfolios per client.
+4. Number of portfolio_assets per asset.
+5. Total asset quantity across all portfolios.
+6. Total transaction amount per account.
+7. Total amount per transaction type.
+8. Number of goals per status.
+9. Number of accounts per account_type.
+10. Number of assets per asset_type.
 
 ## HAVING
-1. Customers having more than 2 bills.
-2. Products billed more than 5 times.
-3. Bills where sum of line_total > 1000.
-4. Customers whose total billed amount > 5000.
-5. Products with average line_total > 300.
-6. Months with more than 3 bills.
-7. Bills containing more than 3 distinct products.
-8. Customers with any single bill > 2000.
-9. Products whose total quantity sold > 10.
-10. Customers with between 2 and 5 bills.
+1. Clients with more than 2 accounts.
+2. Accounts with total deposits > 10000.
+3. Assets appearing in more than 3 portfolios.
+4. Transaction types with average amount > 1000.
+5. Clients with at least 2 portfolios.
+6. Accounts where deposits exceed withdrawals.
+7. Statuses with more than one goal.
+8. Accounts with 2 or more transactions before 2021.
+9. Clients with average transaction amount > 500.
+10. Assets with total quantity < 50.
 
 ## ORDER BY
-1. Products ordered by price ascending.
-2. Products ordered by price descending.
-3. Customers sorted alphabetically by name.
-4. Bills sorted by bill_date newest first.
-5. Bills sorted by total_amount lowest first.
-6. Billdetails sorted by line_total descending.
-7. Products sorted by price ASC, then product_name DESC.
-8. Bills ordered by customer_id, then bill_date.
-9. Billdetails ordered by bill_id ASC, quantity DESC.
-10. Customers ordered by LEN(customer_name) descending.
+1. Clients by last_name ascending.
+2. Clients by join_date descending.
+3. Accounts by opened_date ascending.
+4. Portfolios by created_date descending.
+5. Assets by name ascending.
+6. Portfolio_assets by acquisition_date descending.
+7. Transactions by txn_date descending.
+8. Financial goals by target_date ascending.
+9. Transactions by amount descending.
+10. Assets by symbol descending.
 
 ## TOP
-1. Top 5 most expensive products.
-2. Top 3 customers by number of bills.
-3. Top 5 bills by total_amount.
-4. Top 10 billdetails by line_total.
-5. The single product with the highest price.
-6. Top 5 products by total quantity sold.
-7. Top 3 customers by total billed amount.
-8. Top 5 most recent bills.
-9. Top 5 customers alphabetically.
-10. Top 2 bills for customer_id = 1 by bill_date.
+1. Top 5 clients by earliest join date.
+2. Top 5 clients with most accounts.
+3. Top 5 accounts by number of transactions.
+4. Top 3 portfolios by number of assets.
+5. Top 5 assets by total quantity.
+6. Top 5 accounts by total transaction amount.
+7. Top 5 financial goals by target amount.
+8. Top 5 clients by total current goal amount.
+9. Top 3 highest individual transactions.
+10. Top 5 assets alphabetically.
 
 ***
 | &copy; TINITIATE.COM |

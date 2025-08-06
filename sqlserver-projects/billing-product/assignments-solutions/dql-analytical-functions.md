@@ -499,6 +499,7 @@ SELECT
   ) AS PrevDtlByProduct
 FROM billing_product.billdetails;
 ```
+
 ## LEAD()
 ```sql
 -- 1. Next bill amount for each bill ordered by date

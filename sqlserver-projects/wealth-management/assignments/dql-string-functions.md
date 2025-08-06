@@ -7,196 +7,196 @@
 # DQL - String Functions Assignments
 
 ## Length Function (LEN)
-1. Get length of each product_name
-2. Get length of each customer_name
-3. Get length of contact_info
-4. Get length of line_total (as varchar)
-5. Length of concatenated product_name and price
-6. Products where product_name length > 6
-7. Customers where customer_name length <= 10
-8. Products ordered by product_name length descending
-9. Products with name length greater than average
-10. Count of products grouped by name length
+1. Get length of each client's full name.
+2. Get length of each asset symbol.
+3. Find transactions where description length > 20.
+4. List portfolios with name length.
+5. Show length of each client's email.
+6. Show length of account_type.
+7. Length of financial goal names.
+8. Length of asset names.
+9. Length of portfolio asset quantity cast to varchar.
+10. Length of phone numbers.
 
 ## Substring Function (SUBSTRING)
-1. First 3 characters of product_name
-2. First name from customer_name
-3. Domain from contact_info (after '@')
-4. Characters 2–4 of product_name
-5. Last 3 characters of product_name
-6. Year from bill_date
-7. Whole part of line_total
-8. Initial of customer_name
-9. Username from contact_info (before '@')
-10. Remove first character of product_name
+1. First 3 characters of each client's last name.
+2. Characters 1–5 of email.
+3. First 4 of asset symbols.
+4. Middle of portfolio names (chars 3–5).
+5. First 10 of transaction descriptions.
+6. First 2 of account_type.
+7. Extract year prefix from target_date as string.
+8. First 6 of asset names.
+9. Extract month-day from opened_date.
+10. Characters 2–4 of phone number.
 
 ## Concatenation Operator (+)
-1. Customer contact card
-2. Product display string
-3. Bill summary text
-4. Line item summary
-5. Year–month string for bills
-6. Last, First format for customer names
-7. Promotional message for products
-8. Quantity and unit price info
-9. Reach text for customers
-10. Bill owing information
+1. Full client name.
+2. Email and phone in one field.
+3. Portfolio and client names.
+4. Asset symbol and name.
+5. Account type and status.
+6. Goal name and target date.
+7. Transaction type and amount.
+8. Portfolio name and creation date.
+9. Asset type and symbol.
+10. Client join date and name.
 
 ## Lower Function (LOWER)
-1. Lowercase all product names
-2. Lowercase all customer names
-3. Lowercase contact_info
-4. Filter products where lowercase name starts with 'm'
-5. Convert bill_date to lowercase string (for demos)
-6. Lowercase line_total cast
-7. Compare lowercase contact_info domain
-8. Order customers by lowercase name
-9. Count lowercase occurrence of letter 'a' in product_name
-10. Show distinct lowercase product names
+1. Lowercase all client emails.
+2. Lowercase asset symbols.
+3. Lowercase portfolio names.
+4. Lowercase account types.
+5. Lowercase transaction descriptions.
+6. Lowercase goal statuses.
+7. Lowercase asset names.
+8. Lowercase phone numbers (no change but cast).
+9. Lowercase concatenated client names.
+10. Lowercase portfolio_owner summary.
 
 ## Upper Function (UPPER)
-1. Uppercase all product names
-2. Uppercase all customer names
-3. Uppercase contact_info
-4. Filter products where uppercase name contains 'O'
-5. Convert bill_date to uppercase string
-6. Uppercase line_total cast
-7. Compare uppercase contact_info domain
-8. Order products by uppercase name
-9. Concatenate uppercase summary
-10. Show distinct uppercase customer names
+1. Uppercase all client emails.
+2. Uppercase asset symbols.
+3. Uppercase portfolio names.
+4. Uppercase account types.
+5. Uppercase transaction descriptions.
+6. Uppercase goal statuses.
+7. Uppercase asset names.
+8. Uppercase phone numbers.
+9. Uppercase concatenated client names.
+10. Uppercase portfolio_owner summary.
 
 ## Trim Function (TRIM)
-1. Trim spaces around padded product_name
-2. Trim spaces from contact_info (no-op demo)
-3. Trim dashes around product_name
-4. Trim zeros around product_id cast
-5. Use TRIM in WHERE to match exact contact_info
-6. Trim spaces in aliased string
-7. Trim custom character '*' around product_name
-8. Trim leading and trailing underscores
-9. Count trimmed vs original length
-10. Trim in a subquery
+1. Trim whitespace from transaction descriptions.
+2. Trim portfolio names.
+3. Trim client first names.
+4. Trim last names.
+5. Trim asset names.
+6. Trim account types.
+7. Trim goal names.
+8. Trim email addresses.
+9. Trim phone numbers.
+10. Trim concatenated names.
 
 ## Ltrim Function (LTRIM)
-1. Ltrim spaces on left of padded product_name
-2. Ltrim spaces on left of contact_info
-3. Ltrim zeros on left of product_id cast
-4. Ltrim dashes on left
-5. Filter with LTRIM to match
-6. LTRIM in alias
-7. LTRIM numeric prefix
-8. LTRIM in ORDER BY
-9. Compare LTRIM vs original
-10. Use LTRIM in JOIN key
+1. Remove leading spaces from descriptions.
+2. Remove leading spaces from names.
+3. Remove leading spaces from emails.
+4. Remove leading spaces from asset names.
+5. Remove leading spaces from account_type.
+6. Remove leading spaces from goal_name.
+7. Remove leading zeros from quantity if cast to varchar.
+8. Remove leading spaces from phone.
+9. Remove leading spaces from concatenated names.
+10. Remove leading spaces from symbol.
 
 ## Rtrim Function (RTRIM)
-1. Rtrim spaces on right of padded product_name
-2. Rtrim spaces on right of contact_info
-3. Rtrim zeros on right of product_id cast
-4. Rtrim dashes on right
-5. Filter with RTRIM to match
-6. RTRIM in alias
-7. RTRIM numeric suffix
-8. RTRIM in ORDER BY
-9. Compare RTRIM vs original
-10. Use RTRIM in WHERE
+1. Remove trailing spaces from descriptions.
+2. Remove trailing spaces from names.
+3. Remove trailing spaces from emails.
+4. Remove trailing spaces from asset names.
+5. Remove trailing spaces from account_type.
+6. Remove trailing spaces from goal_name.
+7. Remove trailing spaces from phone.
+8. Remove trailing spaces from concatenated names.
+9. Remove trailing spaces from symbol.
+10. Remove trailing spaces from status.
 
 ## Charindex Function (CHARINDEX)
-1. Position of '@' in contact_info
-2. Position of 'phone' in product_name
-3. Filter products containing 'er'
-4. Find hyphen position in concatenated string
-5. First space in customer_name
-6. Position of '.' in CAST(total_amount)
-7. Any digit position in contact_info
-8. Nested CHARINDEX to get domain
-9. Filter customers with no '@'
-10. Use CHARINDEX in ORDER BY
+1. Position of 'Inc' in asset names.
+2. Position of '@' in emails.
+3. Position of 'Fund' in goal_name.
+4. Position of 'Mix' in portfolio names.
+5. Position of 'Deposit' in description.
+6. Position of 'Save' in description.
+7. Position of 'Ret' in status.
+8. Position of '-' in phone.
+9. Position of '202' in join_date string.
+10. Position of '202' in target_date string.
 
 ## Left Function (LEFT)
-1. First 2 letters of product_name
-2. First letter of customer_name
-3. First 4 chars of contact_info
-4. First 4 digits of year-month
-5. First 5 chars of CAST(line_total)
-6. LEFT combined string
-7. LEFT in WHERE
-8. LEFT for formatting
-9. LEFT in ORDER BY
-10. LEFT nested
+1. First 2 letters of each client's first name.
+2. First 3 of asset symbols.
+3. First 4 of portfolio names.
+4. First 5 of email.
+5. First 2 of account_type.
+6. First 3 of goal_name.
+7. First 6 of description.
+8. First 4 of asset name.
+9. First 7 of phone.
+10. First 4 of status.
 
 ## Right Function (RIGHT)
-1. Last 2 letters of product_name
-2. Last letter of customer_name
-3. Last 4 chars of contact_info
-4. Day from bill_date
-5. Last 3 of CAST(line_total)
-6. RIGHT combined string
-7. RIGHT in WHERE
-8. RIGHT for formatting
-9. RIGHT in ORDER BY
-10. RIGHT nested
+1. Last 3 of each client's last name.
+2. Last 4 of asset symbols.
+3. Last 5 of portfolio names.
+4. Last 3 of email domain.
+5. Last 2 of account_type.
+6. Last 4 of goal_name.
+7. Last 6 of description.
+8. Last 3 of asset name.
+9. Last 4 of phone.
+10. Last 3 of status.
 
 ## Reverse Function (REVERSE)
-1. Reverse product_name
-2. Reverse customer_name
-3. Reverse contact_info
-4. Reverse year-month string
-5. Reverse CAST(line_total)
-6. Reverse concatenated string
-7. Filter reversed names starting with 'pt'
-8. Reverse and take LEFT
-9. Reverse email domain
-10. Nested REVERSE(REPLACE())
+1. Reverse each client's first name.
+2. Reverse each asset symbol.
+3. Reverse portfolio names.
+4. Reverse transaction descriptions.
+5. Reverse email addresses.
+6. Reverse account types.
+7. Reverse goal names.
+8. Reverse phone numbers.
+9. Reverse asset names.
+10. Reverse status.
 
 ## Replace Function (REPLACE)
-1. Replace spaces with underscores in product_name
-2. Replace '@example.com' with '@gmail.com'
-3. Remove 'Bill' from summary
-4. Replace '.' with ',' in line_total
-5. Replace '-' with '/ ' in year_month
-6. Replace 'o' with '0' in product_name
-7. Replace duplicate spaces in contact_info
-8. Remove prefix 'www.' in contact_info (demo)
-9. Replace 'x' in line_summary
-10. Nested REPLACE to mask digits
+1. Replace 'Inc' with 'Incorporated' in asset names.
+2. Replace 'Deposit' with 'Dep' in descriptions.
+3. Replace 'Checking' with 'Chk' in account_type.
+4. Replace dashes with spaces in phone.
+5. Replace 'Fund' with 'Fd' in goal_name.
+6. Replace 'ETF' with 'Exchange-Traded Fund' in asset_type.
+7. Replace '/' with '-' in dates for display.
+8. Replace 'Savings' with 'Sav' in account_type.
+9. Replace 'Retirement' with 'Ret' in portfolio names.
+10. Replace 'Active' with 'A' in status.
 
 ## Case Statement (CASE)
-1. Label products as 'Expensive' or 'Cheap'
-2. Bill details as 'Bulk' or 'Single'
-3. Customer contact method
-4. Bill seasons based on month
-5. Round line_total to nearest hundred
-6. Price category with three tiers
-7. Customer name initial group
-8. Bill status based on total_amount
-9. Combine CASE with CONCAT
-10. Nested CASE to highlight large orders
+1. Label transactions as 'Credit' or 'Debit'.
+2. Categorize accounts as 'Open' or 'Closed'.
+3. Classify clients by age group.
+4. Mark portfolio size.
+5. Goal progress status.
+6. Transaction value bucket.
+7. Asset class.
+8. Client join decade.
+9. Account age.
+10. Portfolio creation era.
 
 ## ISNULL Function (ISNULL)
-1. Default contact_info if NULL
-2. Default product_name if NULL
-3. Default price if NULL
-4. Default bill_date if NULL
-5. Default total_amount if NULL
-6. Default line_total if NULL
-7. ISNULL in concatenation
-8. ISNULL in WHERE
-9. ISNULL in ORDER BY
-10. ISNULL to avoid division by zero
+1. Default phone to 'N/A'.
+2. Default description to 'No desc'.
+3. Default asset name to 'Unknown'.
+4. Default status to 'Unknown'.
+5. Default portfolio name to 'Unnamed'.
+6. Default account_type to 'Standard'.
+7. Default email to 'none@example.com'.
+8. Default target_amount to 0.
+9. Default acquisition_price to 0.
+10. Default current_amount to 0.
 
 ## Coalesce Function (COALESCE)
-1. First non-NULL contact_info or default
-2. Coalesce product_name and 'Unknown'
-3. Coalesce price, 0.00, and 100.00
-4. Coalesce bill_date and GETDATE()
-5. Coalesce total_amount, 0
-6. Coalesce line_total or price*quantity
-7. Coalesce in concatenation with multiple fields
-8. Coalesce in WHERE
-9. Coalesce in ORDER BY
-10. Coalesce with NULLIF to avoid nulls
+1. Show email or phone.
+2. Show description or goal_name.
+3. Show portfolio name or 'Unnamed'.
+4. Show asset symbol or 'UNKNOWN'.
+5. Show account_type or 'Standard'.
+6. Show goal_name or 'No Goal'.
+7. Show description, else 'N/A'.
+8. Show phone, else email.
+9. Show current_amount or target_amount.
+10. Show quantity or 0.
 
 ***
 | &copy; TINITIATE.COM |

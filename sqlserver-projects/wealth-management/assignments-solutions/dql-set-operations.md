@@ -8,177 +8,266 @@
 
 ## Union
 ```sql
--- 1. Combine all product_ids and customer_ids into one list of IDs.
-SELECT product_id AS id FROM billing_product.products
+-- 1. Combine account_ids for 'Checking' and 'Brokerage' accounts.
+SELECT account_id
+FROM wealth_management.accounts
+WHERE account_type = 'Checking'
 UNION
-SELECT customer_id FROM billing_product.customers;
+SELECT account_id
+FROM wealth_management.accounts
+WHERE account_type = 'Brokerage';
 
--- 2. Combine all bill_ids and billdetail_ids into one list of IDs.
-SELECT bill_id AS id FROM billing_product.bill
+-- 2. List client_ids who have made a 'Buy' or a 'Sell' transaction.
+SELECT DISTINCT c.client_id
+FROM wealth_management.clients c
+JOIN wealth_management.accounts a ON c.client_id = a.client_id
+JOIN wealth_management.transactions t ON a.account_id = t.account_id
+WHERE t.txn_type = 'Buy'
 UNION
-SELECT billdetail_id AS id FROM billing_product.billdetails;
+SELECT DISTINCT c.client_id
+FROM wealth_management.clients c
+JOIN wealth_management.accounts a ON c.client_id = a.client_id
+JOIN wealth_management.transactions t ON a.account_id = t.account_id
+WHERE t.txn_type = 'Sell';
 
--- 3. List all distinct names from products and customers.
-SELECT product_name AS name FROM billing_product.products
+-- 3. List all asset symbols that are Stocks or ETFs.
+SELECT symbol
+FROM wealth_management.assets
+WHERE asset_type = 'Stock'
 UNION
-SELECT customer_name FROM billing_product.customers;
+SELECT symbol
+FROM wealth_management.assets
+WHERE asset_type = 'ETF';
 
--- 4. List all IDs from products and billdetails (product_id union billdetail_id).
-SELECT product_id AS id FROM billing_product.products
+-- 4. Combine portfolio_ids created in 2021 and 2022.
+SELECT portfolio_id
+FROM wealth_management.portfolios
+WHERE YEAR(created_date) = 2021
 UNION
-SELECT billdetail_id FROM billing_product.billdetails;
+SELECT portfolio_id
+FROM wealth_management.portfolios
+WHERE YEAR(created_date) = 2022;
 
--- 5. All (year, month) combinations from bills and billdetails.
-SELECT YEAR(bill_date) AS yr, MONTH(bill_date) AS mon FROM billing_product.bill
+-- 5. Combine asset_ids held in portfolio 201 or 202.
+SELECT asset_id
+FROM wealth_management.portfolio_assets
+WHERE portfolio_id = 201
 UNION
-SELECT YEAR(b.bill_date), MONTH(b.bill_date)
-  FROM billing_product.billdetails bd
-  JOIN billing_product.bill b ON bd.bill_id = b.bill_id;
+SELECT asset_id
+FROM wealth_management.portfolio_assets
+WHERE portfolio_id = 202;
 
--- 6. Combine product_ids priced over 200 and product_ids with line_total over 200.
-SELECT product_id FROM billing_product.products WHERE price > 200
+-- 6. Combine txn_id for 'Deposit' and 'Withdrawal' transactions.
+SELECT txn_id
+FROM wealth_management.transactions
+WHERE txn_type = 'Deposit'
 UNION
-SELECT DISTINCT product_id FROM billing_product.billdetails WHERE line_total > 200;
+SELECT txn_id
+FROM wealth_management.transactions
+WHERE txn_type = 'Withdrawal';
 
--- 7. List of customers with customer_id<6 together with customers having bills.
-SELECT customer_id FROM billing_product.customers WHERE customer_id < 6
+-- 7. Combine goal_ids for 'Retirement Fund' and 'College Tuition'.
+SELECT goal_id
+FROM wealth_management.financial_goals
+WHERE goal_name = 'Retirement Fund'
 UNION
-SELECT DISTINCT customer_id FROM billing_product.bill;
+SELECT goal_id
+FROM wealth_management.financial_goals
+WHERE goal_name = 'College Tuition';
 
--- 8. All unique total_amount values from bill and line_total from billdetails.
-SELECT total_amount AS amount FROM billing_product.bill
+-- 8. Combine first and last names of clients into one name list.
+SELECT first_name AS name
+FROM wealth_management.clients
 UNION
-SELECT line_total FROM billing_product.billdetails;
+SELECT last_name AS name
+FROM wealth_management.clients;
 
--- 9. Years with bills vs years with billdetails.
-SELECT YEAR(bill_date) AS yr FROM billing_product.bill
+-- 9. Combine distinct years from client join_date and goal target_date.
+SELECT DISTINCT YEAR(join_date) AS year_val
+FROM wealth_management.clients
 UNION
-SELECT YEAR(b.bill_date)
-  FROM billing_product.billdetails bd
-  JOIN billing_product.bill b ON bd.bill_id = b.bill_id;
+SELECT DISTINCT YEAR(target_date)
+FROM wealth_management.financial_goals;
 
--- 10. Union of product_ids priced <=100 and those priced >=500.
-SELECT product_id FROM billing_product.products WHERE price <= 100
+-- 10. Combine account_type and asset_type into a common list.
+SELECT account_type AS type_name
+FROM wealth_management.accounts
 UNION
-SELECT product_id FROM billing_product.products WHERE price >= 500;
+SELECT asset_type
+FROM wealth_management.assets;
 ```
 
 ## Intersect
 ```sql
--- 1. IDs present both as product_id and customer_id.
-SELECT product_id AS id FROM billing_product.products
+-- 1. Clients who have both 'Checking' and 'Savings' accounts.
+SELECT client_id
+FROM wealth_management.accounts
+WHERE account_type = 'Checking'
 INTERSECT
-SELECT customer_id FROM billing_product.customers;
+SELECT client_id
+FROM wealth_management.accounts
+WHERE account_type = 'Savings';
 
--- 2. bill_ids that have corresponding details.
-SELECT bill_id FROM billing_product.bill
+-- 2. asset_ids present in both portfolios 201 and 202.
+SELECT asset_id
+FROM wealth_management.portfolio_assets
+WHERE portfolio_id = 201
 INTERSECT
-SELECT bill_id FROM billing_product.billdetails;
+SELECT asset_id
+FROM wealth_management.portfolio_assets
+WHERE portfolio_id = 202;
 
--- 3. Names present in both products and customers.
-SELECT product_name AS name FROM billing_product.products
+-- 3. account_ids with both 'Buy' and 'Sell' transactions.
+SELECT account_id
+FROM wealth_management.transactions
+WHERE txn_type = 'Buy'
 INTERSECT
-SELECT customer_name FROM billing_product.customers;
+SELECT account_id
+FROM wealth_management.transactions
+WHERE txn_type = 'Sell';
 
--- 4. Months in which both bills and billdetails exist.
-SELECT DISTINCT MONTH(bill_date) AS mon FROM billing_product.bill
+-- 4. Clients with both 'Retirement Fund' and 'College Savings' goals.
+SELECT client_id
+FROM wealth_management.financial_goals
+WHERE goal_name = 'Retirement Fund'
 INTERSECT
-SELECT DISTINCT MONTH(b.bill_date)
-  FROM billing_product.billdetails bd
-  JOIN billing_product.bill b ON bd.bill_id = b.bill_id;
+SELECT client_id
+FROM wealth_management.financial_goals
+WHERE goal_name = 'College Savings';
 
--- 5. product_ids priced above avg(price) and with line_total above avg(line_total).
-SELECT product_id FROM billing_product.products 
- WHERE price > (SELECT AVG(price) FROM billing_product.products)
+-- 5. Stocks that are also held in any portfolio.
+SELECT symbol
+FROM wealth_management.assets
+WHERE asset_type = 'Stock'
 INTERSECT
-SELECT product_id FROM billing_product.billdetails 
- WHERE line_total > (SELECT AVG(line_total) FROM billing_product.billdetails);
+SELECT a.symbol
+FROM wealth_management.assets a
+JOIN wealth_management.portfolio_assets pa ON a.asset_id = pa.asset_id;
 
--- 6. customer_ids billed in Q1 and also in Q2 of 2023.
-SELECT customer_id FROM billing_product.bill 
- WHERE MONTH(bill_date) IN (1,2,3)
+-- 6. Clients who have a 'Checking' account and also hold a portfolio.
+SELECT client_id
+FROM wealth_management.accounts
+WHERE account_type = 'Checking'
 INTERSECT
-SELECT customer_id FROM billing_product.bill 
- WHERE MONTH(bill_date) IN (4,5,6);
+SELECT client_id
+FROM wealth_management.portfolios;
 
--- 7. product_ids sold in both bill 1 and bill 2.
-SELECT product_id FROM billing_product.billdetails WHERE bill_id = 1
+-- 7. Clients with financial goals and with transactions.
+SELECT client_id
+FROM wealth_management.financial_goals
 INTERSECT
-SELECT product_id FROM billing_product.billdetails WHERE bill_id = 2;
+SELECT c.client_id
+FROM wealth_management.clients c
+JOIN wealth_management.accounts a ON c.client_id = a.client_id
+JOIN wealth_management.transactions t ON a.account_id = t.account_id;
 
--- 8. customers with id≤5 who also have at least one bill.
-SELECT customer_id FROM billing_product.customers WHERE customer_id <= 5
+-- 8. asset_ids with quantity > 100 that also have asset_id > 310.
+SELECT asset_id
+FROM wealth_management.portfolio_assets
+WHERE quantity > 100
 INTERSECT
-SELECT customer_id FROM billing_product.bill;
+SELECT asset_id
+FROM wealth_management.assets
+WHERE asset_id > 310;
 
--- 9. total_amount values appearing in both bill and line_total.
-SELECT total_amount FROM billing_product.bill
+-- 9. Portfolios created in 2022 that also have assets with quantity > 100.
+SELECT portfolio_id
+FROM wealth_management.portfolios
+WHERE YEAR(created_date) = 2022
 INTERSECT
-SELECT line_total FROM billing_product.billdetails;
+SELECT portfolio_id
+FROM wealth_management.portfolio_assets
+WHERE quantity > 100;
 
--- 10. Years in both bills and billdetails.
-SELECT YEAR(bill_date) FROM billing_product.bill
+-- 10. Accounts opened before '2022-01-01' with at least one deposit.
+SELECT account_id
+FROM wealth_management.accounts
+WHERE opened_date < '2022-01-01'
 INTERSECT
-SELECT YEAR(b.bill_date)
-  FROM billing_product.billdetails bd
-  JOIN billing_product.bill b ON bd.bill_id = b.bill_id;
+SELECT account_id
+FROM wealth_management.transactions
+WHERE amount > 0;
 ```
 
 ## Except
 ```sql
--- 1. product_ids of products never sold.
-SELECT product_id FROM billing_product.products
+-- 1. Clients who have accounts but no portfolios.
+SELECT client_id
+FROM wealth_management.accounts
 EXCEPT
-SELECT DISTINCT product_id FROM billing_product.billdetails;
+SELECT client_id
+FROM wealth_management.portfolios;
 
--- 2. customer_ids of customers with no bills.
-SELECT customer_id FROM billing_product.customers
+-- 2. asset_ids defined in assets but not held in any portfolio.
+SELECT asset_id
+FROM wealth_management.assets
 EXCEPT
-SELECT DISTINCT customer_id FROM billing_product.bill;
+SELECT asset_id
+FROM wealth_management.portfolio_assets;
 
--- 3. bill_ids that have no details.
-SELECT bill_id FROM billing_product.bill
+-- 3. account_ids with transactions except those still 'Active'.
+SELECT account_id
+FROM wealth_management.transactions
 EXCEPT
-SELECT DISTINCT bill_id FROM billing_product.billdetails;
+SELECT account_id
+FROM wealth_management.accounts
+WHERE status = 'Active';
 
--- 4. billdetail_ids that do not match any bill.
-SELECT billdetail_id FROM billing_product.billdetails
+-- 4. Clients with goals but no accounts.
+SELECT client_id
+FROM wealth_management.financial_goals
 EXCEPT
-SELECT bill_id FROM billing_product.bill;
+SELECT client_id
+FROM wealth_management.accounts;
 
--- 5. product_ids priced ≤100 that have no line_total ≤100.
-SELECT product_id FROM billing_product.products WHERE price <= 100
+-- 5. Portfolios without any assets.
+SELECT portfolio_id
+FROM wealth_management.portfolios
 EXCEPT
-SELECT DISTINCT product_id FROM billing_product.billdetails WHERE line_total <= 100;
+SELECT portfolio_id
+FROM wealth_management.portfolio_assets;
 
--- 6. customers ≤id 5 with no bills in H1-2023.
-SELECT customer_id FROM billing_product.customers WHERE customer_id <= 5
+-- 6. Clients who joined before '2021-01-01' but have no goals.
+SELECT client_id
+FROM wealth_management.clients
+WHERE join_date < '2021-01-01'
 EXCEPT
-SELECT DISTINCT customer_id FROM billing_product.bill 
- WHERE MONTH(bill_date) <= 6 AND YEAR(bill_date)=2023;
+SELECT client_id
+FROM wealth_management.financial_goals;
 
--- 7. total_amount values in bills never seen as line_total.
-SELECT total_amount FROM billing_product.bill
+-- 7. Accounts opened after '2022-01-01' with no transactions.
+SELECT account_id
+FROM wealth_management.accounts
+WHERE opened_date > '2022-01-01'
 EXCEPT
-SELECT line_total FROM billing_product.billdetails;
+SELECT account_id
+FROM wealth_management.transactions;
 
--- 8. months with bills but no billdetails.
-SELECT DISTINCT MONTH(bill_date) AS mon FROM billing_product.bill
+-- 8. Transactions excluding all 'Deposit' entries.
+SELECT txn_id
+FROM wealth_management.transactions
 EXCEPT
-SELECT DISTINCT MONTH(b.bill_date)
-  FROM billing_product.billdetails bd
-  JOIN billing_product.bill b ON bd.bill_id = b.bill_id;
+SELECT txn_id
+FROM wealth_management.transactions
+WHERE txn_type = 'Deposit';
 
--- 9. product_ids ≥200 that have not been sold.
-SELECT product_id FROM billing_product.products WHERE price >= 200
+-- 9. asset_ids with acquisition_price < 200 EXCEPT those with quantity > 50.
+SELECT asset_id
+FROM wealth_management.portfolio_assets
+WHERE acquisition_price < 200
 EXCEPT
-SELECT DISTINCT product_id FROM billing_product.billdetails;
+SELECT asset_id
+FROM wealth_management.portfolio_assets
+WHERE quantity > 50;
 
--- 10. customers with bills but none in Q3-2023.
-SELECT DISTINCT customer_id FROM billing_product.bill
+-- 10. Clients without any transaction history.
+SELECT client_id
+FROM wealth_management.clients
 EXCEPT
-SELECT DISTINCT customer_id FROM billing_product.bill 
- WHERE MONTH(bill_date) IN (7,8,9) AND YEAR(bill_date)=2023;
+SELECT c.client_id
+FROM wealth_management.clients c
+JOIN wealth_management.accounts a ON c.client_id = a.client_id
+JOIN wealth_management.transactions t ON a.account_id = t.account_id;
 ```
 
 ***

@@ -7,135 +7,136 @@
 # DQL - Date Functions Assignments
 
 ## Current Date and time (GETDATE)
-1. Display current date and time
-2. Display only the current date
-3. Display only the current time
-4. Insert a new bill with bill_date = GETDATE()
-5. Update bill_date of bill_id = 5 to GETDATE()
-6. List bills with bill_date on or before now
-7. List bills created today
-8. Show GETDATE() formatted as ISO
-9. Show current year using GETDATE()
-10. Show weekday name of GETDATE()
+1. Display current date and time.
+2. Display current date only.
+3. List clients who joined today.
+4. List accounts opened today.
+5. Count transactions up to now.
+6. Show days since each client's join.
+7. Show portfolio retrieval timestamp.
+8. List transactions with current query time.
+9. Show goal query timestamp.
+10. List portfolio creation with current timestamp.
 
 ## Date Part Function (DATEPART)
-1. Extract year from each bill_date
-2. Extract month from each bill_date
-3. Extract day from each bill_date
-4. Extract hour from current time
-5. Extract minute from current time
-6. Extract second from current time
-7. Extract weekday index (1=Sunday)
-8. Extract ISO week number
-9. Extract day of year
-10. Extract quarter
+1. Extract year from client join_date.
+2. Extract month from join_date.
+3. Extract day from transaction txn_date.
+4. Extract hour from current datetime.
+5. Extract minute from current datetime.
+6. Extract second from current datetime.
+7. Extract quarter from portfolio created_date.
+8. Extract week of year from client join_date.
+9. Extract day of year from financial goal target_date.
+10. Extract ISO year from acquisition_date.
 
 ## Date Difference Function (DATEDIFF)
-1. Days since each bill_date
-2. Months since each bill_date
-3. Years since each bill_date
-4. Hours between bill_date and now
-5. Minutes between bill_date and now
-6. Seconds between bill_date and now
-7. Days between bill 1 and bill 2
-8. Weeks between earliest and latest bill
-9. Months between first and last bill of customer_id=3
-10. Days difference from a fixed date
+1. Calculate days since client joined.
+2. Calculate months since account opened.
+3. Calculate years until goal target_date.
+4. Calculate hours between a transaction and now.
+5. Days between portfolio creation and today.
+6. Days between two transactions.
+7. Months between acquisition and today.
+8. Years since client birth (age).
+9. Days to first transaction after join.
+10. Weeks from join_date to goal target_date.
 
 ## Date Addition/Subtraction (DATEADD)
-1. Add 7 days to each bill_date
-2. Subtract 7 days from each bill_date
-3. Add 1 month to each bill_date
-4. Subtract 1 month from each bill_date
-5. Add 1 year to each bill_date
-6. Subtract 1 year from each bill_date
-7. Add 3 hours to current time
-8. Add 30 minutes to current time
-9. Add 45 seconds to current time
-10. Calculate due date 30 days after bill_date
+1. Add 30 days to client join_date.
+2. Subtract 1 month from account opened_date.
+3. Add 1 year to financial goal target_date.
+4. Subtract 7 days from transaction txn_date.
+5. Add 6 hours to acquisition_date.
+6. Subtract 15 days from portfolio created_date.
+7. Add 90 minutes to now.
+8. Subtract 2 years from target_date.
+9. Add 100 days to join_date.
+10. Subtract 3 months from opened_date.
 
 ## Date Formatting (FORMAT)
-1. Format bill_date as 'yyyy-MM-dd'
-2. Format bill_date as 'dd/MM/yyyy'
-3. Format bill_date as 'MMMM dd, yyyy'
-4. Format bill_date time as 'HH:mm:ss'
-5. Format now as 'yyyy-MM-dd HH:mm'
-7. Format bill_date as month name short
-8. Format bill_date with ordinal day
-9. Format line_total as currency
-10. Format bill_date with ISO 8601
+1. Format join_date as 'dd/MM/yyyy'.
+2. Format opened_date as 'MMMM yyyy'.
+3. Format txn_date as 'yyyy-MM-dd HH:mm'.
+4. Format target_date as 'MMM dd, yyyy'.
+5. Format created_date as 'yyyy/MM/dd'.
+6. Format acquisition_date as 'dd MMM yyyy'.
+7. Format current time as 'hh:mm tt'.
+8. Format date_of_birth as 'dddd, MMMM d'.
+9. Format txn_date as ISO 8601.
+10. Format target_date as long date.
 
 ## Weekday Function (DATEPART weekday)
-1. Get weekday number (1=Sunday)
-2. Filter bills on Sundays
-3. Filter bills on Saturdays
-4. Count bills per weekday
-5. Show weekday name alongside bill
-6. Bills on business days (Mon–Fri)
-7. First bill of each weekday
-8. Bills on weekend days
-9. Add weekday number to each bill_date
-10. Bills skipping weekends (count business days)
+1. Extract weekday number from txn_date.
+2. List transactions on Monday (weekday = 2).
+3. Count transactions by weekday.
+4. Clients who joined on Friday.
+5. Extract weekday of account opened_date.
+6. Goals due on weekends.
+7. Portfolio creation weekday.
+8. Transactions on first day of week (weekday=1).
+9. Clients with join_date weekday between 2 and 6.
+10. Goals with target weekday.
 
 ## Date to String (CONVERT with style)
-1. Convert bill_date to 'yyyy-mm-dd'
-2. Convert bill_date to 'mm/dd/yyyy'
-3. Convert bill_date to 'dd/mm/yyyy'
-4. Convert bill_date to 'yyyymmdd'
-5. Convert bill_date to 'Mon dd yyyy'
-6. Convert bill_date to 'dd mon yy'
-7. Convert GETDATE() to ISO8601
-8. Convert GETDATE() to style 20
-9. Convert GETDATE() to style 1
-10. Convert GETDATE() to style 3
+1. Convert join_date to mm/dd/yyyy.
+2. Convert opened_date to dd/mm/yyyy.
+3. Convert txn_date to yyyymmdd.
+4. Convert target_date to 'mon dd yyyy'.
+5. Convert created_date to dd Mon yyyy.
+6. Convert acquisition_date to yyyy-mm-dd.
+7. Convert date_of_birth to mm-dd-yy.
+8. Convert target_date to default style.
+9. Convert txn_date to style 120.
+10. Convert join_date to style 113.
 
 ## DateTime to String (CONVERT with style)
-1. bill_date with time 'yyyy-mm-dd hh:mi:ss'
-2. bill_date with milliseconds 'yyyy-mm-dd hh:mi:ss.mmm'
-3. NOW with milliseconds
-4. bill_date in style 113
-5. bill_date in style 109
-6. bill_date in style 126 (ISO8601)
-7. GETDATE() in style 127 (ISO8601 +TZ)
-8. bill_date in style 3 with time
-9. bill_date in style 23 with time
-10. GETDATE() in style 14 (hh:mi:ss:mmm)
+1. Convert GETDATE() to style 121.
+2. Convert txn_date to style 20.
+3. Convert target_date to style 126.
+4. Convert GETDATE() to style 100.
+5. Convert created_date to style 109.
+6. Convert acquisition_date to style 113.
+7. Convert txn_date to style 120.
+8. Convert GETDATE() with milliseconds.
+9. Convert date_of_birth to style 103.
+10. Convert opened_date to style 1.
 
 ## String to Date (CONVERT/CAST)
-1. Convert '2023-04-15' to date
-2. Convert '04/15/2023' US format
-3. Convert '15/04/2023' UK format
-4. Convert '20230415' compact format
-5. CAST string to date
-6. TRY_CONVERT date from invalid
-7. Convert '15-Apr-2023' format 106
-8. Convert style 1 two-digit year
-9. Convert 'Apr 15, 2023' style 107
-10. Convert 'Sat Apr 15 2023' style 100
+1. Convert '01/15/2022' to date.
+2. Convert '15/01/2022' to date.
+3. Convert '20220115' to date.
+4. Convert 'Jan 15 2022' to date.
+5. Convert '2022-01-15' to date.
+6. Convert '15-Jan-2022' to date.
+7. Convert '15.01.2022' to date.
+8. Convert '2022/01/15' to date.
+9. Convert '2022-Jan-15' to date.
+10. Convert '01-15-2022' to date.
 
 ## String to DateTime (CONVERT/TRY_PARSE)
-1. Convert '2023-04-15 13:45:00' to datetime
-2. Convert ISO8601 with mmm '121'
-3. CAST ISO string to datetime2
-4. TRY_PARSE UK format
-5. Convert style 113
-6. Convert style 109
-7. Convert with timezone offset
-8. TRY_CONVERT datetime2 from compact
-9. Convert style 126 to datetimeoffset
-10. TRY_PARSE month name format
+1. Convert '2022-01-15 10:30:00' to datetime.
+2. Convert '15/01/2022 16:45:00' to datetime.
+3. Convert '20220115 103000' to datetime.
+4. Convert 'Jan 15 2022 1:30PM' to datetime.
+5. Convert '2022-01-15T10:30:00' to datetime2.
+6. Convert '2022/01/15 10:30' to datetime.
+7. Convert '01-15-2022 10:30:00' to datetime.
+8. Convert '15 Jan 2022 10:30:00' to datetime.
+9. Convert '2022.01.15 10:30:00' to datetime.
+10. Convert '2022-01-15 10:30:00.123' to datetime2.
 
 ## DateTime and TimeZone (AT TIME ZONE / SWITCHOFFSET)
-1. Show current UTC time
-2. Convert current UTC to India Standard Time
-3. Convert bill_date (assumed UTC) to IST
-4. Convert bill_date to Pacific Standard Time
-5. Use SWITCHOFFSET to shift bill_dateoffset by +02:00
-6. Insert current time with timezone
-7. Filter bills where IST local date is today
-8. Compare bill_date IST to a fixed IST datetime
-9. Show difference in hours between UTC and IST for bill_date
-10. Convert bill_date from local to UTC (reverse)
+1. Show current UTC time.
+2. Convert GETDATE() to India Standard Time.
+3. Convert transaction time to Eastern Standard Time.
+4. Convert target_date to Pacific Standard Time.
+5. Show server datetimeoffset.
+6. Convert client join_date midnight to UTC.
+7. Convert portfolio created_date to Central Europe Time.
+8. Show current time in GMT.
+9. Convert opened_date to Japan Standard Time.
+10. Convert acquisition_date to Australian Eastern Standard Time.
 
 ***
 | &copy; TINITIATE.COM |

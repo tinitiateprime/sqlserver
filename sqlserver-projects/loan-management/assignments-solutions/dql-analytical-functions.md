@@ -373,6 +373,7 @@ SELECT loan_id, borrower_id, start_date,
        ) AS prev_start_date
   FROM loan_management.loans;
 ```
+
 ## LEAD()
 ```sql
 -- 1. Next payment amount per loan.

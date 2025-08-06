@@ -8,255 +8,185 @@
 
 ## Count
 ```sql
--- 1. Count all products
-SELECT COUNT(*) AS TotalProducts
-FROM billing_product.products;
-
--- 2. Count all customers
-SELECT COUNT(*) AS TotalCustomers
-FROM billing_product.customers;
-
--- 3. Count all bills
-SELECT COUNT(*) AS TotalBills
-FROM billing_product.bill;
-
--- 4. Count all bill details
-SELECT COUNT(*) AS TotalBillDetails
-FROM billing_product.billdetails;
-
--- 5. Count distinct products sold
-SELECT COUNT(DISTINCT product_id) AS DistinctProductsSold
-FROM billing_product.billdetails;
-
--- 6. Count bills per customer
-SELECT customer_id, COUNT(*) AS BillsCount
-FROM billing_product.bill
-GROUP BY customer_id;
-
--- 7. Count line items per bill
-SELECT bill_id, COUNT(*) AS LineItemCount
-FROM billing_product.billdetails
-GROUP BY bill_id;
-
--- 8. Count customers with at least one bill
-SELECT COUNT(DISTINCT customer_id) AS CustomersWithBills
-FROM billing_product.bill;
-
--- 9. Count products never sold
-SELECT COUNT(*) AS UnsoldProducts
-FROM billing_product.products
-WHERE product_id NOT IN (
-  SELECT product_id FROM billing_product.billdetails
-);
-
--- 10. Count bills issued in 2023
-SELECT COUNT(*) AS BillsIn2023
-FROM billing_product.bill
-WHERE YEAR(bill_date) = 2023;
+-- 1. Total number of clients.
+SELECT COUNT(*) AS total_clients FROM wealth_management.clients;
+-- 2. Total number of accounts.
+SELECT COUNT(*) AS total_accounts FROM wealth_management.accounts;
+-- 3. Total number of portfolios.
+SELECT COUNT(*) AS total_portfolios FROM wealth_management.portfolios;
+-- 4. Total number of assets.
+SELECT COUNT(*) AS total_assets FROM wealth_management.assets;
+-- 5. Total number of transactions.
+SELECT COUNT(*) AS total_transactions FROM wealth_management.transactions;
+-- 6. Total number of financial goals.
+SELECT COUNT(*) AS total_goals FROM wealth_management.financial_goals;
+-- 7. Number of accounts per client.
+SELECT client_id, COUNT(*) AS accounts_count
+FROM wealth_management.accounts
+GROUP BY client_id;
+-- 8. Number of portfolios per client.
+SELECT client_id, COUNT(*) AS portfolios_count
+FROM wealth_management.portfolios
+GROUP BY client_id;
+-- 9. Number of assets per portfolio.
+SELECT portfolio_id, COUNT(*) AS assets_count
+FROM wealth_management.portfolio_assets
+GROUP BY portfolio_id;
+-- 10. Number of transactions by type.
+SELECT txn_type, COUNT(*) AS count_by_type
+FROM wealth_management.transactions
+GROUP BY txn_type;
 ```
 
 ## Sum
 ```sql
--- 1. Sum of all bill total_amounts
-SELECT SUM(total_amount) AS SumAllBillAmounts
-FROM billing_product.bill;
-
--- 2. Sum of all line totals
-SELECT SUM(line_total) AS SumAllLineTotals
-FROM billing_product.billdetails;
-
--- 3. Sum of prices of all products
-SELECT SUM(price) AS SumAllProductPrices
-FROM billing_product.products;
-
--- 4. Sum total_amount per customer
-SELECT customer_id, SUM(total_amount) AS SumPerCustomer
-FROM billing_product.bill
-GROUP BY customer_id;
-
--- 5. Sum line_total per product
-SELECT product_id, SUM(line_total) AS SumPerProduct
-FROM billing_product.billdetails
-GROUP BY product_id;
-
--- 6. Sum quantity sold per product
-SELECT product_id, SUM(quantity) AS TotalQuantitySold
-FROM billing_product.billdetails
-GROUP BY product_id;
-
--- 7. Sum total_amount for bills in Q1 2023
-SELECT SUM(total_amount) AS SumQ1_2023
-FROM billing_product.bill
-WHERE MONTH(bill_date) BETWEEN 1 AND 3 AND YEAR(bill_date) = 2023;
-
--- 8. Sum line_total for bill_id = 1
-SELECT SUM(line_total) AS SumBill1Details
-FROM billing_product.billdetails
-WHERE bill_id = 1;
-
--- 9. Sum of total_amount for customers with ID ≤ 5
-SELECT SUM(total_amount) AS SumCustomers1to5
-FROM billing_product.bill
-WHERE customer_id <= 5;
-
--- 10. Sum of price*quantity for all line items
-SELECT SUM(p.price * bd.quantity) AS ComputedLineSum
-FROM billing_product.billdetails bd
-JOIN billing_product.products p ON bd.product_id = p.product_id;
+-- 1. Sum of all transaction amounts.
+SELECT SUM(amount) AS sum_all_transactions FROM wealth_management.transactions;
+-- 2. Sum of all deposits.
+SELECT SUM(amount) AS sum_deposits
+FROM wealth_management.transactions
+WHERE amount > 0;
+-- 3. Sum of all withdrawals.
+SELECT SUM(amount) AS sum_withdrawals
+FROM wealth_management.transactions
+WHERE amount < 0;
+-- 4. Sum of current amounts across all goals.
+SELECT SUM(current_amount) AS sum_current_goals FROM wealth_management.financial_goals;
+-- 5. Sum of target amounts across all goals.
+SELECT SUM(target_amount) AS sum_target_goals FROM wealth_management.financial_goals;
+-- 6. Sum of quantities held in all portfolios.
+SELECT SUM(quantity) AS sum_portfolio_quantity FROM wealth_management.portfolio_assets;
+-- 7. Sum of acquisition prices across all portfolio assets.
+SELECT SUM(acquisition_price) AS sum_acquisition_prices FROM wealth_management.portfolio_assets;
+-- 8. Sum of current_amount per client.
+SELECT client_id, SUM(current_amount) AS sum_client_current
+FROM wealth_management.financial_goals
+GROUP BY client_id;
+-- 9. Sum of amount per account.
+SELECT account_id, SUM(amount) AS sum_account_amount
+FROM wealth_management.transactions
+GROUP BY account_id;
+-- 10. Sum of quantity per asset.
+SELECT asset_id, SUM(quantity) AS sum_asset_quantity
+FROM wealth_management.portfolio_assets
+GROUP BY asset_id;
 ```
 
 ## Avg
 ```sql
--- 1. Average price of products
-SELECT AVG(price) AS AvgProductPrice
-FROM billing_product.products;
-
--- 2. Average total_amount of bills
-SELECT AVG(total_amount) AS AvgBillAmount
-FROM billing_product.bill;
-
--- 3. Average line_total of bill details
-SELECT AVG(line_total) AS AvgLineTotal
-FROM billing_product.billdetails;
-
--- 4. Average quantity per line item
-SELECT AVG(quantity) AS AvgQuantity
-FROM billing_product.billdetails;
-
--- 5. Average total_amount per customer
-SELECT customer_id, AVG(total_amount) AS AvgPerCustomer
-FROM billing_product.bill
-GROUP BY customer_id;
-
--- 6. Average line_total per product
-SELECT product_id, AVG(line_total) AS AvgPerProduct
-FROM billing_product.billdetails
-GROUP BY product_id;
-
--- 7. Average total_amount for bills in March 2023
-SELECT AVG(total_amount) AS AvgMarch2023
-FROM billing_product.bill
-WHERE MONTH(bill_date) = 3 AND YEAR(bill_date) = 2023;
-
--- 8. Average quantity per bill
-SELECT bill_id, AVG(quantity) AS AvgQtyPerBill
-FROM billing_product.billdetails
-GROUP BY bill_id;
-
--- 9. Average price of sold products only
-SELECT AVG(p.price) AS AvgSoldProductPrice
-FROM billing_product.products p
-WHERE EXISTS (
-  SELECT 1 FROM billing_product.billdetails bd WHERE bd.product_id = p.product_id
-);
-
--- 10. Average total_amount per month in 2023
-SELECT MONTH(bill_date) AS Mon, AVG(total_amount) AS AvgAmt
-FROM billing_product.bill
-WHERE YEAR(bill_date) = 2023
-GROUP BY MONTH(bill_date);
+-- 1. Average transaction amount.
+SELECT AVG(amount) AS avg_transaction_amount FROM wealth_management.transactions;
+-- 2. Average deposit amount.
+SELECT AVG(amount) AS avg_deposit
+FROM wealth_management.transactions
+WHERE amount > 0;
+-- 3. Average withdrawal amount.
+SELECT AVG(amount) AS avg_withdrawal
+FROM wealth_management.transactions
+WHERE amount < 0;
+-- 4. Average current_amount of goals.
+SELECT AVG(current_amount) AS avg_current_goals FROM wealth_management.financial_goals;
+-- 5. Average target_amount of goals.
+SELECT AVG(target_amount) AS avg_target_goals FROM wealth_management.financial_goals;
+-- 6. Average quantity in portfolios.
+SELECT AVG(quantity) AS avg_portfolio_quantity FROM wealth_management.portfolio_assets;
+-- 7. Average acquisition_price in portfolios.
+SELECT AVG(acquisition_price) AS avg_acquisition_price FROM wealth_management.portfolio_assets;
+-- 8. Average number of portfolios per client.
+SELECT AVG(cnt) AS avg_portfolios_per_client
+FROM (
+  SELECT client_id, COUNT(*) AS cnt
+  FROM wealth_management.portfolios
+  GROUP BY client_id
+) t;
+-- 9. Average number of accounts per client.
+SELECT AVG(cnt) AS avg_accounts_per_client
+FROM (
+  SELECT client_id, COUNT(*) AS cnt
+  FROM wealth_management.accounts
+  GROUP BY client_id
+) t;
+-- 10. Average transactions per account.
+SELECT AVG(cnt) AS avg_txns_per_account
+FROM (
+  SELECT account_id, COUNT(*) AS cnt
+  FROM wealth_management.transactions
+  GROUP BY account_id
+) t;
 ```
 
 ## Max
 ```sql
--- 1. Maximum product price
-SELECT MAX(price) AS MaxProductPrice
-FROM billing_product.products;
-
--- 2. Maximum bill total_amount
-SELECT MAX(total_amount) AS MaxBillAmount
-FROM billing_product.bill;
-
--- 3. Maximum line_total in details
-SELECT MAX(line_total) AS MaxLineTotal
-FROM billing_product.billdetails;
-
--- 4. Maximum quantity in bill details
-SELECT MAX(quantity) AS MaxQuantity
-FROM billing_product.billdetails;
-
--- 5. Highest total_amount per customer
-SELECT customer_id, MAX(total_amount) AS MaxPerCustomer
-FROM billing_product.bill
-GROUP BY customer_id;
-
--- 6. Highest line_total per bill
-SELECT bill_id, MAX(line_total) AS MaxLinePerBill
-FROM billing_product.billdetails
-GROUP BY bill_id;
-
--- 7. Maximum price among sold products
-SELECT MAX(p.price) AS MaxSoldPrice
-FROM billing_product.products p
-JOIN billing_product.billdetails bd ON p.product_id = bd.product_id;
-
--- 8. Latest bill_date
-SELECT MAX(bill_date) AS LatestBillDate
-FROM billing_product.bill;
-
--- 9. Maximum number of items in a single bill
-SELECT bill_id, MAX(item_count) AS MaxItems
-FROM (
-  SELECT bill_id, COUNT(*) AS item_count
-  FROM billing_product.billdetails
-  GROUP BY bill_id
-) AS t;
-
--- 10. Maximum total_amount in 2023
-SELECT MAX(total_amount) AS MaxAmt2023
-FROM billing_product.bill
-WHERE YEAR(bill_date) = 2023;
+-- 1. Maximum transaction amount.
+SELECT MAX(amount) AS max_transaction FROM wealth_management.transactions;
+-- 2. Maximum deposit amount.
+SELECT MAX(amount) AS max_deposit
+FROM wealth_management.transactions
+WHERE amount > 0;
+-- 3. Maximum withdrawal amount.
+SELECT MIN(amount) AS max_withdrawal  /* most negative = min() */
+FROM wealth_management.transactions
+WHERE amount < 0;
+-- 4. Maximum current_amount in goals.
+SELECT MAX(current_amount) AS max_current_goal FROM wealth_management.financial_goals;
+-- 5. Maximum target_amount in goals.
+SELECT MAX(target_amount) AS max_target_goal FROM wealth_management.financial_goals;
+-- 6. Maximum quantity in portfolio_assets.
+SELECT MAX(quantity) AS max_portfolio_quantity FROM wealth_management.portfolio_assets;
+-- 7. Maximum acquisition_price in portfolio_assets.
+SELECT MAX(acquisition_price) AS max_acquisition_price FROM wealth_management.portfolio_assets;
+-- 8. Client with most portfolios.
+SELECT TOP 1 client_id, COUNT(*) AS num_portfolios
+FROM wealth_management.portfolios
+GROUP BY client_id
+ORDER BY COUNT(*) DESC;
+-- 9. Client with most accounts.
+SELECT TOP 1 client_id, COUNT(*) AS num_accounts
+FROM wealth_management.accounts
+GROUP BY client_id
+ORDER BY COUNT(*) DESC;
+-- 10. Account with most transactions.
+SELECT TOP 1 account_id, COUNT(*) AS num_transactions
+FROM wealth_management.transactions
+GROUP BY account_id
+ORDER BY COUNT(*) DESC;
 ```
 
 ## Min
 ```sql
--- 1. Minimum product price
-SELECT MIN(price) AS MinProductPrice
-FROM billing_product.products;
-
--- 2. Minimum bill total_amount
-SELECT MIN(total_amount) AS MinBillAmount
-FROM billing_product.bill;
-
--- 3. Minimum line_total in details
-SELECT MIN(line_total) AS MinLineTotal
-FROM billing_product.billdetails;
-
--- 4. Minimum quantity in bill details
-SELECT MIN(quantity) AS MinQuantity
-FROM billing_product.billdetails;
-
--- 5. Lowest total_amount per customer
-SELECT customer_id, MIN(total_amount) AS MinPerCustomer
-FROM billing_product.bill
-GROUP BY customer_id;
-
--- 6. Lowest line_total per bill
-SELECT bill_id, MIN(line_total) AS MinLinePerBill
-FROM billing_product.billdetails
-GROUP BY bill_id;
-
--- 7. Minimum price among sold products
-SELECT MIN(p.price) AS MinSoldPrice
-FROM billing_product.products p
-JOIN billing_product.billdetails bd ON p.product_id = bd.product_id;
-
--- 8. Earliest bill_date
-SELECT MIN(bill_date) AS EarliestBillDate
-FROM billing_product.bill;
-
--- 9. Minimum number of items in a single bill
-SELECT bill_id, MIN(item_count) AS MinItems
-FROM (
-  SELECT bill_id, COUNT(*) AS item_count
-  FROM billing_product.billdetails
-  GROUP BY bill_id
-) AS t;
-
--- 10. Minimum total_amount in 2023
-SELECT MIN(total_amount) AS MinAmt2023
-FROM billing_product.bill
-WHERE YEAR(bill_date) = 2023;
+-- 1. Minimum transaction amount.
+SELECT MIN(amount) AS min_transaction FROM wealth_management.transactions;
+-- 2. Minimum deposit amount.
+SELECT MIN(amount) AS min_deposit
+FROM wealth_management.transactions
+WHERE amount > 0;
+-- 3. Minimum withdrawal amount.
+SELECT MAX(amount) AS min_withdrawal  /* least negative = max() */
+FROM wealth_management.transactions
+WHERE amount < 0;
+-- 4. Minimum current_amount in goals.
+SELECT MIN(current_amount) AS min_current_goal FROM wealth_management.financial_goals;
+-- 5. Minimum target_amount in goals.
+SELECT MIN(target_amount) AS min_target_goal FROM wealth_management.financial_goals;
+-- 6. Minimum quantity in portfolio_assets.
+SELECT MIN(quantity) AS min_portfolio_quantity FROM wealth_management.portfolio_assets;
+-- 7. Minimum acquisition_price in portfolio_assets.
+SELECT MIN(acquisition_price) AS min_acquisition_price FROM wealth_management.portfolio_assets;
+-- 8. Client with fewest portfolios.
+SELECT TOP 1 client_id, COUNT(*) AS num_portfolios
+FROM wealth_management.portfolios
+GROUP BY client_id
+ORDER BY COUNT(*) ASC;
+-- 9. Client with fewest accounts.
+SELECT TOP 1 client_id, COUNT(*) AS num_accounts
+FROM wealth_management.accounts
+GROUP BY client_id
+ORDER BY COUNT(*) ASC;
+-- 10. Account with fewest transactions.
+SELECT TOP 1 account_id, COUNT(*) AS num_transactions
+FROM wealth_management.transactions
+GROUP BY account_id
+ORDER BY COUNT(*) ASC;
 ```
 
 ***

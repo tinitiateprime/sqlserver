@@ -647,6 +647,7 @@ SELECT
   ) AS prev_status
 FROM credit_card.credit_cards AS cc;
 ```
+
 ## LEAD()
 ```sql
 -- 1. Next transaction amount per card by date

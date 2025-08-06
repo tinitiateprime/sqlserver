@@ -7,64 +7,64 @@
 # DQL - Aggregate Functions Assignments
 
 ## Count
-1. Count all products
-2. Count all customers
-3. Count all bills
-4. Count all bill details
-5. Count distinct products sold
-6. Count bills per customer
-7. Count line items per bill
-8. Count customers with at least one bill
-9. Count products never sold
-10. Count bills issued in 2023
+1. Total number of clients.
+2. Total number of accounts.
+3. Total number of portfolios.
+4. Total number of assets.
+5. Total number of transactions.
+6. Total number of financial goals.
+7. Number of accounts per client.
+8. Number of portfolios per client.
+9. Number of assets per portfolio.
+10. Number of transactions by type.
 
 ## Sum
-1. Sum of all bill total_amounts
-2. Sum of all line totals
-3. Sum of prices of all products
-4. Sum total_amount per customer
-5. Sum line_total per product
-6. Sum quantity sold per product
-7. Sum total_amount for bills in Q1 2023
-8. Sum line_total for bill_id = 1
-9. Sum of total_amount for customers with ID ≤ 5
-10. Sum of price*quantity for all line items
+1. Sum of all transaction amounts.
+2. Sum of all deposits.
+3. Sum of all withdrawals.
+4. Sum of current amounts across all goals.
+5. Sum of target amounts across all goals.
+6. Sum of quantities held in all portfolios.
+7. Sum of acquisition prices across all portfolio assets.
+8. Sum of current_amount per client.
+9. Sum of amount per account.
+10. Sum of quantity per asset.
 
 ## Avg
-1. Average price of products
-2. Average total_amount of bills
-3. Average line_total of bill details
-4. Average quantity per line item
-5. Average total_amount per customer
-6. Average line_total per product
-7. Average total_amount for bills in March 2023
-8. Average quantity per bill
-9. Average price of sold products only
-10. Average total_amount per month in 2023
+1. Average transaction amount.
+2. Average deposit amount.
+3. Average withdrawal amount.
+4. Average current_amount of goals.
+5. Average target_amount of goals.
+6. Average quantity in portfolios.
+7. Average acquisition_price in portfolios.
+8. Average number of portfolios per client.
+9. Average number of accounts per client.
+10. Average transactions per account.
 
 ## Max
-1. Maximum product price
-2. Maximum bill total_amount
-3. Maximum line_total in details
-4. Maximum quantity in bill details
-5. Highest total_amount per customer
-6. Highest line_total per bill
-7. Maximum price among sold products
-8. Latest bill_date
-9. Maximum number of items in a single bill
-10. Maximum total_amount in 2023
+1. Maximum transaction amount.
+2. Maximum deposit amount.
+3. Maximum withdrawal amount.
+4. Maximum current_amount in goals.
+5. Maximum target_amount in goals.
+6. Maximum quantity in portfolio_assets.
+7. Maximum acquisition_price in portfolio_assets.
+8. Client with most portfolios.
+9. Client with most accounts.
+10. Account with most transactions.
 
 ## Min
-1. Minimum product price
-2. Minimum bill total_amount
-3. Minimum line_total in details
-4. Minimum quantity in bill details
-5. Lowest total_amount per customer
-6. Lowest line_total per bill
-7. Minimum price among sold products
-8. Earliest bill_date
-9. Minimum number of items in a single bill
-10. Minimum total_amount in 2023
+1. Minimum transaction amount.
+2. Minimum deposit amount.
+3. Minimum withdrawal amount.
+4. Minimum current_amount in goals.
+5. Minimum target_amount in goals.
+6. Minimum quantity in portfolio_assets.
+7. Minimum acquisition_price in portfolio_assets.
+8. Client with fewest portfolios.
+9. Client with fewest accounts.
+10. Account with fewest transactions.
 
 ***
 | &copy; TINITIATE.COM |

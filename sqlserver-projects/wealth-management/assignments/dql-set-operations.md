@@ -7,40 +7,40 @@
 # DQL - Set Operations Assignments
 
 ## Union
-1. Combine all product_ids and customer_ids into one list of IDs.
-2. Combine all bill_ids and billdetail_ids into one list of IDs.
-3. List all distinct names from products and customers.
-4. List all IDs from products and billdetails (product_id union billdetail_id).
-5. All (year, month) combinations from bills and billdetails.
-6. Combine product_ids priced over 200 and product_ids with line_total over 200.
-7. List of customers with customer_id<6 together with customers having bills.
-8. All unique total_amount values from bill and line_total from billdetails.
-9. Years with bills vs years with billdetails.
-10. Union of product_ids priced <=100 and those priced >=500.
+1. Combine account_ids for 'Checking' and 'Brokerage' accounts.
+2. List client_ids who have made a 'Buy' or a 'Sell' transaction.
+3. List all asset symbols that are Stocks or ETFs.
+4. Combine portfolio_ids created in 2021 and 2022.
+5. Combine asset_ids held in portfolio 201 or 202.
+6. Combine txn_id for 'Deposit' and 'Withdrawal' transactions.
+7. Combine goal_ids for 'Retirement Fund' and 'College Tuition'.
+8. Combine first and last names of clients into one name list.
+9. Combine distinct years from client join_date and goal target_date.
+10. Combine account_type and asset_type into a common list.
 
 ## Intersect
-1. IDs present both as product_id and customer_id.
-2. bill_ids that have corresponding details.
-3. Names present in both products and customers.
-4. Months in which both bills and billdetails exist.
-5. product_ids priced above avg(price) and with line_total above avg(line_total).
-6. customer_ids billed in Q1 and also in Q2 of 2023.
-7. product_ids sold in both bill 1 and bill 2.
-8. customers with id≤5 who also have at least one bill.
-9. total_amount values appearing in both bill and line_total.
-10. Years in both bills and billdetails.
+1. Clients who have both 'Checking' and 'Savings' accounts.
+2. asset_ids present in both portfolios 201 and 202.
+3. account_ids with both 'Buy' and 'Sell' transactions.
+4. Clients with both 'Retirement Fund' and 'College Savings' goals.
+5. Stocks that are also held in any portfolio.
+6. Clients who have a 'Checking' account and also hold a portfolio.
+7. Clients with financial goals and with transactions.
+8. asset_ids with quantity > 100 that also have asset_id > 310.
+9. Portfolios created in 2022 that also have assets with quantity > 100.
+10. Accounts opened before '2022-01-01' with at least one deposit.
 
 ## Except
-1. product_ids of products never sold.
-2. customer_ids of customers with no bills.
-3. bill_ids that have no details.
-4. billdetail_ids that do not match any bill.
-5. product_ids priced ≤100 that have no line_total ≤100.
-6. customers ≤id 5 with no bills in H1-2023.
-7. total_amount values in bills never seen as line_total.
-8. months with bills but no billdetails.
-9. product_ids ≥200 that have not been sold.
-10. customers with bills but none in Q3-2023.
+1. Clients who have accounts but no portfolios.
+2. asset_ids defined in assets but not held in any portfolio.
+3. account_ids with transactions except those still 'Active'.
+4. Clients with goals but no accounts.
+5. Portfolios without any assets.
+6. Clients who joined before '2021-01-01' but have no goals.
+7. Accounts opened after '2022-01-01' with no transactions.
+8. Transactions excluding all 'Deposit' entries.
+9. asset_ids with acquisition_price < 200 EXCEPT those with quantity > 50.
+10. Clients without any transaction history.
 
 ***
 | &copy; TINITIATE.COM |

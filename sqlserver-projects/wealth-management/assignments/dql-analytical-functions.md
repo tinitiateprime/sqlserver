@@ -7,112 +7,112 @@
 # DQL - Analytical Functions Assignments
 
 ## Aggregate Functions
-1. Running total of bill total_amount ordered by bill_date
-2. Running average of total_amount over last 2 bills
-3. Sum of line_total partitioned by bill_id
-4. Average line_total partitioned by product_id
-5. Cumulative sum of total_amount per customer ordered by bill_date
-6. Cumulative max of total_amount across all bills
-7. Cumulative min line_total partitioned by product_id
-8. Count of billdetails per product using window function
-9. Overall sum and average price of products
-10. Count of bills per month using window
+1. Running total of transaction amounts per account.
+2. Total portfolios per client.
+3. Total assets quantity per portfolio.
+4. Cumulative goal progress per client by target_date.
+5. Average transaction amount per account.
+6. Maximum single transaction per account.
+7. Minimum single transaction per account.
+8. Average acquisition_price per asset across all portfolios.
+9. Moving sum of last 5 transactions globally (by date).
+10. Count of goals per status.
 
 ## ROW_NUMBER()
-1. Row number of bills ordered by bill_date
-2. Row number per customer ordered by bill_date
-3. Row number of products ordered by price desc
-4. Row number per bill for billdetails by line_total desc
-5. Sequential row numbers for billdetails
-6. Row number of customers by name
-7. Row number partitioned by month of bill_date
-8. Row number of line items overall by line_total
-9. Row number per product partition by billdetails ordered by quantity
-10. Row number for bills with highest total_amount first
+1. Sequential number of transactions per account by date.
+2. Order portfolios per client by creation date.
+3. Number assets per portfolio by acquisition_date.
+4. Rank client goals by target_date.
+5. Number accounts per client by opened_date.
+6. Order clients by join_date.
+7. Number assets by symbol alphabetically.
+8. Order transactions per client across accounts.
+9. Number portfolio_assets by price descending.
+10. Order goals per client by current_amount desc.
 
 ## RANK()
-1. Rank bills by total_amount desc
-2. Rank products by price desc
-3. Rank customers by number of bills
-4. Rank billdetails within each bill by line_total
-5. Rank bills per customer by total_amount
-6. Rank products by total quantity sold
-7. Rank months by total sales
-8. Rank line items globally by line_total
-9. Rank customers by average bill amount
-10. Rank products by average line_total
+1. Rank accounts per client by total transaction amount desc.
+2. Rank portfolios per client by total asset quantity.
+3. Rank clients by total current goal amount.
+4. Rank assets by number of portfolios held.
+5. Rank goals per client by progress percentage.
+6. Rank transactions by amount desc globally.
+7. Rank accounts by number of transactions.
+8. Rank clients by number of accounts.
+9. Rank portfolios by creation date (older = better).
+10. Rank assets by symbol.
 
 ## DENSE_RANK()
-1. Dense rank bills by total_amount desc
-2. Dense rank products by price desc
-3. Dense rank customers by bill count
-4. Dense rank billdetails within bill
-5. Dense rank products by sales quantity
-6. Dense rank months by sales
-7. Dense rank customers by average bill
-8. Dense rank line items by value
-9. Dense rank bills by date (earliest first)
-10. Dense rank products by length of name
+1. Rank accounts per client by total transaction amount desc.
+2. Rank portfolios per client by total asset quantity.
+3. Rank clients by total current goal amount.
+4. Rank assets by number of portfolios held.
+5. Rank goals per client by progress percentage.
+6. Rank transactions by amount desc globally.
+7. Rank accounts by number of transactions.
+8. Rank clients by number of accounts.
+9. Rank portfolios by creation date (older = better).
+10. Rank assets by symbol.
 
 ## NTILE(n)
-1. Divide bills into 4 quartiles by total_amount
-2. Divide customers into 3 buckets by total bills
-3. Divide products into 5 buckets by price
-4. Divide billdetails into 4 buckets by line_total
-5. Divide bills into 2 halves by date
-6. Divide customers into 4 segments by average bill
-7. Divide products into 3 segments by quantity sold
-8. Divide months into 4 quarters by sales
-9. Divide line items into 10 deciles by quantity
-10. Divide bills into buckets by customer count
+1. Divide clients into 4 quartiles by total_current_amount.
+2. Quartile of accounts by total transaction amount.
+3. Quartile of portfolios by total asset quantity.
+4. Quartile of assets by number of portfolios.
+5. Quartile of transactions by amount.
+6. Quartile of goals by target_amount.
+7. Quartile of portfolios by creation date.
+8. Quartile of accounts by opened_date.
+9. Quartile of assets by asset_id.
+10. Quartile of clients by join_date.
 
 ## LAG()
-1. Previous bill amount for each bill ordered by date
-2. Previous bill date per customer
-3. Previous line_total per bill
-4. Previous quantity per product
-5. Difference from previous bill amount
-6. Previous bill_id
-7. Previous product price
-8. Previous customer's contact_info
-9. Previous quantity in all details
-10. Previous line_total per product partition
+1. Previous transaction amount per account.
+2. Previous transaction date per account.
+3. Previous goal current_amount per client.
+4. Previous acquisition_price per portfolio.
+5. Previous opened_date per client.
+6. Previous creation date per client’s portfolios.
+7. Previous symbol per alphabetic asset list.
+8. Previous phone value per client.
+9. Previous target_amount per client.
+10. Previous quantity per asset across all portfolios.
 
 ## LEAD()
-1. Next bill amount for each bill ordered by date
-2. Next bill date per customer
-3. Next line_total per bill
-4. Next quantity per product
-5. Difference to next bill amount
-6. Next bill_id in sequence
-7. Next product price ordered by price
-8. Next customer's contact_info alphabetically
-9. Next quantity overall
-10. Next line_total partitioned by product
+1. Next transaction amount per account.
+2. Next transaction date per account.
+3. Next goal target_date per client.
+4. Next acquisition_price per portfolio.
+5. Next account opened_date per client.
+6. Next portfolio creation date per client.
+7. Next symbol per alphabetic asset list.
+8. Next phone per client by join_date.
+9. Next current_amount per client.
+10. Next quantity per asset.
 
 ## FIRST_VALUE()
-1. First bill_date per customer
-2. First total_amount per customer
-3. First line_total per bill
-4. First quantity per product
-5. First product_name alphabetically
-6. First billdetail_id per bill
-7. First product price in ascending order
-8. First customer contact_info alphabetically
-9. First bill_id per month
-10. First line_total overall
+1. First transaction amount per account.
+2. First opened_date per client.
+3. First goal target_date per client.
+4. First portfolio creation date per client.
+5. First acquisition_date per portfolio.
+6. First client join_date.
+7. First asset symbol alphabetically.
+8. First current_amount per client.
+9. First transaction date globally.
+10. First quantity per asset across portfolios.
 
 ## LAST_VALUE()
-1. Last bill_date per customer
-2. Last total_amount per customer
-3. Last line_total per bill
-4. Last quantity per product
-5. Last product_name alphabetically
-6. Last billdetail_id per bill
-7. Last product price in ascending order
-8. Last customer contact_info alphabetically
-9. Last bill_id per month
-10. Last line_total overall
+1. Last transaction amount per account.
+2. Last opened_date per client.
+3. Last goal target_date per client.
+4. Last portfolio creation date per client.
+5. Last acquisition_date per portfolio.
+6. Latest client join_date.
+7. Last asset symbol alphabetically.
+8. Last current_amount per client.
+9. Last transaction date globally.
+10. Last quantity per asset across portfolios.
 
 ***
 | &copy; TINITIATE.COM |

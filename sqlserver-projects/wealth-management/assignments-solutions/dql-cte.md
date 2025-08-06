@@ -8,357 +8,386 @@
 
 ## CTE
 ```sql
--- 1. Total number of bills per customer
-WITH BillCount AS (
-  SELECT customer_id,
-         COUNT(*) AS num_bills
-  FROM billing_product.bill
-  GROUP BY customer_id
+-- 1. List each client with their total number of accounts.
+WITH client_accounts AS (
+  SELECT client_id, COUNT(*) AS account_count
+  FROM wealth_management.accounts
+  GROUP BY client_id
 )
-SELECT * FROM BillCount;
+SELECT c.client_id, c.first_name + ' ' + c.last_name AS client_name, ca.account_count
+FROM client_accounts ca
+JOIN wealth_management.clients c ON ca.client_id = c.client_id;
 
--- 2. Total line items per bill
-WITH ItemsPerBill AS (
-  SELECT bill_id,
-         COUNT(*) AS item_count
-  FROM billing_product.billdetails
-  GROUP BY bill_id
+-- 2. Compute sum of deposits per account using a CTE.
+WITH deposit_sums AS (
+  SELECT account_id, SUM(amount) AS total_deposits
+  FROM wealth_management.transactions
+  WHERE amount > 0
+  GROUP BY account_id
 )
-SELECT * FROM ItemsPerBill;
+SELECT ds.account_id, ds.total_deposits
+FROM deposit_sums ds;
 
--- 3. Average bill amount per customer
-WITH AvgBillAmt AS (
-  SELECT customer_id,
-         AVG(total_amount) AS avg_amount
-  FROM billing_product.bill
-  GROUP BY customer_id
+-- 3. Find portfolios with more than 2 assets.
+WITH portfolio_asset_counts AS (
+  SELECT portfolio_id, COUNT(*) AS asset_count
+  FROM wealth_management.portfolio_assets
+  GROUP BY portfolio_id
 )
-SELECT * FROM AvgBillAmt;
+SELECT portfolio_id, asset_count
+FROM portfolio_asset_counts
+WHERE asset_count > 2;
 
--- 4. Highest single line_total per product
-WITH MaxLinePerProd AS (
-  SELECT product_id,
-         MAX(line_total) AS max_line
-  FROM billing_product.billdetails
-  GROUP BY product_id
+-- 4. List financial goals with percentage progress.
+WITH goal_progress AS (
+  SELECT goal_id,
+         current_amount * 1.0 / target_amount AS progress_pct
+  FROM wealth_management.financial_goals
 )
-SELECT * FROM MaxLinePerProd;
+SELECT * FROM goal_progress;
 
--- 5. Customers with no bills
-WITH C AS (
-  SELECT customer_id FROM billing_product.customers
-),
-B AS (
-  SELECT DISTINCT customer_id FROM billing_product.bill
+-- 5. Identify high‐value transactions (> 10,000).
+WITH high_value_txns AS (
+  SELECT txn_id, account_id, amount
+  FROM wealth_management.transactions
+  WHERE amount > 10000
 )
-SELECT C.customer_id
-FROM C
-LEFT JOIN B ON C.customer_id = B.customer_id
-WHERE B.customer_id IS NULL;
+SELECT * FROM high_value_txns;
 
--- 6. Products never sold
-WITH P AS (
-  SELECT product_id FROM billing_product.products
-),
-S AS (
-  SELECT DISTINCT product_id FROM billing_product.billdetails
+-- 6. Join clients and portfolios to show owner names.
+WITH client_list AS (
+  SELECT client_id, first_name + ' ' + last_name AS client_name
+  FROM wealth_management.clients
 )
-SELECT P.product_id
-FROM P
-LEFT JOIN S ON P.product_id = S.product_id
-WHERE S.product_id IS NULL;
+SELECT cl.client_name, p.portfolio_id, p.name AS portfolio_name
+FROM wealth_management.portfolios p
+JOIN client_list cl ON p.client_id = cl.client_id;
 
--- 7. Bill summary (count & sum) for bills in Q1 2023
-WITH Q1Bills AS (
-  SELECT bill_id, total_amount
-  FROM billing_product.bill
-  WHERE bill_date BETWEEN '2023-01-01' AND '2023-03-31'
+-- 7. Clients older than 40 years.
+WITH client_age AS (
+  SELECT client_id,
+         DATEDIFF(year, date_of_birth, GETDATE()) AS age
+  FROM wealth_management.clients
 )
-SELECT
-  COUNT(*) AS count_q1,
-  SUM(total_amount) AS sum_q1
-FROM Q1Bills;
+SELECT * FROM client_age WHERE age > 40;
 
--- 8. Distinct billing months
-WITH Months AS (
-  SELECT DISTINCT YEAR(bill_date) AS yr,
-                  MONTH(bill_date) AS mon
-  FROM billing_product.bill
+-- 8. Assets acquired in 2023.
+WITH acq_2023 AS (
+  SELECT portfolio_id, asset_id, acquisition_date
+  FROM wealth_management.portfolio_assets
+  WHERE YEAR(acquisition_date) = 2023
 )
-SELECT * FROM Months;
+SELECT * FROM acq_2023;
 
--- 9. Join bill and items count via CTE
-WITH Items AS (
-  SELECT bill_id, COUNT(*) AS cnt
-  FROM billing_product.billdetails
-  GROUP BY bill_id
+-- 9. Average transaction amount per account.
+WITH avg_txn AS (
+  SELECT account_id, AVG(amount) AS avg_amount
+  FROM wealth_management.transactions
+  GROUP BY account_id
 )
-SELECT b.bill_id, b.total_amount, i.cnt AS items_count
-FROM billing_product.bill b
-JOIN Items i ON b.bill_id = i.bill_id;
+SELECT * FROM avg_txn;
 
--- 10. Customers’ spend & items via CTE
-WITH Spend AS (
-  SELECT customer_id, SUM(total_amount) AS total_spent
-  FROM billing_product.bill GROUP BY customer_id
-), 
-Items AS (
-  SELECT b.customer_id, COUNT(*) AS total_items
-  FROM billing_product.billdetails d
-  JOIN billing_product.bill b ON b.bill_id = d.bill_id
-  GROUP BY b.customer_id
+-- 10. Portfolio asset values (quantity × acquisition_price).
+WITH portfolio_values AS (
+  SELECT portfolio_id,
+         SUM(quantity * acquisition_price) AS total_value
+  FROM wealth_management.portfolio_assets
+  GROUP BY portfolio_id
 )
-SELECT s.customer_id, s.total_spent, i.total_items
-FROM Spend s
-JOIN Items i ON s.customer_id = i.customer_id;
+SELECT * FROM portfolio_values;
 ```
 
 ## Using Multiple CTEs
 ```sql
--- 1. Compare customer spend vs. average
-WITH CustSpend AS (
-  SELECT customer_id, SUM(total_amount) AS total_spent
-  FROM billing_product.bill GROUP BY customer_id
+-- 1. Show client names and their total deposits.
+WITH clients_cte AS (
+  SELECT client_id, first_name + ' ' + last_name AS client_name
+  FROM wealth_management.clients
 ),
-AvgSpend AS (
-  SELECT AVG(total_spent) AS avg_spent FROM CustSpend
+deposits_cte AS (
+  SELECT a.client_id, SUM(t.amount) AS total_deposits
+  FROM wealth_management.accounts a
+  JOIN wealth_management.transactions t ON a.account_id = t.account_id
+  WHERE t.amount > 0
+  GROUP BY a.client_id
 )
-SELECT c.customer_id, c.total_spent,
-       CASE WHEN c.total_spent > a.avg_spent THEN 'Above Avg' ELSE 'Below Avg' END AS status
-FROM CustSpend c CROSS JOIN AvgSpend a;
+SELECT c.client_name, d.total_deposits
+FROM clients_cte c
+LEFT JOIN deposits_cte d ON c.client_id = d.client_id;
 
--- 2. Bills & details summary together
-WITH BillSum AS (
-  SELECT bill_id, SUM(line_total) AS sum_lines
-  FROM billing_product.billdetails GROUP BY bill_id
+-- 2. Compare portfolio counts and goal counts per client.
+WITH portfolio_counts AS (
+  SELECT client_id, COUNT(*) AS num_portfolios
+  FROM wealth_management.portfolios
+  GROUP BY client_id
 ),
-BillCnt AS (
-  SELECT bill_id, COUNT(*) AS cnt_items
-  FROM billing_product.billdetails GROUP BY bill_id
+goal_counts AS (
+  SELECT client_id, COUNT(*) AS num_goals
+  FROM wealth_management.financial_goals
+  GROUP BY client_id
 )
-SELECT b.bill_id, bs.sum_lines, bc.cnt_items
-FROM billing_product.bill b
-LEFT JOIN BillSum bs ON b.bill_id = bs.bill_id
-LEFT JOIN BillCnt bc ON b.bill_id = bc.bill_id;
+SELECT pc.client_id, pc.num_portfolios, gc.num_goals
+FROM portfolio_counts pc
+FULL JOIN goal_counts gc ON pc.client_id = gc.client_id;
 
--- 3. Top 5 customers by spend and their bill count
-WITH CustSpend AS (
-  SELECT customer_id, SUM(total_amount) AS total_spent
-  FROM billing_product.bill GROUP BY customer_id
+-- 3. List assets with average price and total quantity.
+WITH avg_price AS (
+  SELECT asset_id, AVG(acquisition_price) AS avg_price
+  FROM wealth_management.portfolio_assets
+  GROUP BY asset_id
 ),
-Top5Cust AS (
-  SELECT TOP 5 customer_id FROM CustSpend ORDER BY total_spent DESC
-),
-CustBills AS (
-  SELECT customer_id, COUNT(*) AS num_bills
-  FROM billing_product.bill GROUP BY customer_id
+total_qty AS (
+  SELECT asset_id, SUM(quantity) AS total_quantity
+  FROM wealth_management.portfolio_assets
+  GROUP BY asset_id
 )
-SELECT t.customer_id, cs.total_spent, cb.num_bills
-FROM Top5Cust t
-JOIN CustSpend cs ON cs.customer_id = t.customer_id
-JOIN CustBills cb ON cb.customer_id = t.customer_id;
+SELECT a.asset_id, a.symbol, ap.avg_price, tq.total_quantity
+FROM wealth_management.assets a
+JOIN avg_price ap ON a.asset_id = ap.asset_id
+JOIN total_qty tq ON a.asset_id = tq.asset_id;
 
--- 4. Monthly sales and item count
-WITH MonthlySales AS (
-  SELECT YEAR(bill_date) AS yr, MONTH(bill_date) AS mon, SUM(total_amount) AS sales
-  FROM billing_product.bill GROUP BY YEAR(bill_date), MONTH(bill_date)
+-- 4. Clients’ first and last transaction dates.
+WITH first_txn AS (
+  SELECT a.client_id, MIN(t.txn_date) AS first_date
+  FROM wealth_management.accounts a
+  JOIN wealth_management.transactions t ON a.account_id = t.account_id
+  GROUP BY a.client_id
 ),
-MonthlyItems AS (
-  SELECT YEAR(b.bill_date) AS yr, MONTH(b.bill_date) AS mon, COUNT(*) AS items
-  FROM billing_product.billdetails d
-  JOIN billing_product.bill b ON b.bill_id = d.bill_id
-  GROUP BY YEAR(b.bill_date), MONTH(b.bill_date)
+last_txn AS (
+  SELECT a.client_id, MAX(t.txn_date) AS last_date
+  FROM wealth_management.accounts a
+  JOIN wealth_management.transactions t ON a.account_id = t.account_id
+  GROUP BY a.client_id
 )
-SELECT m.yr, m.mon, m.sales, mi.items
-FROM MonthlySales m
-LEFT JOIN MonthlyItems mi ON m.yr = mi.yr AND m.mon = mi.mon;
+SELECT f.client_id, f.first_date, l.last_date
+FROM first_txn f
+JOIN last_txn l ON f.client_id = l.client_id;
 
--- 5. Products sold vs. unsold
-WITH Sold AS (
-  SELECT DISTINCT product_id FROM billing_product.billdetails
+-- 5. Account balances vs. goal targets.
+WITH account_balances AS (
+  SELECT account_id, SUM(amount) AS balance
+  FROM wealth_management.transactions
+  GROUP BY account_id
 ),
-AllProd AS (
-  SELECT product_id FROM billing_product.products
+goal_targets AS (
+  SELECT client_id, SUM(target_amount) AS total_target
+  FROM wealth_management.financial_goals
+  GROUP BY client_id
 )
-SELECT a.product_id,
-       CASE WHEN s.product_id IS NOT NULL THEN 'Sold' ELSE 'Unsold' END AS status
-FROM AllProd a
-LEFT JOIN Sold s ON a.product_id = s.product_id;
+SELECT a.account_id, a.balance, g.total_target
+FROM account_balances a
+JOIN wealth_management.accounts acc ON a.account_id = acc.account_id
+JOIN goal_targets g ON acc.client_id = g.client_id;
 
--- 6. Customer last bill date & next due via CTEs
-WITH LastBill AS (
-  SELECT customer_id, MAX(bill_date) AS last_dt
-  FROM billing_product.bill GROUP BY customer_id
+-- 6. Recent activity: last 5 transactions and goals per client.
+WITH recent_txns AS (
+  SELECT t.*, ROW_NUMBER() OVER (PARTITION BY a.client_id ORDER BY t.txn_date DESC) AS rn
+  FROM wealth_management.transactions t
+  JOIN wealth_management.accounts a ON t.account_id = a.account_id
 ),
-NextDue AS (
-  SELECT customer_id, DATEADD(day,30,last_dt) AS next_due
-  FROM LastBill
+recent_goals AS (
+  SELECT *, ROW_NUMBER() OVER (PARTITION BY client_id ORDER BY target_date DESC) AS rn
+  FROM wealth_management.financial_goals
 )
-SELECT l.customer_id, l.last_dt, n.next_due
-FROM LastBill l JOIN NextDue n ON l.customer_id = n.customer_id;
+SELECT 'Txn' AS type, account_id AS id, txn_date AS date, amount AS value
+FROM recent_txns WHERE rn <= 5
+UNION ALL
+SELECT 'Goal', client_id, target_date, current_amount
+FROM recent_goals WHERE rn <= 5
+ORDER BY date DESC;
 
--- 7. Bill detail enriched with product price
-WITH ProdPrice AS (
-  SELECT product_id, price FROM billing_product.products
+-- 7. Client summary: portfolios, assets, and goals.
+WITH pc AS (
+  SELECT client_id, COUNT(*) AS portfolios
+  FROM wealth_management.portfolios GROUP BY client_id
 ),
-Detail AS (
-  SELECT d.billdetail_id, d.bill_id, d.product_id, d.quantity, d.line_total
-  FROM billing_product.billdetails d
+ac AS (
+  SELECT p.client_id, COUNT(pa.asset_id) AS assets
+  FROM wealth_management.portfolios p
+  JOIN wealth_management.portfolio_assets pa ON p.portfolio_id = pa.portfolio_id
+  GROUP BY p.client_id
+),
+gc AS (
+  SELECT client_id, COUNT(*) AS goals
+  FROM wealth_management.financial_goals GROUP BY client_id
 )
-SELECT det.*, pp.price
-FROM Detail det
-JOIN ProdPrice pp ON det.product_id = pp.product_id;
+SELECT c.client_id, c.first_name + ' ' + c.last_name AS name,
+       COALESCE(pc.portfolios,0) AS portfolios,
+       COALESCE(ac.assets,0) AS assets,
+       COALESCE(gc.goals,0) AS goals
+FROM wealth_management.clients c
+LEFT JOIN pc ON c.client_id=pc.client_id
+LEFT JOIN ac ON c.client_id=ac.client_id
+LEFT JOIN gc ON c.client_id=gc.client_id;
 
--- 8. Customers and whether they are VIP (spend>2000)
-WITH CustSpend AS (
-  SELECT customer_id, SUM(total_amount) AS total_spent
-  FROM billing_product.bill GROUP BY customer_id
+-- 8. Compare average transaction and average deposit per account.
+WITH avg_txn AS (
+  SELECT account_id, AVG(amount) AS avg_all
+  FROM wealth_management.transactions GROUP BY account_id
 ),
-VIP AS (
-  SELECT customer_id, CASE WHEN total_spent>2000 THEN 1 ELSE 0 END AS is_vip
-  FROM CustSpend
+avg_dep AS (
+  SELECT account_id, AVG(amount) AS avg_dep
+  FROM wealth_management.transactions WHERE amount>0 GROUP BY account_id
 )
-SELECT c.customer_id, c.customer_name, v.is_vip
-FROM billing_product.customers c
-LEFT JOIN VIP v ON c.customer_id = v.customer_id;
+SELECT a.account_id, at.avg_all, ad.avg_dep
+FROM wealth_management.accounts a
+LEFT JOIN avg_txn at ON a.account_id=at.account_id
+LEFT JOIN avg_dep ad ON a.account_id=ad.account_id;
 
--- 9. Bill ranking by total_amount and detail count
-WITH BillAmt AS (
-  SELECT bill_id, total_amount FROM billing_product.bill
+-- 9. Portfolio value vs. asset count.
+WITH pv AS (
+  SELECT portfolio_id, SUM(quantity*acquisition_price) AS total_value
+  FROM wealth_management.portfolio_assets GROUP BY portfolio_id
 ),
-BillCnt AS (
-  SELECT bill_id, COUNT(*) AS cnt FROM billing_product.billdetails GROUP BY bill_id
-),
-Ranked AS (
-  SELECT a.bill_id, a.total_amount, c.cnt,
-         RANK() OVER (ORDER BY a.total_amount DESC) AS amt_rank,
-         RANK() OVER (ORDER BY c.cnt DESC) AS cnt_rank
-  FROM BillAmt a JOIN BillCnt c ON a.bill_id=c.bill_id
+pc AS (
+  SELECT portfolio_id, COUNT(*) AS asset_count
+  FROM wealth_management.portfolio_assets GROUP BY portfolio_id
 )
-SELECT * FROM Ranked;
+SELECT p.portfolio_id, pv.total_value, pc.asset_count
+FROM wealth_management.portfolios p
+LEFT JOIN pv ON p.portfolio_id=pv.portfolio_id
+LEFT JOIN pc ON p.portfolio_id=pc.portfolio_id;
 
--- 10. Customer  —  product purchase matrix via CTEs
-WITH CustList AS (
-  SELECT customer_id FROM billing_product.customers
-),
-ProdList AS (
-  SELECT product_id FROM billing_product.products
-),
-Purch AS (
-  SELECT DISTINCT b.customer_id, d.product_id
-  FROM billing_product.billdetails d
-  JOIN billing_product.bill b ON b.bill_id=d.bill_id
+-- 10. High‐risk clients: top 5 by withdrawal volume.
+WITH withdrawals AS (
+  SELECT a.client_id, SUM(-t.amount) AS total_withdrawals
+  FROM wealth_management.accounts a
+  JOIN wealth_management.transactions t ON a.account_id=t.account_id
+  WHERE t.amount<0
+  GROUP BY a.client_id
 )
-SELECT c.customer_id, p.product_id,
-       CASE WHEN pu.product_id IS NOT NULL THEN 'Y' ELSE 'N' END AS purchased
-FROM CustList c
-CROSS JOIN ProdList p
-LEFT JOIN Purch pu ON pu.customer_id=c.customer_id AND pu.product_id=p.product_id;
+SELECT TOP 5 c.client_id, c.first_name + ' ' + c.last_name AS name, w.total_withdrawals
+FROM withdrawals w
+JOIN wealth_management.clients c ON w.client_id=c.client_id
+ORDER BY w.total_withdrawals DESC;
 ```
 
 ## Recursive CTEs
 ```sql
--- 1. Generate numbers 1 through 10
-WITH Numbers AS (
+-- 1. Generate numbers 1–12 (months).
+WITH nums AS (
   SELECT 1 AS n
   UNION ALL
-  SELECT n+1 FROM Numbers WHERE n<10
+  SELECT n+1 FROM nums WHERE n<12
 )
-SELECT * FROM Numbers;
+SELECT * FROM nums OPTION (MAXRECURSION 12);
 
--- 2. Calendar dates between two extremes
-WITH DateRange AS (
-  SELECT MIN(bill_date) AS dt FROM billing_product.bill
+-- 2. Monthly goal snapshots for client 1 for 6 months.
+WITH month_seq AS (
+  SELECT 0 AS m
   UNION ALL
-  SELECT DATEADD(day,1,dt) FROM DateRange WHERE dt < (SELECT MAX(bill_date) FROM billing_product.bill)
-)
-SELECT * FROM DateRange;
-
--- 3. First day of each month in 2023
-WITH Months AS (
-  SELECT CAST('2023-01-01' AS date) AS m
-  UNION ALL
-  SELECT DATEADD(month,1,m) FROM Months WHERE m<'2023-12-01'
-)
-SELECT m FROM Months;
-
--- 4. Fibonacci sequence first 10 values
-WITH Fib AS (
-  SELECT 1 AS a, 1 AS b, 1 AS idx
-  UNION ALL
-  SELECT b, a+b, idx+1 FROM Fib WHERE idx<10
-)
-SELECT idx, a AS fibonacci FROM Fib;
-
--- 5. Cumulative monthly sales via recursion
-WITH Months AS (
-  SELECT 1 AS mon, YEAR(MIN(bill_date)) AS yr FROM billing_product.bill
-  UNION ALL
-  SELECT mon+1, yr FROM Months WHERE mon<12
+  SELECT m+1 FROM month_seq WHERE m<5
 ),
-Sales AS (
-  SELECT m.yr, m.mon,
-         (SELECT SUM(total_amount) FROM billing_product.bill
-          WHERE YEAR(bill_date)=m.yr AND MONTH(bill_date)=m.mon) AS monthly_sales
-  FROM Months m
+snapshots AS (
+  SELECT gs.client_id,
+         DATEADD(month, ms.m, GETDATE()) AS snapshot_date,
+         fg.current_amount
+  FROM month_seq ms
+  JOIN wealth_management.financial_goals fg ON fg.client_id=1
 )
-SELECT * FROM Sales;
+SELECT * FROM snapshots OPTION (MAXRECURSION 6);
 
--- 6. Generate invoice sequence IDs
-WITH InvSeq AS (
-  SELECT 1000 AS inv
-  UNION ALL
-  SELECT inv+1 FROM InvSeq WHERE inv<1010
-)
-SELECT * FROM InvSeq;
-
--- 7. List next 5 due dates per bill
-WITH LastBill AS (
-  SELECT bill_id, bill_date FROM billing_product.bill
+-- 3. Running balance per account.
+WITH txn_cte AS (
+  SELECT account_id, txn_date, amount
+  FROM wealth_management.transactions
 ),
-Due AS (
-  SELECT bill_id, bill_date AS due_date, 1 AS cycle FROM LastBill
+running AS (
+  SELECT account_id, txn_date, amount,
+         amount AS balance
+  FROM txn_cte WHERE txn_date = (SELECT MIN(txn_date) FROM txn_cte t2 WHERE t2.account_id=txn_cte.account_id)
   UNION ALL
-  SELECT bill_id, DATEADD(day,30,due_date), cycle+1
-  FROM Due WHERE cycle<5
+  SELECT r.account_id, t.txn_date, t.amount,
+         r.balance + t.amount
+  FROM running r
+  JOIN txn_cte t ON t.account_id=r.account_id AND t.txn_date > r.txn_date
 )
-SELECT * FROM Due ORDER BY bill_id, cycle;
+SELECT account_id, txn_date, balance
+FROM running
+OPTION (MAXRECURSION 0);
 
--- 8. Years from oldest to current year
-WITH Years AS (
-  SELECT YEAR(MIN(bill_date)) AS yr FROM billing_product.bill
+-- 4. Date series from earliest join to today.
+WITH date_range AS (
+  SELECT MIN(join_date) AS dt FROM wealth_management.clients
+),
+dates AS (
+  SELECT dt FROM date_range
   UNION ALL
-  SELECT yr+1 FROM Years WHERE yr<YEAR(GETDATE())
+  SELECT DATEADD(day,1,dt) FROM dates WHERE dt < CAST(GETDATE() AS date)
 )
-SELECT yr FROM Years;
+SELECT dt FROM dates OPTION (MAXRECURSION 0);
 
--- 9. Build a running customer spend list
-WITH Spend AS (
-  SELECT customer_id, SUM(total_amount) AS amount
-  FROM billing_product.bill GROUP BY customer_id
-), 
-Rec AS (
-  SELECT customer_id, amount, 1 AS rn FROM Spend WHERE customer_id = (SELECT MIN(customer_id) FROM Spend)
+-- 5. Cumulative transactions by day.
+WITH days AS (
+  SELECT DISTINCT CAST(txn_date AS date) AS day
+  FROM wealth_management.transactions
+),
+daily_sum AS (
+  SELECT day, SUM(amount) AS day_sum
+  FROM wealth_management.transactions
+  GROUP BY CAST(txn_date AS date)
+),
+cum AS (
+  SELECT day, day_sum, day_sum AS cum_sum FROM daily_sum WHERE day = (SELECT MIN(day) FROM daily_sum)
   UNION ALL
-  SELECT s.customer_id, s.amount, rn+1
-  FROM Rec r
-  JOIN Spend s ON s.customer_id = (
-    SELECT MIN(customer_id) FROM Spend WHERE customer_id > r.customer_id
-  )
+  SELECT d.day, ds.day_sum, c.cum_sum + ds.day_sum
+  FROM cum c
+  JOIN daily_sum ds ON ds.day = DATEADD(day,1,c.day)
 )
-SELECT * FROM Rec;
+SELECT * FROM cum ORDER BY day OPTION (MAXRECURSION 0);
 
--- 10. Recursive product price depreciation (10% per year for 5 years)
-WITH Dep0 AS (
-  SELECT product_id, price, 0 AS year FROM billing_product.products
-), DepN AS (
-  SELECT product_id, price * POWER(0.9,year) AS dep_price, year
-  FROM Dep0
+-- 6. Hierarchical goal dependency (fictional parent_goal_id).
+WITH goal_hierarchy AS (
+  SELECT goal_id, parent_goal_id, goal_name
+  FROM wealth_management.financial_goals
+  WHERE parent_goal_id IS NULL
   UNION ALL
-  SELECT product_id, price * POWER(0.9,year+1), year+1
-  FROM DepN WHERE year<4
+  SELECT fg.goal_id, fg.parent_goal_id, fg.goal_name
+  FROM wealth_management.financial_goals fg
+  JOIN goal_hierarchy gh ON fg.parent_goal_id = gh.goal_id
 )
-SELECT * FROM DepN ORDER BY product_id, year;
+SELECT * FROM goal_hierarchy OPTION (MAXRECURSION 0);
+
+-- 7. Generate 5‐year projection points.
+WITH seq AS (
+  SELECT 0 AS y
+  UNION ALL
+  SELECT y+1 FROM seq WHERE y<5
+)
+SELECT y AS years_ahead, DATEADD(year,y,GETDATE()) AS projected_date
+FROM seq OPTION (MAXRECURSION 6);
+
+-- 8. Client tenure in years recursively.
+WITH cte0 AS (
+  SELECT client_id, DATEDIFF(year, join_date, GETDATE()) AS tenure
+  FROM wealth_management.clients
+),
+cte_rec AS (
+  SELECT client_id, tenure FROM cte0
+  UNION ALL
+  SELECT client_id, tenure-1 FROM cte_rec WHERE tenure>0
+)
+SELECT DISTINCT client_id, tenure FROM cte_rec OPTION (MAXRECURSION 0);
+
+-- 9. Split portfolio values into deciles.
+WITH pv AS (
+  SELECT portfolio_id, SUM(quantity*acquisition_price) AS value
+  FROM wealth_management.portfolio_assets GROUP BY portfolio_id
+),
+deciles AS (
+  SELECT portfolio_id, value,
+         NTILE(10) OVER (ORDER BY value) AS decile
+  FROM pv
+)
+SELECT * FROM deciles;
+
+-- 10. Build a calendar of weekdays for next 7 days.
+WITH dates AS (
+  SELECT CAST(GETDATE() AS date) AS dt
+  UNION ALL
+  SELECT DATEADD(day,1,dt) FROM dates WHERE dt < DATEADD(day,6,GETDATE())
+)
+SELECT dt, DATENAME(weekday,dt) AS weekday FROM dates OPTION (MAXRECURSION 7);
 ```
 
 ***

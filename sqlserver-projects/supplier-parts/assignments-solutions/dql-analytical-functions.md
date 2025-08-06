@@ -273,6 +273,7 @@ SELECT part_id, unit_price,
        LAG(unit_price) OVER (ORDER BY CASE WHEN unit_price>5 THEN part_id ELSE NULL END) AS prev_high_price
 FROM supplier_parts.parts;
 ```
+
 ## LEAD()
 ```sql
 -- 1. Show next part’s price ordered by part_id.

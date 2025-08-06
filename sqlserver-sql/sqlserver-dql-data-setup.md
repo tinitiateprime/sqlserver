@@ -83,6 +83,7 @@ CREATE TABLE employees.salgrade
 CREATE TABLE employees.projects
 ( 
   projectno           INT NOT NULL,
+  project_name         VARCHAR(100),
   budget              NUMERIC(7,2),
   monthly_commission  NUMERIC(7,2),
   
@@ -194,13 +195,13 @@ VALUES
 * Inserts for `employees.projects`
 ```sql
 -- Insert data into employees.projects
-INSERT INTO employees.projects (projectno, budget, monthly_commission)
+INSERT INTO employees.projects (projectno, project_name, budget, monthly_commission)
 VALUES 
-    (1, 10000, 100),
-    (2, 20000, 200),
-    (3, 30000, 300),
-    (4, 40000, 400),
-    (5, 50000, 500);
+    (1, 'Pulse', 10000, 100),
+    (2, 'Streamline', 20000, 200),
+    (3, 'SwiftSync', 30000, 300),
+    (4, 'Flux', 40000, 400),
+    (5, 'RealEye', 50000, 500);
 ```
 * Inserts for `employees.emp_projects`
 ```sql
