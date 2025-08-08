@@ -184,6 +184,9 @@ CREATE TABLE pharma_company.ManufacturingBatch
   CONSTRAINT PK_ManufacturingBatch PRIMARY KEY CLUSTERED (BatchID, BatchDate)
     ON PS_PharmaYear(BatchDate)
 );
+-- Create an index for 'ManufacturingBatch' table
+CREATE INDEX IX_Batch_ProductDate
+ON pharma_company.ManufacturingBatch(ProductID, BatchDate DESC);
 
 -- Create 'Equipment' table
 CREATE TABLE pharma_company.Equipment
@@ -219,6 +222,9 @@ CREATE TABLE pharma_company.QCResult
   CONSTRAINT PK_QCResult PRIMARY KEY CLUSTERED (ResultID, TestDate)
     ON PS_PharmaYear(TestDate)
 );
+-- Create an index for 'QCResult' table
+CREATE INDEX IX_QC_BatchDate
+ ON pharma_company.QCResult(BatchID, TestDate DESC);
 
 -- Create 'DistributionCenter' table
 CREATE TABLE pharma_company.DistributionCenter
@@ -244,6 +250,9 @@ CREATE TABLE pharma_company.Inventory
   CONSTRAINT PK_Inventory PRIMARY KEY CLUSTERED (InventoryID, SnapshotDate)
     ON PS_PharmaYear(SnapshotDate)
 );
+-- Create an index for 'Inventory' table
+CREATE INDEX IX_Inv_CenterDate
+ON pharma_company.Inventory(CenterID, SnapshotDate DESC);
 
 -- Create 'Shipment' table
 CREATE TABLE pharma_company.Shipment
@@ -259,6 +268,9 @@ CREATE TABLE pharma_company.Shipment
   CONSTRAINT PK_Shipment PRIMARY KEY CLUSTERED (ShipmentID, ShipmentDate)
     ON PS_PharmaYear(ShipmentDate)
 );
+-- Create an index for 'Shipment' table
+CREATE INDEX IX_Ship_CenterDate
+ON pharma_company.Shipment(CenterID, ShipmentDate DESC);
 
 -- Create 'Customer' table
 CREATE TABLE pharma_company.Customer
@@ -284,6 +296,9 @@ CREATE TABLE pharma_company.SalesOrder
   CONSTRAINT PK_SalesOrder PRIMARY KEY CLUSTERED (SalesOrderID, OrderDate)
     ON PS_PharmaYear(OrderDate)
 );
+-- Create an index for 'SalesOrder' table
+CREATE INDEX IX_SO_CustDate
+ON pharma_company.SalesOrder(CustomerID, OrderDate DESC);
 
 -- Create 'RegulatorySubmission' table
 CREATE TABLE pharma_company.RegulatorySubmission
