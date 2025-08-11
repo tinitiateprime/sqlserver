@@ -4,7 +4,7 @@
 
 &copy; TINITIATE.COM
 
-# Pharmaceutical Manufacturing & Distribution Data Model
+# Pharma Company Data Model
 This data model supports end-to-end pharmaceutical operations: from raw material sourcing and formulation through manufacturing, quality control, inventory management, and distribution.  
 - **Address**, **Supplier**, and **RawMaterial** define lookup data for vendors and inputs.  
 - **Product** and **Formulation** capture the bill-of-materials for each drug.  
@@ -107,49 +107,77 @@ This data model supports end-to-end pharmaceutical operations: from raw material
 -- Create 'pharma_company' schema
 CREATE SCHEMA pharma_company;
 
+-- Create 'pharma_year' partition scheme
+IF NOT EXISTS (SELECT 1 FROM sys.partition_functions WHERE name = 'PF_PharmaYear')
+BEGIN
+  EXEC('CREATE PARTITION FUNCTION PF_PharmaYear (date)
+        AS RANGE RIGHT FOR VALUES (''2023-01-01'',''2024-01-01'',''2025-01-01'',''2026-01-01'',''2027-01-01'');');
+END;
+IF NOT EXISTS (SELECT 1 FROM sys.partition_schemes WHERE name = 'PS_PharmaYear')
+BEGIN
+  EXEC('CREATE PARTITION SCHEME PS_PharmaYear
+        AS PARTITION PF_PharmaYear
+        ALL TO ([PRIMARY]);');
+END;
+
 -- Create 'Address' table
 CREATE TABLE pharma_company.Address
 (
-  AddressID   INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+  AddressID   INT           IDENTITY(1,1),
   Street      NVARCHAR(150) NOT NULL,
   City        NVARCHAR(50)  NOT NULL,
   State       NVARCHAR(50)  NOT NULL,
   ZIP         NVARCHAR(15)  NOT NULL,
   Country     NVARCHAR(50)  NOT NULL
 );
+ALTER TABLE pharma_company.Address
+  ADD CONSTRAINT PK_Address_AddressID
+  PRIMARY KEY CLUSTERED (AddressID);
 
 -- Create 'Supplier' table
 CREATE TABLE pharma_company.Supplier
 (
-  SupplierID    INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+  SupplierID    INT           IDENTITY(1,1),
   Name          NVARCHAR(150) NOT NULL,
   ContactName   NVARCHAR(100) NULL,
   Phone         VARCHAR(20)   NULL,
   Email         VARCHAR(100)  NULL,
-  AddressID     INT           NULL
-    CONSTRAINT FK_Supplier_Address FOREIGN KEY REFERENCES pharma_company.Address(AddressID),
+  AddressID     INT           NULL,
   CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
   CreatedBy     SYSNAME       NOT NULL DEFAULT SUSER_SNAME(),
   UpdatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy     SYSNAME       NOT NULL DEFAULT SUSER_SNAME()
 );
+ALTER TABLE pharma_company.Supplier
+  ADD CONSTRAINT PK_Supplier_SupplierID
+  PRIMARY KEY CLUSTERED (SupplierID);
+ALTER TABLE pharma_company.Supplier
+  ADD CONSTRAINT FK_Supplier_Address
+  FOREIGN KEY (AddressID)
+  REFERENCES pharma_company.Address(AddressID);
 
 -- Create 'RawMaterial' table
 CREATE TABLE pharma_company.RawMaterial
 (
-  RawMaterialID INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+  RawMaterialID INT           IDENTITY(1,1),
   Name          NVARCHAR(150) NOT NULL,
   CASNumber     VARCHAR(50)   NULL,
-  SupplierID    INT           NOT NULL
-    CONSTRAINT FK_RawMat_Supplier FOREIGN KEY REFERENCES pharma_company.Supplier(SupplierID),
+  SupplierID    INT           NOT NULL,
   CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
   CreatedBy     SYSNAME       NOT NULL DEFAULT SUSER_SNAME()
 );
+ALTER TABLE pharma_company.RawMaterial
+  ADD CONSTRAINT PK_RawMaterial_RawMaterialID
+  PRIMARY KEY CLUSTERED (RawMaterialID);
+ALTER TABLE pharma_company.RawMaterial
+  ADD CONSTRAINT FK_RawMat_Supplier
+  FOREIGN KEY (SupplierID)
+  REFERENCES pharma_company.Supplier(SupplierID);
 
 -- Create 'Product' table
 CREATE TABLE pharma_company.Product
 (
-  ProductID     INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+  ProductID     INT           IDENTITY(1,1),
   Name          NVARCHAR(200) NOT NULL,
   Strength      NVARCHAR(50)  NULL,   -- e.g. "500 mg"
   Formulation   NVARCHAR(50)  NULL,   -- e.g. "Tablet", "Capsule"
@@ -158,32 +186,49 @@ CREATE TABLE pharma_company.Product
   UpdatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy     SYSNAME       NOT NULL DEFAULT SUSER_SNAME()
 );
+ALTER TABLE pharma_company.Product
+  ADD CONSTRAINT PK_Product_ProductID
+  PRIMARY KEY CLUSTERED (ProductID);
 
 -- Create 'Formulation' table
 CREATE TABLE pharma_company.Formulation
 (
-  ProductID     INT           NOT NULL
-    CONSTRAINT PK_Formulation PRIMARY KEY CLUSTERED (ProductID, RawMaterialID),
-  RawMaterialID INT           NOT NULL
-    CONSTRAINT FK_Formulation_RawMat FOREIGN KEY REFERENCES pharma_company.RawMaterial(RawMaterialID),
+  ProductID     INT           NOT NULL,
+  RawMaterialID INT           NOT NULL,
   Percentage    DECIMAL(5,2)  NOT NULL,  -- % by weight/volume
   CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.Formulation
+  ADD CONSTRAINT PK_Formulation
+  PRIMARY KEY CLUSTERED (ProductID, RawMaterialID);
+ALTER TABLE pharma_company.Formulation
+  ADD CONSTRAINT FK_Formulation_Product
+  FOREIGN KEY (ProductID)
+  REFERENCES pharma_company.Product(ProductID);
+ALTER TABLE pharma_company.Formulation
+  ADD CONSTRAINT FK_Formulation_RawMat
+  FOREIGN KEY (RawMaterialID)
+  REFERENCES pharma_company.RawMaterial(RawMaterialID);
 
 -- Create 'ManufacturingBatch' table
 CREATE TABLE pharma_company.ManufacturingBatch
 (
   BatchID       BIGINT       NOT NULL,
-  ProductID     INT           NOT NULL
-    CONSTRAINT FK_Batch_Product FOREIGN KEY REFERENCES pharma_company.Product(ProductID),
+  ProductID     INT           NOT NULL,
   BatchDate     DATE          NOT NULL,
   QuantityUnits INT           NOT NULL,
   Status        NVARCHAR(20)  NOT NULL,  -- e.g. "Released","Hold"
   CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
-  CreatedBy     SYSNAME       NOT NULL DEFAULT SUSER_SNAME(),
-  CONSTRAINT PK_ManufacturingBatch PRIMARY KEY CLUSTERED (BatchID, BatchDate)
-    ON PS_PharmaYear(BatchDate)
+  CreatedBy     SYSNAME       NOT NULL DEFAULT SUSER_SNAME()
 );
+ALTER TABLE pharma_company.ManufacturingBatch
+  ADD CONSTRAINT PK_ManufacturingBatch
+  PRIMARY KEY CLUSTERED (BatchID, BatchDate)
+  ON PS_PharmaYear(BatchDate);
+ALTER TABLE pharma_company.ManufacturingBatch
+  ADD CONSTRAINT FK_Batch_Product
+  FOREIGN KEY (ProductID)
+  REFERENCES pharma_company.Product(ProductID);
 -- Create an index for 'ManufacturingBatch' table
 CREATE INDEX IX_Batch_ProductDate
 ON pharma_company.ManufacturingBatch(ProductID, BatchDate DESC);
@@ -191,37 +236,52 @@ ON pharma_company.ManufacturingBatch(ProductID, BatchDate DESC);
 -- Create 'Equipment' table
 CREATE TABLE pharma_company.Equipment
 (
-  EquipmentID   INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+  EquipmentID   INT           IDENTITY(1,1),
   Name          NVARCHAR(100) NOT NULL,
   Type          NVARCHAR(50)  NULL,  -- e.g. "Reactor", "Granulator"
   Location      NVARCHAR(100) NULL,
   CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.Equipment
+  ADD CONSTRAINT PK_Equipment_EquipmentID
+  PRIMARY KEY CLUSTERED (EquipmentID);
 
 -- Create 'QualityTest' table
 CREATE TABLE pharma_company.QualityTest
 (
-  TestID        INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+  TestID        INT           IDENTITY(1,1),
   Name          NVARCHAR(150) NOT NULL,  -- e.g. "Dissolution", "Purity"
   Method        NVARCHAR(100) NULL,
   CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.QualityTest
+  ADD CONSTRAINT PK_QualityTest_TestID
+  PRIMARY KEY CLUSTERED (TestID);
 
 -- Create 'QCResult' table
 CREATE TABLE pharma_company.QCResult
 (
   ResultID      BIGINT       NOT NULL,
-  BatchID       BIGINT       NOT NULL
-    CONSTRAINT FK_QC_Batch FOREIGN KEY REFERENCES pharma_company.ManufacturingBatch(BatchID),
-  TestID        INT          NOT NULL
-    CONSTRAINT FK_QC_Test FOREIGN KEY REFERENCES pharma_company.QualityTest(TestID),
+  BatchID       BIGINT       NOT NULL,
+  BatchDate     DATE         NOT NULL,
+  TestID        INT          NOT NULL,
   TestDate      DATE         NOT NULL,
   ResultValue   NVARCHAR(100) NULL,
   PassFail      CHAR(1)      NOT NULL,  -- 'P' or 'F'
-  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME(),
-  CONSTRAINT PK_QCResult PRIMARY KEY CLUSTERED (ResultID, TestDate)
-    ON PS_PharmaYear(TestDate)
+  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.QCResult
+  ADD CONSTRAINT PK_QCResult
+  PRIMARY KEY CLUSTERED (ResultID, TestDate)
+  ON PS_PharmaYear(TestDate);
+ALTER TABLE pharma_company.QCResult
+  ADD CONSTRAINT FK_QC_Batch
+  FOREIGN KEY (BatchID, BatchDate)
+  REFERENCES pharma_company.ManufacturingBatch(BatchID, BatchDate);
+ALTER TABLE pharma_company.QCResult
+  ADD CONSTRAINT FK_QC_Test
+  FOREIGN KEY (TestID)
+  REFERENCES pharma_company.QualityTest(TestID);
 -- Create an index for 'QCResult' table
 CREATE INDEX IX_QC_BatchDate
  ON pharma_company.QCResult(BatchID, TestDate DESC);
@@ -229,73 +289,106 @@ CREATE INDEX IX_QC_BatchDate
 -- Create 'DistributionCenter' table
 CREATE TABLE pharma_company.DistributionCenter
 (
-  CenterID      INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
+  CenterID      INT           IDENTITY(1,1),
   Name          NVARCHAR(150) NOT NULL,
-  AddressID     INT           NULL
-    CONSTRAINT FK_DC_Address FOREIGN KEY REFERENCES pharma_company.Address(AddressID),
+  AddressID     INT           NULL,
   CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.DistributionCenter
+  ADD CONSTRAINT PK_DistributionCenter_CenterID
+  PRIMARY KEY CLUSTERED (CenterID);
+ALTER TABLE pharma_company.DistributionCenter
+  ADD CONSTRAINT FK_DC_Address
+  FOREIGN KEY (AddressID)
+  REFERENCES pharma_company.Address(AddressID);
 
 -- Create 'Inventory' table
 CREATE TABLE pharma_company.Inventory
 (
   InventoryID   BIGINT       NOT NULL,
-  CenterID      INT          NOT NULL
-    CONSTRAINT FK_Inv_Center FOREIGN KEY REFERENCES pharma_company.DistributionCenter(CenterID),
-  ProductID     INT          NOT NULL
-    CONSTRAINT FK_Inv_Product FOREIGN KEY REFERENCES pharma_company.Product(ProductID),
+  CenterID      INT          NOT NULL,
+  ProductID     INT          NOT NULL,
   SnapshotDate  DATE         NOT NULL,
   QuantityUnits INT          NOT NULL,
-  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME(),
-  CONSTRAINT PK_Inventory PRIMARY KEY CLUSTERED (InventoryID, SnapshotDate)
-    ON PS_PharmaYear(SnapshotDate)
+  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.Inventory
+  ADD CONSTRAINT PK_Inventory
+  PRIMARY KEY CLUSTERED (InventoryID, SnapshotDate)
+  ON PS_PharmaYear(SnapshotDate);
+ALTER TABLE pharma_company.Inventory
+  ADD CONSTRAINT FK_Inv_Center
+  FOREIGN KEY (CenterID)
+  REFERENCES pharma_company.DistributionCenter(CenterID);
+ALTER TABLE pharma_company.Inventory
+  ADD CONSTRAINT FK_Inv_Product
+  FOREIGN KEY (ProductID)
+  REFERENCES pharma_company.Product(ProductID);
 -- Create an index for 'Inventory' table
 CREATE INDEX IX_Inv_CenterDate
 ON pharma_company.Inventory(CenterID, SnapshotDate DESC);
+
+-- Create 'Customer' table
+CREATE TABLE pharma_company.Customer
+(
+  CustomerID    INT           IDENTITY(1,1),
+  Name          NVARCHAR(150) NOT NULL,
+  AddressID     INT           NULL,
+  CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME()
+);
+ALTER TABLE pharma_company.Customer
+  ADD CONSTRAINT PK_Customer_CustomerID
+  PRIMARY KEY CLUSTERED (CustomerID);
+ALTER TABLE pharma_company.Customer
+  ADD CONSTRAINT FK_Cust_Address
+  FOREIGN KEY (AddressID)
+  REFERENCES pharma_company.Address(AddressID);
 
 -- Create 'Shipment' table
 CREATE TABLE pharma_company.Shipment
 (
   ShipmentID    BIGINT       NOT NULL,
-  CenterID      INT          NOT NULL
-    CONSTRAINT FK_Ship_Center FOREIGN KEY REFERENCES pharma_company.DistributionCenter(CenterID),
-  CustomerID    INT          NOT NULL
-    CONSTRAINT FK_Ship_Cust FOREIGN KEY REFERENCES pharma_company.Customer(CustomerID),
+  CenterID      INT          NOT NULL,
+  CustomerID    INT          NOT NULL,
   ShipmentDate  DATE         NOT NULL,
   QuantityUnits INT          NOT NULL,
-  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME(),
-  CONSTRAINT PK_Shipment PRIMARY KEY CLUSTERED (ShipmentID, ShipmentDate)
-    ON PS_PharmaYear(ShipmentDate)
+  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.Shipment
+  ADD CONSTRAINT PK_Shipment
+  PRIMARY KEY CLUSTERED (ShipmentID, ShipmentDate)
+  ON PS_PharmaYear(ShipmentDate);
+ALTER TABLE pharma_company.Shipment
+  ADD CONSTRAINT FK_Ship_Center
+  FOREIGN KEY (CenterID)
+  REFERENCES pharma_company.DistributionCenter(CenterID);
+ALTER TABLE pharma_company.Shipment
+  ADD CONSTRAINT FK_Ship_Cust
+  FOREIGN KEY (CustomerID)
+  REFERENCES pharma_company.Customer(CustomerID);
 -- Create an index for 'Shipment' table
 CREATE INDEX IX_Ship_CenterDate
 ON pharma_company.Shipment(CenterID, ShipmentDate DESC);
-
--- Create 'Customer' table
-CREATE TABLE pharma_company.Customer
-(
-  CustomerID    INT           IDENTITY(1,1) PRIMARY KEY CLUSTERED,
-  Name          NVARCHAR(150) NOT NULL,
-  AddressID     INT           NULL
-    CONSTRAINT FK_Cust_Address FOREIGN KEY REFERENCES pharma_company.Address(AddressID),
-  CreatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME()
-);
 
 -- Create 'SalesOrder' table
 CREATE TABLE pharma_company.SalesOrder
 (
   SalesOrderID  BIGINT       NOT NULL,
-  CustomerID    INT          NOT NULL
-    CONSTRAINT FK_SO_Cust FOREIGN KEY REFERENCES pharma_company.Customer(CustomerID),
+  CustomerID    INT          NOT NULL,
   OrderDate     DATE         NOT NULL,
   TotalUnits    INT          NOT NULL,
   TotalAmount   DECIMAL(18,2)NOT NULL,
   Status        NVARCHAR(20) NOT NULL,  -- e.g. "Open","Shipped"
-  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME(),
-  CONSTRAINT PK_SalesOrder PRIMARY KEY CLUSTERED (SalesOrderID, OrderDate)
-    ON PS_PharmaYear(OrderDate)
+  CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.SalesOrder
+  ADD CONSTRAINT PK_SalesOrder
+  PRIMARY KEY CLUSTERED (SalesOrderID, OrderDate)
+  ON PS_PharmaYear(OrderDate);
+ALTER TABLE pharma_company.SalesOrder
+  ADD CONSTRAINT FK_SO_Cust
+  FOREIGN KEY (CustomerID)
+  REFERENCES pharma_company.Customer(CustomerID);
 -- Create an index for 'SalesOrder' table
 CREATE INDEX IX_SO_CustDate
 ON pharma_company.SalesOrder(CustomerID, OrderDate DESC);
@@ -303,15 +396,21 @@ ON pharma_company.SalesOrder(CustomerID, OrderDate DESC);
 -- Create 'RegulatorySubmission' table
 CREATE TABLE pharma_company.RegulatorySubmission
 (
-  SubmissionID  BIGINT       IDENTITY(1,1) PRIMARY KEY CLUSTERED,
-  ProductID     INT          NOT NULL
-    CONSTRAINT FK_RS_Product FOREIGN KEY REFERENCES pharma_company.Product(ProductID),
+  SubmissionID  BIGINT       IDENTITY(1,1),
+  ProductID     INT          NOT NULL,
   SubmissionDate DATE        NOT NULL,
   Agency        NVARCHAR(100)NOT NULL,  -- e.g. "FDA", "EMA"
   Status        NVARCHAR(50) NOT NULL,  -- e.g. "Pending","Approved"
   DocumentLink  NVARCHAR(255) NULL,
   CreatedAt     DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME()
 );
+ALTER TABLE pharma_company.RegulatorySubmission
+  ADD CONSTRAINT PK_RegulatorySubmission_SubmissionID
+  PRIMARY KEY CLUSTERED (SubmissionID);
+ALTER TABLE pharma_company.RegulatorySubmission
+  ADD CONSTRAINT FK_RS_Product
+  FOREIGN KEY (ProductID)
+  REFERENCES pharma_company.Product(ProductID);
 ```
 
 ## DML Syntax
