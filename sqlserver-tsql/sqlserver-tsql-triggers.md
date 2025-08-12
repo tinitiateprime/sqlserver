@@ -9,13 +9,9 @@
 * A trigger is a special kind of stored procedure that automatically runs (fires) in response to specific database events such as INSERT, UPDATE, or DELETE on a table or view.
 * Triggers can be used to enforce business rules, validate data, and perform other actions when data is inserted, updated, or deleted from a table.
 
-There are two types of triggers in SQL Server:
-* **DML triggers**
-
-DML triggers fire in response to changes to data in a table, such as an insert, update, or delete operation. They can be defined to execute either before or after the data modification operation.
-* **DDL triggers**
-
-DDL triggers fire in response to changes to the database schema, such as creating or altering tables, views, or stored procedures.
+### There are two types of triggers in SQL Server:
+* **DML triggers** - DML triggers fire in response to changes to data in a table, such as an insert, update, or delete operation. They can be defined to execute either before or after the data modification operation.
+* **DDL triggers** - DDL triggers fire in response to changes to the database schema, such as creating or altering tables, views, or stored procedures.
 
 ## Create Tables For Trigger Demonstration
 ```sql

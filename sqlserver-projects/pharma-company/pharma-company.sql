@@ -1,113 +1,14 @@
-![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : Pharma Company Data Model
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server Tutorial
 
-&copy; TINITIATE.COM
 
-# Pharma Company Data Model
-This data model supports end-to-end pharmaceutical operations: from raw material sourcing and formulation through manufacturing, quality control, inventory management, and distribution.  
-- **Address**, **Supplier**, and **RawMaterial** define lookup data for vendors and inputs.  
-- **Product** and **Formulation** capture the bill-of-materials for each drug.  
-- **ManufacturingBatch** records each production run, using partitioning for large-scale data.  
-- **Equipment** and **QualityTest** list assets and QC procedures.  
-- **QCResult** logs pass/fail outcomes per batch.  
-- **DistributionCenter**, **Inventory**, and **Shipment** manage where and when product moves.  
-- **Customer**, **SalesOrder**, and **RegulatorySubmission** track orders, clients, and compliance filings.
-
-![Pharma Company ER Diagram Mermaid](pharma-company-er-diagram-mermaid.png)
-
-## Address Table
-* **AddressID**: Surrogate key (PK).  
-* **Street**, **City**, **State**, **ZIP**, **Country**: Standard address fields.
-
-## Supplier Table
-* **SupplierID**: Surrogate key (PK).  
-* **Name**, **ContactName**, **Phone**, **Email**: Vendor details.  
-* **AddressID**: FK → Address(AddressID).  
-* **CreatedAt/By**, **UpdatedAt/By**: Audit columns.
-
-## RawMaterial Table
-* **RawMaterialID**: Surrogate key (PK).  
-* **Name**, **CASNumber**: Material identifiers.  
-* **SupplierID**: FK → Supplier(SupplierID).  
-* **CreatedAt/By**: Audit columns.
-
-## Product Table
-* **ProductID**: Surrogate key (PK).  
-* **Name**, **Strength**, **Formulation**: Drug characteristics.  
-* **CreatedAt/By**, **UpdatedAt/By**: Audit columns.
-
-## Formulation Table
-* **ProductID**, **RawMaterialID**: Composite PK & FKs → Product, RawMaterial.  
-* **Percentage**: % by weight/volume.  
-* **CreatedAt**: Timestamp.
-
-## ManufacturingBatch Table
-* **BatchID**, **BatchDate**: Composite PK, partitioned by date.  
-* **ProductID**: FK → Product(ProductID).  
-* **QuantityUnits**, **Status**: Production metrics.  
-* **CreatedAt/By**: Audit.  
-* **IX_Batch_ProductDate**: Index for fast lookups.
-
-## Equipment Table
-* **EquipmentID**: Surrogate key (PK).  
-* **Name**, **Type**, **Location**: Asset details.  
-* **CreatedAt**: Timestamp.
-
-## QualityTest Table
-* **TestID**: Surrogate key (PK).  
-* **Name**, **Method**: QC procedure info.  
-* **CreatedAt**: Timestamp.
-
-## QCResult Table
-* **ResultID**, **TestDate**: Composite PK, partitioned by date.  
-* **BatchID**: FK → ManufacturingBatch(BatchID).  
-* **TestID**: FK → QualityTest(TestID).  
-* **ResultValue**, **PassFail**: Outcome data.  
-* **CreatedAt**: Timestamp.  
-* **IX_QC_BatchDate**: Index for batch/date queries.
-
-## DistributionCenter Table
-* **CenterID**: Surrogate key (PK).  
-* **Name**, **AddressID**: FK → Address(AddressID).  
-* **CreatedAt**: Timestamp.
-
-## Inventory Table
-* **InventoryID**, **SnapshotDate**: Composite PK, partitioned by date.  
-* **CenterID**, **ProductID**: FKs → DistributionCenter, Product.  
-* **QuantityUnits**: On-hand stock.  
-* **CreatedAt**: Timestamp.  
-* **IX_Inv_CenterDate**: Index on center/date.
-
-## Shipment Table
-* **ShipmentID**, **ShipmentDate**: Composite PK, partitioned by date.  
-* **CenterID**, **CustomerID**: FKs → DistributionCenter, Customer.  
-* **QuantityUnits**: Shipped volume.  
-* **CreatedAt**: Timestamp.  
-* **IX_Ship_CenterDate**: Index on center/date.
-
-## Customer Table
-* **CustomerID**: Surrogate key (PK).  
-* **Name**, **AddressID**: FK → Address(AddressID).  
-* **CreatedAt**: Timestamp.
-
-## SalesOrder Table
-* **SalesOrderID**, **OrderDate**: Composite PK, partitioned by date.  
-* **CustomerID**: FK → Customer(CustomerID).  
-* **TotalUnits**, **TotalAmount**, **Status**: Order details.  
-* **CreatedAt**: Timestamp.  
-* **IX_SO_CustDate**: Index on customer/date.
-
-## RegulatorySubmission Table
-* **SubmissionID**: Surrogate key (PK).  
-* **ProductID**: FK → Product(ProductID).  
-* **SubmissionDate**, **Agency**, **Status**, **DocumentLink**: Compliance filings.  
-* **CreatedAt**: Timestamp.
-
-![Pharma Company ER Diagram DBeaver](pharma-company-er-diagram-dbeaver.png)
-
-## DDL Syntax
-```sql
+-- DDL Syntax:
 -- Create 'pharma_company' schema
 CREATE SCHEMA pharma_company;
 
@@ -415,11 +316,11 @@ ALTER TABLE pharma_company.RegulatorySubmission
   ADD CONSTRAINT FK_RS_Product
   FOREIGN KEY (ProductID)
   REFERENCES pharma_company.Product(ProductID);
-```
 
-## DML Syntax
-* Run the script in one batch so all variables stay in scope.
-```sql
+
+
+-- DML Syntax:
+-- Run the script in one batch so all variables stay in scope.
 /* ===================================================================
    PHARMA COMPANY – BULK DATA GENERATOR (inline generators)
    Prereq: Tables + PF_PharmaYear/PS_PharmaYear already exist.
@@ -761,10 +662,10 @@ SELECT
   (SELECT COUNT(*) FROM pharma_company.SalesOrder)           AS SalesOrderCount,
   (SELECT COUNT(*) FROM pharma_company.Shipment)             AS ShipmentCount,
   (SELECT COUNT(*) FROM pharma_company.RegulatorySubmission) AS RegulatorySubmissionCount;
-```
 
-## DROP Syntax:
-```sql
+
+
+-- DROP Syntax:
 DROP TABLE IF EXISTS pharma_company.QCResult;
 DROP TABLE IF EXISTS pharma_company.Formulation;
 DROP TABLE IF EXISTS pharma_company.Inventory;
@@ -789,4 +690,3 @@ DROP SCHEMA pharma_company;
 
 DROP PARTITION SCHEME PS_PharmaYear;
 DROP PARTITION FUNCTION PF_PharmaYear;
-```
