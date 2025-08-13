@@ -38,8 +38,8 @@ END CATCH
 
 ## Error functions
 * Error functions are used within a `CATCH` block to retrieve information about the error that caused the TRY block to transfer control to the `CATCH` block.
-* These functions  provide details such as the error number, message, severity, state, procedure name, and line number where the error occurred. Here are the most commonly used error 
-
+* These functions  provide details such as the error number, message, severity, state, procedure name, and line number where the error occurred.
+### Here are the most commonly used error:
 **ERROR_NUMBER()**
 * Returns the error number of the error that caused the CATCH block to be  executed.
 ```sql

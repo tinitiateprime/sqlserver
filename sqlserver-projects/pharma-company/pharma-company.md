@@ -14,7 +14,7 @@ This data model supports end-to-end pharmaceutical operations: from raw material
 - **DistributionCenter**, **Inventory**, and **Shipment** manage where and when product moves.  
 - **Customer**, **SalesOrder**, and **RegulatorySubmission** track orders, clients, and compliance filings.
 
-![Pharma Company ER Diagram Mermaid](pharma-company-er-diagram-mermaid.png)
+![Pharma Company ER Diagram DBeaver](pharma-company-er-diagram-dbeaver.png)
 
 ## Address Table
 * **AddressID**: Surrogate key (PK).  
@@ -104,14 +104,14 @@ This data model supports end-to-end pharmaceutical operations: from raw material
 * **SubmissionDate**, **Agency**, **Status**, **DocumentLink**: Compliance filings.  
 * **CreatedAt**: Timestamp.
 
-![Pharma Company ER Diagram DBeaver](pharma-company-er-diagram-dbeaver.png)
+![Pharma Company ER Diagram Mermaid](pharma-company-er-diagram-mermaid.png)
 
 ## DDL Syntax
 ```sql
 -- Create 'pharma_company' schema
 CREATE SCHEMA pharma_company;
 
--- Create 'pharma_year' partition scheme
+-- Create 'PF_PharmaYear' partition scheme
 IF NOT EXISTS (SELECT 1 FROM sys.partition_functions WHERE name = 'PF_PharmaYear')
 BEGIN
   EXEC('CREATE PARTITION FUNCTION PF_PharmaYear (date)
@@ -426,6 +426,9 @@ ALTER TABLE pharma_company.RegulatorySubmission
    ===================================================================*/
 SET NOCOUNT ON;
 
+/* ===================================================================
+   Tunables
+   ===================================================================*/
 DECLARE 
   @addrCount        int = 1000,
   @supplierCount    int = 120,

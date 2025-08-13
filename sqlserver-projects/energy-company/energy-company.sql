@@ -1,112 +1,14 @@
-![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : Energy Company Data Model
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server Tutorial
 
-&copy; TINITIATE.COM
 
-# Energy Company Data Model
-This model covers the end-to-end energy lifecycle: customers and meters, facilities and assets, generation (production), consumption (meter readings), pricing (rate plans), sales, invoicing, payments, and asset maintenance.  
-- **Address, Customer** capture contact and identity data.  
-- **Department, Facility, AssetType, Asset** define the operational structure and physical equipment.  
-- **EnergyProduction** records generation at assets (partitioned).  
-- **Meter, MeterReading** track installed meters and periodic consumption (partitioned).  
-- **RatePlan, EnergySale, Invoice, Payment** handle commercial processes from pricing to collections (partitioned where time-series).  
-- **AssetMaintenance** logs upkeep and costs.  
-Time-series tables use date partitioning (e.g., `PS_EnergyYear`) for scale and query performance; selective nonclustered indexes optimize common filters.
-
-![Energy Company ER Diagram DBeaver](energy-company-er-diagram-dbeaver.png)
-
-## Address
-* **AddressID**: Surrogate key (PK).  
-* **Street, City, State, ZIP, Country**: Standard address fields.
-
-## Customer
-* **CustomerID**: Surrogate key (PK).  
-* **FirstName, LastName, Email, Phone**: Customer identity and contact.  
-* **AddressID**: FK → `Address(AddressID)`.  
-* **CreatedAt/By, UpdatedAt/By**: Audit columns.
-
-## Department
-* **DepartmentID**: Surrogate key (PK).  
-* **Name**: Organizational unit (e.g., Operations, Maintenance).
-
-## Facility
-* **FacilityID**: Surrogate key (PK).  
-* **Name, Location**: Plant/substation identity.  
-* **DepartmentID**: FK → `Department(DepartmentID)`.  
-* **CreatedAt/By, UpdatedAt/By**: Audit columns.
-
-## AssetType
-* **AssetTypeID**: Surrogate key (PK).  
-* **Name, Description**: Equipment category (e.g., Turbine, Transformer).
-
-## Asset
-* **AssetID**: Surrogate key (PK).  
-* **FacilityID**: FK → `Facility(FacilityID)`.  
-* **AssetTypeID**: FK → `AssetType(AssetTypeID)`.  
-* **Name, CommissionDate, Status, CapacityMW**: Equipment details and capacity.  
-* **CreatedAt/By, UpdatedAt/By**: Audit columns.  
-* **IX_Asset_Status**: Speeds status queries; includes `CommissionDate, CapacityMW`.
-
-## EnergyProduction (Partitioned)
-* **ProductionID, ProductionDate**: Composite PK; partitioned by `ProductionDate` (e.g., `PS_EnergyYear`).  
-* **AssetID**: FK → `Asset(AssetID)`.  
-* **EnergyMWh**: Generated energy for the day/period.  
-* **CreatedAt/By**: Audit columns.  
-* **IX_EP_AssetDate**: Fast lookups by asset and recent dates.
-
-## Meter
-* **MeterID**: Surrogate key (PK).  
-* **CustomerID**: FK → `Customer(CustomerID)`.  
-* **InstallationDate, MeterType, SerialNumber (UNIQUE), Status**: Meter metadata.  
-* **CreatedAt/By, UpdatedAt/By**: Audit columns.
-
-## MeterReading (Partitioned)
-* **ReadingID, ReadDate**: Composite PK; partitioned by `ReadDate`.  
-* **MeterID**: FK → `Meter(MeterID)`.  
-* **Consumption_kWh**: Period consumption.  
-* **CreatedAt/By**: Audit columns.  
-* **IX_MR_MeterDate**: Optimizes recent-read queries per meter.
-
-## RatePlan
-* **RatePlanID**: Surrogate key (PK).  
-* **Name, Description, PricePerkWh**: Tariff definition.  
-* **EffectiveDate, ExpirationDate**: Validity window.  
-* **IX_RatePlan_Eff**: Efficient plan lookup by effective/expiry dates.
-
-## EnergySale (Partitioned)
-* **SaleID, SaleDate**: Composite PK; partitioned by `SaleDate`.  
-* **CustomerID**: FK → `Customer(CustomerID)`.  
-* **RatePlanID**: FK → `RatePlan(RatePlanID)`.  
-* **kWhSold, TotalCharge**: Billed energy and amount.  
-* **CreatedAt/By**: Audit columns.  
-* **IX_ES_CustDate**: Customer history by date.
-
-## Invoice (Partitioned)
-* **InvoiceID, InvoiceDate**: Composite PK; partitioned by `InvoiceDate`.  
-* **CustomerID**: FK → `Customer(CustomerID)`.  
-* **SaleID**: FK → `EnergySale(SaleID)`.  
-* **DueDate, AmountDue, Status**: Billing lifecycle.  
-* **CreatedAt/By**: Audit columns.  
-* **IX_Inv_Status**: Filters by status; includes `DueDate, AmountDue`.
-
-## Payment
-* **PaymentID**: Surrogate key (PK).  
-* **InvoiceID**: FK → `Invoice(InvoiceID)`.  
-* **PaymentDate, AmountPaid, PaymentMethod, CheckRef**: Remittance details.  
-* **CreatedAt/By**: Audit columns.
-
-## AssetMaintenance
-* **MaintenanceID**: Surrogate key (PK).  
-* **AssetID**: FK → `Asset(AssetID)`.  
-* **MaintenanceDate, Description, CostUSD, PerformedBy**: Work log and cost tracking.  
-* **CreatedAt/By, UpdatedAt/By**: Audit columns.  
-* **IX_AM_AssetDate**: Recent maintenance per asset.
-
-![Energy Company ER Diagram Mermaid](energy-company-er-diagram-mermaid.png)
-
-## DDL Syntax
-```sql
+-- DDL Syntax:
 -- Create 'energy_company' schema
 CREATE SCHEMA energy_company;
 
@@ -391,10 +293,10 @@ FOREIGN KEY (AssetID) REFERENCES energy_company.Asset(AssetID);
 -- Create an index for 'AssetMaintenance' table
 CREATE INDEX IX_AM_AssetDate
 ON energy_company.AssetMaintenance(AssetID, MaintenanceDate DESC);
-```
 
-## DML Syntax
-```sql
+
+
+-- DML Syntax:
 /* ===================================================================
    ENERGY COMPANY – BULK DATA GENERATOR (inline generators)
    Prereq: Tables + PF_EnergyYear/PS_EnergyYear already exist.
@@ -643,10 +545,10 @@ SELECT
   (SELECT COUNT(*) FROM energy_company.Invoice) AS InvoiceCount,
   (SELECT COUNT(*) FROM energy_company.Payment) AS PaymentCount,
   (SELECT COUNT(*) FROM energy_company.AssetMaintenance) AS AssetMaintenanceCount;
-```
 
-## DROP Syntax:
-```sql
+
+
+-- DROP Syntax:
 DROP TABLE IF EXISTS energy_company.Payment;
 DROP TABLE IF EXISTS energy_company.AssetMaintenance;
 
@@ -670,4 +572,3 @@ DROP SCHEMA IF EXISTS energy_company;
 
 DROP PARTITION SCHEME PS_EnergyYear;
 DROP PARTITION FUNCTION PS_EnergyYear;
-```
