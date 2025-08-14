@@ -666,8 +666,8 @@ DROP TABLE IF EXISTS energy_company.Customer;
 DROP TABLE IF EXISTS energy_company.Department;
 DROP TABLE IF EXISTS energy_company.Address;
 
-DROP SCHEMA IF EXISTS energy_company;
-
 DROP PARTITION SCHEME PS_EnergyYear;
 DROP PARTITION FUNCTION PS_EnergyYear;
+
+DROP SCHEMA IF EXISTS energy_company;
 ```

@@ -9,7 +9,7 @@
 * In T-SQL, `BEGIN` and `END` are used to define a block of one or more statements as a single unit.
 * This is essential when you need to group multiple operations under control-of-flow constructs, transactions, or within stored routines.
 
-## Example 1: Adding two variables
+## Adding two variables
 We are declaring and initializing variables, performing a simple addition operation, and then printing and selecting the result. 
 ### Declaration
 * @num1 is declared as an integer and initialized to 1.
@@ -40,7 +40,7 @@ BEGIN
 END;
 ```
 
-## Example 1: Reassigning a variable and performing arithmetic
+## Reassigning a variable and performing arithmetic
 We are declaring and initializing variables, reassigning, performing a simple addition operation, and then printing the result. 
 ### Declaration
 * @data1 is declared as an integer and initialized to 1.

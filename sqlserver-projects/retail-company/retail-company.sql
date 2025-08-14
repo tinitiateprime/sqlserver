@@ -1,90 +1,14 @@
-![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : Retail Company Data Model
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server Tutorial
 
-&copy; TINITIATE.COM
 
-# Retail Company Data Model
-This model supports core retail operations: customers and addresses, catalog (categories, suppliers, products), inventory across warehouses, sales orders with line items, and procurement via purchase orders.  
-- **Customer, Address** capture buyer and shipping details.  
-- **ProductCategory, Supplier, Product** define the merchandise master.  
-- **Warehouse, Inventory** track stock by site and date.  
-- **SalesOrder, SalesOrderDetail** handle order capture (partitioned by order date).  
-- **PurchaseOrder, PurchaseOrderDetail** manage replenishment from suppliers.  
-Targeted nonclustered indexes optimize common filters (category, product/date, customer/date, status).
-
-![Retail Company ER Diagram DBeaver](retail-company-er-diagram-dbeaver.png)
-
-## Customer
-* **CustomerID**: Surrogate key (PK).  
-* **FirstName, LastName, Email, Phone**: Customer identity and contact.  
-* **AddressID**: FK → `Address(AddressID)` (shipping/billing address).  
-* **CreatedAt/By, UpdatedAt/By**: Audit columns.
-
-## Address
-* **AddressID**: Surrogate key (PK).  
-* **Street, City, State, ZIP, Country**: Standard address fields.
-
-## ProductCategory
-* **CategoryID**: Surrogate key (PK).  
-* **Name, Description**: Merchandise grouping.
-
-## Supplier
-* **SupplierID**: Surrogate key (PK).  
-* **Name, ContactName, Phone, Email**: Vendor info.  
-* **AddressID**: FK → `Address(AddressID)`.
-
-## Product
-* **ProductID**: Surrogate key (PK).  
-* **Name**: Product title.  
-* **CategoryID**: FK → `ProductCategory(CategoryID)`.  
-* **SupplierID**: FK → `Supplier(SupplierID)`.  
-* **UnitPrice, UnitsInStock, ReorderLevel, Discontinued**: Item economics & availability.  
-* **CreatedAt/By, UpdatedAt/By**: Audit columns.  
-* **IX_Prod_Category**: Speeds lookups by category.
-
-## Warehouse
-* **WarehouseID**: Surrogate key (PK).  
-* **Name, Location**: Stocking point metadata.
-
-## Inventory
-* **InventoryID**: Surrogate key (PK).  
-* **ProductID**: FK → `Product(ProductID)`.  
-* **WarehouseID**: FK → `Warehouse(WarehouseID)`.  
-* **StockDate, QuantityOnHand, CreatedAt**: Daily on-hand snapshot.  
-* **IX_Inv_ProductDate**: Fast recent stock checks per product.
-
-## SalesOrder (Partitioned)
-* **SalesOrderID, OrderDate**: Composite PK; partitioned by `OrderDate` (e.g., `PS_SalesYear`).  
-* **CustomerID**: FK → `Customer(CustomerID)`.  
-* **ShipDate, ShipAddressID**: Optional ship info (FK → `Address`).  
-* **Status, TotalAmount, Created*/Updated***: Order lifecycle & audit.  
-* **IX_SO_CustDate**: Customer order history by date.  
-* **IX_SO_Status**: Filter by status; includes `TotalAmount`.
-
-## SalesOrderDetail
-* **SalesOrderDetailID**: Surrogate key (PK).  
-* **SalesOrderID**: FK → `SalesOrder(SalesOrderID)`.  
-* **ProductID**: FK → `Product(ProductID)`.  
-* **UnitPrice, Quantity, LineTotal (computed)**: Line economics.  
-* **IX_SOD_Product**: Product-level line lookups.
-
-## PurchaseOrder
-* **PurchaseOrderID**: Surrogate key (PK).  
-* **SupplierID**: FK → `Supplier(SupplierID)`.  
-* **OrderDate, ExpectedDate, Status, TotalAmount, CreatedAt/By**: PO lifecycle.  
-* **IX_PO_SuppDate**: Supplier history by date.
-
-## PurchaseOrderDetail
-* **PurchaseOrderDetailID**: Surrogate key (PK).  
-* **PurchaseOrderID**: FK → `PurchaseOrder(PurchaseOrderID)`.  
-* **ProductID**: FK → `Product(ProductID)`.  
-* **UnitCost, Quantity, LineTotal (computed)**: PO line economics.
-
-![Retail Company ER Diagram Mermaid](retail-company-er-diagram-mermaid.png)
-
-## DDL Syntax
-```sql
+-- DDL Syntax:
 -- Create 'retail_company' schema
 CREATE SCHEMA retail_company;
 
@@ -328,10 +252,10 @@ ALTER TABLE retail_company.PurchaseOrderDetail
   ADD CONSTRAINT FK_POD_Product
       FOREIGN KEY (ProductID)
       REFERENCES retail_company.Product(ProductID);
-```
 
-## DML Syntax
-```sql
+
+
+-- DML Syntax:
 /* ===================================================================
    RETAIL COMPANY – BULK DATA GENERATOR (contained-DB safe)
    Prereq: Your retail_company tables + PS_SalesYear already exist.
@@ -676,10 +600,10 @@ SELECT
   (SELECT COUNT(*) FROM retail_company.SalesOrderDetail)    AS SalesOrderDetailCount,
   (SELECT COUNT(*) FROM retail_company.PurchaseOrder)       AS PurchaseOrderCount,
   (SELECT COUNT(*) FROM retail_company.PurchaseOrderDetail) AS PurchaseOrderDetailCount;
-```
 
-## DROP Syntax
-```sql
+
+
+-- DROP Syntax:
 DROP TABLE IF EXISTS retail_company.PurchaseOrderDetail;
 DROP TABLE IF EXISTS retail_company.PurchaseOrder;
 DROP TABLE IF EXISTS retail_company.SalesOrderDetail;
@@ -698,4 +622,3 @@ DROP PARTITION SCHEME PS_SalesYear;
 DROP PARTITION FUNCTION PS_SalesYear;
 
 DROP SCHEMA retail_company;
-```

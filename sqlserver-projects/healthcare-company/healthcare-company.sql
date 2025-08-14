@@ -1,118 +1,14 @@
-![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
+/*******************************************************************************
+*  Organization : TINITIATE TECHNOLOGIES PVT LTD
+*  Website      : tinitiate.com
+*  Script Title : SQL Server
+*  Description  : Healthcare Company Data Model
+*  Author       : Team Tinitiate
+*******************************************************************************/
 
-# SQL Server Tutorial
 
-&copy; TINITIATE.COM
 
-# Healthcare Data Model
-This model covers a clinical workflow end-to-end: patients and providers, appointments and medical records, diagnoses/procedures, medications and prescriptions, labs (orders/results), insurance (policies/claims), and payments.  
-- **Patient, Address** capture demographics and contact details.  
-- **Department, Provider** define the care organization and clinicians.  
-- **Appointment** schedules encounters (partitioned by datetime with targeted indexes).  
-- **MedicalRecord, Diagnosis, ProcedureRecord** store clinical documentation and coding.  
-- **Medication, Prescription** manage medication master data and patient prescriptions.  
-- **LabOrder, LabResult** track ordered tests and their outcomes.  
-- **InsurancePolicy, Claim, Payment** represent coverage, billing, and remittances.  
-Audit columns (`CreatedAt/By`, `UpdatedAt/By`) are included where appropriate; filtered and covering indexes optimize common access paths.
-
-## Patient
-* **PatientID**: Surrogate key (PK).  
-* **FirstName, LastName, DOB, Gender**: Core demographics.  
-* **Phone, Email, AddressID, EmergencyContact**: Contact & next-of-kin.  
-* **CreatedAt/By, UpdatedAt/By**: Audit metadata.
-
-## Address
-* **AddressID**: Surrogate key (PK).  
-* **Street, City, State, ZIP, Country**: Standard address fields.
-
-## Department
-* **DepartmentID**: Surrogate key (PK).  
-* **Name, Floor, Location**: Organizational unit info.
-
-## Provider
-* **ProviderID**: Surrogate key (PK).  
-* **FirstName, LastName, NPI_Number (UNIQUE), Specialty**: Clinician identity.  
-* **Phone, Email**: Contact.  
-* **DepartmentID**: FK → `Department(DepartmentID)`.  
-* **CreatedAt/By, UpdatedAt/By**: Audit.
-
-## Appointment (Partitioned)
-* **AppointmentID, ApptDateTime**: Composite PK; partitioned on `ApptDateTime` (e.g., `PS_AppointmentYear`).  
-* **PatientID**: FK → `Patient(PatientID)`.  
-* **ProviderID**: FK → `Provider(ProviderID)`.  
-* **ApptType, Status, Location**: Scheduling details.  
-* **Created*/Updated***: Audit.  
-* **IX_App_PatientDate (filtered)**: Patient + recent dates.  
-* **IX_App_ProviderStatus (includes Location)**: Provider + status filtering.
-
-## MedicalRecord
-* **RecordID**: Surrogate key (PK).  
-* **PatientID**: FK → `Patient(PatientID)`.  
-* **RecordDate, RecordType, AuthorID**: Clinical note metadata.  
-* **Created*/Updated***: Audit.  
-* **IX_MR_PatientDate**: Patient chronological access.
-
-## Diagnosis
-* **DiagnosisID**: Surrogate key (PK).  
-* **RecordID**: FK → `MedicalRecord(RecordID)`.  
-* **ICD10Code, Description, DiagnosedDate**: Coded condition details.
-
-## ProcedureRecord
-* **ProcedureID**: Surrogate key (PK).  
-* **RecordID**: FK → `MedicalRecord(RecordID)`.  
-* **CPTCode, Description, ProcedureDate**: Procedure coding & timing.
-
-## Medication
-* **MedicationID**: Surrogate key (PK).  
-* **Name, Form, Strength, NDC_Code**: Drug master attributes.
-
-## Prescription
-* **PrescriptionID**: Surrogate key (PK).  
-* **PatientID**: FK → `Patient(PatientID)`.  
-* **ProviderID**: FK → `Provider(ProviderID)`.  
-* **MedicationID**: FK → `Medication(MedicationID)`.  
-* **Dosage, Frequency, StartDate, EndDate, Instructions**: Prescribing details.  
-* **Created*/Updated***: Audit.  
-* **IX_Rx_PatientActive (filtered)**: Active prescriptions per patient.
-
-## LabOrder
-* **LabOrderID**: Surrogate key (PK).  
-* **PatientID**: FK → `Patient(PatientID)`.  
-* **ProviderID**: FK → `Provider(ProviderID)`.  
-* **OrderDate, Status, SpecimenType**: Order metadata.  
-* **Created*/Updated***: Audit.  
-* **IX_LO_PatientDate**: Patient orders by date.
-
-## LabResult
-* **LabResultID**: Surrogate key (PK).  
-* **LabOrderID**: FK → `LabOrder(LabOrderID)`.  
-* **TestCode, TestName, ResultValue, Units, ReferenceRange, ResultDate**: Result details.  
-* **IX_LR_OrderDate**: Results by order/date.
-
-## InsurancePolicy
-* **PolicyID**: Surrogate key (PK).  
-* **PatientID**: FK → `Patient(PatientID)`.  
-* **InsurerName, PolicyNumber, GroupNumber**: Coverage identifiers.  
-* **EffectiveDate, ExpirationDate**: Validity window.  
-* **Created*/Updated***: Audit.  
-* **IX_IP_PatientActive (filtered)**: Quickly find current policies.
-
-## Claim
-* **ClaimID**: Surrogate key (PK).  
-* **PolicyID**: FK → `InsurancePolicy(PolicyID)`.  
-* **PatientID**: FK → `Patient(PatientID)`.  
-* **ProviderID**: FK → `Provider(ProviderID)`.  
-* **ClaimDate, TotalCharge, Status**: Billing event details.  
-* **Created*/Updated***: Audit.  
-* **IX_Clm_DateStatus**: Query by date/status.
-
-## Payment
-* **PaymentID**: Surrogate key (PK).  
-* **ClaimID**: FK → `Claim(ClaimID)`.  
-* **PaymentDate, AmountPaid, PaymentMethod, CheckReference, CreatedAt**: Remittance info.
-
-## DDL Syntax
-```sql
+-- DDL Syntax:
 -- Create 'healthcare_company' schema
 CREATE SCHEMA healthcare_company;
 
@@ -471,10 +367,10 @@ ALTER TABLE healthcare_company.Payment
   ADD CONSTRAINT FK_Pmt_Claim
       FOREIGN KEY (ClaimID)
       REFERENCES healthcare_company.Claim(ClaimID);
-```
 
-## DML Syntax
-```sql
+
+
+-- DML Syntax:
 /* ===================================================================
    HEALTHCARE COMPANY – BULK DATA GENERATOR (inline generators)
    Prereq: Tables + PS_AppointmentYear already exist.
@@ -831,10 +727,10 @@ SELECT
   (SELECT COUNT(*) FROM healthcare_company.InsurancePolicy)  AS InsurancePolicyCount,
   (SELECT COUNT(*) FROM healthcare_company.Claim)            AS ClaimCount,
   (SELECT COUNT(*) FROM healthcare_company.Payment)          AS PaymentCount;
-```
 
-## DROP Syntax
-```sql
+
+
+-- DROP Syntax:
 DROP TABLE IF EXISTS healthcare_company.Payment;
 DROP TABLE IF EXISTS healthcare_company.LabResult;
 DROP TABLE IF EXISTS healthcare_company.Claim;
@@ -855,4 +751,3 @@ DROP PARTITION SCHEME PS_AppointmentYear;
 DROP PARTITION FUNCTION PS_AppointmentYear;
 
 DROP SCHEMA healthcare_company;
-```

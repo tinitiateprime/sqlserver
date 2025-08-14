@@ -789,7 +789,7 @@ DROP TABLE IF EXISTS oil_n_gas_company.Facility;
 DROP TABLE IF EXISTS oil_n_gas_company.Product;
 DROP TABLE IF EXISTS oil_n_gas_company.Region;
 
-DROP SCHEMA IF EXISTS oil_n_gas_company;
-
 DROP PARTITION SCHEME PS_OilGasYear;
 DROP PARTITION FUNCTION PS_OilGasYear;
+
+DROP SCHEMA IF EXISTS oil_n_gas_company;

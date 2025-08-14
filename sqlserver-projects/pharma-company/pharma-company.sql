@@ -689,7 +689,7 @@ DROP TABLE IF EXISTS pharma_company.Equipment;
 
 DROP TABLE IF EXISTS pharma_company.Address;
 
-DROP SCHEMA pharma_company;
-
 DROP PARTITION SCHEME PS_PharmaYear;
 DROP PARTITION FUNCTION PF_PharmaYear;
+
+DROP SCHEMA pharma_company;
