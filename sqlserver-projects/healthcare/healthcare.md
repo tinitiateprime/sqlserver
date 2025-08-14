@@ -15,6 +15,8 @@ This model covers a clinical workflow end-to-end: patients and providers, appoin
 - **InsurancePolicy, Claim, Payment** represent coverage, billing, and remittances.  
 Audit columns (`CreatedAt/By`, `UpdatedAt/By`) are included where appropriate; filtered and covering indexes optimize common access paths.
 
+![Healthcare ER Diagram DBeaver](Healthcare-er-diagram-dbeaver.png)
+
 ## Patient
 * **PatientID**: Surrogate key (PK).  
 * **FirstName, LastName, DOB, Gender**: Core demographics.  
@@ -111,10 +113,12 @@ Audit columns (`CreatedAt/By`, `UpdatedAt/By`) are included where appropriate; f
 * **ClaimID**: FK → `Claim(ClaimID)`.  
 * **PaymentDate, AmountPaid, PaymentMethod, CheckReference, CreatedAt**: Remittance info.
 
+![Healthcare ER Diagram Mermaid](healthcare-er-diagram-mermaid.png)
+
 ## DDL Syntax
 ```sql
--- Create 'healthcare_company' schema
-CREATE SCHEMA healthcare_company;
+-- Create 'healthcare' schema
+CREATE SCHEMA healthcare;
 
 -- Create 'PS_AppointmentYear' partition scheme
 IF NOT EXISTS (SELECT 1 FROM sys.partition_functions WHERE name = 'PS_AppointmentYear')
@@ -130,7 +134,7 @@ BEGIN
 END;
 
 -- Create 'Address' table
-CREATE TABLE healthcare_company.Address
+CREATE TABLE healthcare.Address
 (
   AddressID    INT           IDENTITY(1,1),
   Street       NVARCHAR(150) NOT NULL,
@@ -139,22 +143,22 @@ CREATE TABLE healthcare_company.Address
   ZIP          NVARCHAR(15)  NOT NULL,
   Country      NVARCHAR(50)  NOT NULL
 );
-ALTER TABLE healthcare_company.Address
+ALTER TABLE healthcare.Address
   ADD CONSTRAINT PK_Address PRIMARY KEY CLUSTERED (AddressID);
 
 -- Create 'Department' table
-CREATE TABLE healthcare_company.Department
+CREATE TABLE healthcare.Department
 (
   DepartmentID INT           IDENTITY(1,1),
   Name         NVARCHAR(100) NOT NULL,
   Floor        INT           NULL,
   Location     NVARCHAR(100) NULL
 );
-ALTER TABLE healthcare_company.Department
+ALTER TABLE healthcare.Department
   ADD CONSTRAINT PK_Department PRIMARY KEY CLUSTERED (DepartmentID);
 
 -- Create 'Patient' table
-CREATE TABLE healthcare_company.Patient
+CREATE TABLE healthcare.Patient
 (
   PatientID         INT           IDENTITY(1,1),
   FirstName         NVARCHAR(50)  NOT NULL,
@@ -171,15 +175,15 @@ CREATE TABLE healthcare_company.Patient
   UpdatedAt         DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy         SYSNAME       NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.Patient
+ALTER TABLE healthcare.Patient
   ADD CONSTRAINT PK_Patient PRIMARY KEY CLUSTERED (PatientID);
-ALTER TABLE healthcare_company.Patient
+ALTER TABLE healthcare.Patient
   ADD CONSTRAINT FK_Cust_Address
       FOREIGN KEY (AddressID)
-      REFERENCES healthcare_company.Address(AddressID);
+      REFERENCES healthcare.Address(AddressID);
 
 -- Create 'Provider' table
-CREATE TABLE healthcare_company.Provider
+CREATE TABLE healthcare.Provider
 (
   ProviderID    INT           IDENTITY(1,1),
   FirstName     NVARCHAR(50)  NOT NULL,
@@ -194,17 +198,17 @@ CREATE TABLE healthcare_company.Provider
   UpdatedAt     DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy     SYSNAME       NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.Provider
+ALTER TABLE healthcare.Provider
   ADD CONSTRAINT PK_Provider PRIMARY KEY CLUSTERED (ProviderID);
-ALTER TABLE healthcare_company.Provider
+ALTER TABLE healthcare.Provider
   ADD CONSTRAINT UQ_Provider_NPI UNIQUE (NPI_Number);
-ALTER TABLE healthcare_company.Provider
+ALTER TABLE healthcare.Provider
   ADD CONSTRAINT FK_Provider_Department
       FOREIGN KEY (DepartmentID)
-      REFERENCES healthcare_company.Department(DepartmentID);
+      REFERENCES healthcare.Department(DepartmentID);
 
 -- Create 'Appointment' table
-CREATE TABLE healthcare_company.Appointment
+CREATE TABLE healthcare.Appointment
 (
   AppointmentID  BIGINT         NOT NULL,
   PatientID      INT            NOT NULL,
@@ -218,29 +222,29 @@ CREATE TABLE healthcare_company.Appointment
   UpdatedAt      DATETIME2      NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy      SYSNAME        NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.Appointment
+ALTER TABLE healthcare.Appointment
   ADD CONSTRAINT PK_Appointment
       PRIMARY KEY CLUSTERED (AppointmentID, ApptDateTime)
       ON PS_AppointmentYear(ApptDateTime);
-ALTER TABLE healthcare_company.Appointment
+ALTER TABLE healthcare.Appointment
   ADD CONSTRAINT FK_Appt_Patient
       FOREIGN KEY (PatientID)
-      REFERENCES healthcare_company.Patient(PatientID);
-ALTER TABLE healthcare_company.Appointment
+      REFERENCES healthcare.Patient(PatientID);
+ALTER TABLE healthcare.Appointment
   ADD CONSTRAINT FK_Appt_Provider
       FOREIGN KEY (ProviderID)
-      REFERENCES healthcare_company.Provider(ProviderID);
+      REFERENCES healthcare.Provider(ProviderID);
 -- Create an index for 'Appointment' table
 CREATE INDEX IX_App_PatientDate
-  ON healthcare_company.Appointment(PatientID, ApptDateTime DESC)
+  ON healthcare.Appointment(PatientID, ApptDateTime DESC)
   WHERE ApptDateTime >= '2023-01-01';
 -- Create an index for 'Appointment' table
 CREATE INDEX IX_App_ProviderStatus
-  ON healthcare_company.Appointment(ProviderID, Status)
+  ON healthcare.Appointment(ProviderID, Status)
   INCLUDE (Location);
 
 -- Create 'MedicalRecord' table
-CREATE TABLE healthcare_company.MedicalRecord
+CREATE TABLE healthcare.MedicalRecord
 (
   RecordID     BIGINT         IDENTITY(1,1),
   PatientID    INT            NOT NULL,
@@ -252,18 +256,18 @@ CREATE TABLE healthcare_company.MedicalRecord
   UpdatedAt    DATETIME2      NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy    SYSNAME        NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.MedicalRecord
+ALTER TABLE healthcare.MedicalRecord
   ADD CONSTRAINT PK_MedicalRecord PRIMARY KEY CLUSTERED (RecordID);
-ALTER TABLE healthcare_company.MedicalRecord
+ALTER TABLE healthcare.MedicalRecord
   ADD CONSTRAINT FK_MR_Patient
       FOREIGN KEY (PatientID)
-      REFERENCES healthcare_company.Patient(PatientID);
+      REFERENCES healthcare.Patient(PatientID);
 -- Create an index for 'MedicalRecord' table
 CREATE INDEX IX_MR_PatientDate
-  ON healthcare_company.MedicalRecord(PatientID, RecordDate);
+  ON healthcare.MedicalRecord(PatientID, RecordDate);
 
 -- Create 'Diagnosis' table
-CREATE TABLE healthcare_company.Diagnosis
+CREATE TABLE healthcare.Diagnosis
 (
   DiagnosisID   BIGINT       IDENTITY(1,1),
   RecordID      BIGINT       NOT NULL,
@@ -271,15 +275,15 @@ CREATE TABLE healthcare_company.Diagnosis
   Description   NVARCHAR(255) NULL,
   DiagnosedDate DATE          NOT NULL
 );
-ALTER TABLE healthcare_company.Diagnosis
+ALTER TABLE healthcare.Diagnosis
   ADD CONSTRAINT PK_Diagnosis PRIMARY KEY CLUSTERED (DiagnosisID);
-ALTER TABLE healthcare_company.Diagnosis
+ALTER TABLE healthcare.Diagnosis
   ADD CONSTRAINT FK_Dx_Record
       FOREIGN KEY (RecordID)
-      REFERENCES healthcare_company.MedicalRecord(RecordID);
+      REFERENCES healthcare.MedicalRecord(RecordID);
 
 -- Create 'ProcedureRecord' table
-CREATE TABLE healthcare_company.ProcedureRecord
+CREATE TABLE healthcare.ProcedureRecord
 (
   ProcedureID    BIGINT       IDENTITY(1,1),
   RecordID       BIGINT       NOT NULL,
@@ -287,15 +291,15 @@ CREATE TABLE healthcare_company.ProcedureRecord
   Description    NVARCHAR(255) NULL,
   ProcedureDate  DATE         NOT NULL
 );
-ALTER TABLE healthcare_company.ProcedureRecord
+ALTER TABLE healthcare.ProcedureRecord
   ADD CONSTRAINT PK_ProcedureRecord PRIMARY KEY CLUSTERED (ProcedureID);
-ALTER TABLE healthcare_company.ProcedureRecord
+ALTER TABLE healthcare.ProcedureRecord
   ADD CONSTRAINT FK_Proc_Record
       FOREIGN KEY (RecordID)
-      REFERENCES healthcare_company.MedicalRecord(RecordID);
+      REFERENCES healthcare.MedicalRecord(RecordID);
 
 -- Create 'Medication' table
-CREATE TABLE healthcare_company.Medication
+CREATE TABLE healthcare.Medication
 (
   MedicationID   INT           IDENTITY(1,1),
   Name           NVARCHAR(150) NOT NULL,
@@ -303,11 +307,11 @@ CREATE TABLE healthcare_company.Medication
   Strength       NVARCHAR(50)  NULL,
   NDC_Code       VARCHAR(20)   NULL
 );
-ALTER TABLE healthcare_company.Medication
+ALTER TABLE healthcare.Medication
   ADD CONSTRAINT PK_Medication PRIMARY KEY CLUSTERED (MedicationID);
 
 -- Create 'Prescription' table
-CREATE TABLE healthcare_company.Prescription
+CREATE TABLE healthcare.Prescription
 (
   PrescriptionID INT           IDENTITY(1,1),
   PatientID      INT           NOT NULL,
@@ -323,27 +327,27 @@ CREATE TABLE healthcare_company.Prescription
   UpdatedAt      DATETIME2     NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy      SYSNAME       NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.Prescription
+ALTER TABLE healthcare.Prescription
   ADD CONSTRAINT PK_Prescription PRIMARY KEY CLUSTERED (PrescriptionID);
-ALTER TABLE healthcare_company.Prescription
+ALTER TABLE healthcare.Prescription
   ADD CONSTRAINT FK_Rx_Patient
       FOREIGN KEY (PatientID)
-      REFERENCES healthcare_company.Patient(PatientID);
-ALTER TABLE healthcare_company.Prescription
+      REFERENCES healthcare.Patient(PatientID);
+ALTER TABLE healthcare.Prescription
   ADD CONSTRAINT FK_Rx_Provider
       FOREIGN KEY (ProviderID)
-      REFERENCES healthcare_company.Provider(ProviderID);
-ALTER TABLE healthcare_company.Prescription
+      REFERENCES healthcare.Provider(ProviderID);
+ALTER TABLE healthcare.Prescription
   ADD CONSTRAINT FK_Rx_Med
       FOREIGN KEY (MedicationID)
-      REFERENCES healthcare_company.Medication(MedicationID);
+      REFERENCES healthcare.Medication(MedicationID);
 -- Create an index for 'Prescription' table
 CREATE INDEX IX_Rx_PatientActive
-  ON healthcare_company.Prescription(PatientID)
+  ON healthcare.Prescription(PatientID)
   WHERE EndDate IS NULL;
 
 -- Create 'LabOrder' table
-CREATE TABLE healthcare_company.LabOrder
+CREATE TABLE healthcare.LabOrder
 (
   LabOrderID   BIGINT       IDENTITY(1,1),
   PatientID    INT          NOT NULL,
@@ -356,22 +360,22 @@ CREATE TABLE healthcare_company.LabOrder
   UpdatedAt    DATETIME2    NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy    SYSNAME      NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.LabOrder
+ALTER TABLE healthcare.LabOrder
   ADD CONSTRAINT PK_LabOrder PRIMARY KEY CLUSTERED (LabOrderID);
-ALTER TABLE healthcare_company.LabOrder
+ALTER TABLE healthcare.LabOrder
   ADD CONSTRAINT FK_LO_Patient
       FOREIGN KEY (PatientID)
-      REFERENCES healthcare_company.Patient(PatientID);
-ALTER TABLE healthcare_company.LabOrder
+      REFERENCES healthcare.Patient(PatientID);
+ALTER TABLE healthcare.LabOrder
   ADD CONSTRAINT FK_LO_Prov
       FOREIGN KEY (ProviderID)
-      REFERENCES healthcare_company.Provider(ProviderID);
+      REFERENCES healthcare.Provider(ProviderID);
 -- Create an index for 'LabOrder' table
 CREATE INDEX IX_LO_PatientDate
-  ON healthcare_company.LabOrder(PatientID, OrderDate DESC);
+  ON healthcare.LabOrder(PatientID, OrderDate DESC);
 
 -- Create 'LabResult' table
-CREATE TABLE healthcare_company.LabResult
+CREATE TABLE healthcare.LabResult
 (
   LabResultID    BIGINT       IDENTITY(1,1),
   LabOrderID     BIGINT       NOT NULL,
@@ -382,18 +386,18 @@ CREATE TABLE healthcare_company.LabResult
   ReferenceRange NVARCHAR(100) NULL,
   ResultDate     DATETIME2    NOT NULL
 );
-ALTER TABLE healthcare_company.LabResult
+ALTER TABLE healthcare.LabResult
   ADD CONSTRAINT PK_LabResult PRIMARY KEY CLUSTERED (LabResultID);
-ALTER TABLE healthcare_company.LabResult
+ALTER TABLE healthcare.LabResult
   ADD CONSTRAINT FK_LR_Order
       FOREIGN KEY (LabOrderID)
-      REFERENCES healthcare_company.LabOrder(LabOrderID);
+      REFERENCES healthcare.LabOrder(LabOrderID);
 -- Create an index for 'LabResult' table
 CREATE INDEX IX_LR_OrderDate
-  ON healthcare_company.LabResult(LabOrderID, ResultDate);
+  ON healthcare.LabResult(LabOrderID, ResultDate);
 
 -- Create 'InsurancePolicy' table
-CREATE TABLE healthcare_company.InsurancePolicy
+CREATE TABLE healthcare.InsurancePolicy
 (
   PolicyID       BIGINT      IDENTITY(1,1),
   PatientID      INT         NOT NULL,
@@ -407,21 +411,21 @@ CREATE TABLE healthcare_company.InsurancePolicy
   UpdatedAt      DATETIME2   NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy      SYSNAME     NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.InsurancePolicy
+ALTER TABLE healthcare.InsurancePolicy
   ADD CONSTRAINT PK_InsurancePolicy PRIMARY KEY CLUSTERED (PolicyID);
-ALTER TABLE healthcare_company.InsurancePolicy
+ALTER TABLE healthcare.InsurancePolicy
   ADD CONSTRAINT FK_IP_Patient
       FOREIGN KEY (PatientID)
-      REFERENCES healthcare_company.Patient(PatientID);
+      REFERENCES healthcare.Patient(PatientID);
 -- Create an index for 'InsurancePolicy' table
 CREATE INDEX IX_IP_Patient_ExpDate
-  ON healthcare_company.InsurancePolicy(PatientID, ExpirationDate);
+  ON healthcare.InsurancePolicy(PatientID, ExpirationDate);
 CREATE INDEX IX_IP_Patient_ExpirationNull
-  ON healthcare_company.InsurancePolicy(PatientID)
+  ON healthcare.InsurancePolicy(PatientID)
   WHERE ExpirationDate IS NULL;
 
 -- Create 'Claim' table
-CREATE TABLE healthcare_company.Claim
+CREATE TABLE healthcare.Claim
 (
   ClaimID        BIGINT      IDENTITY(1,1),
   PolicyID       BIGINT      NOT NULL,
@@ -435,26 +439,26 @@ CREATE TABLE healthcare_company.Claim
   UpdatedAt      DATETIME2   NOT NULL DEFAULT SYSUTCDATETIME(),
   UpdatedBy      SYSNAME     NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.Claim
+ALTER TABLE healthcare.Claim
   ADD CONSTRAINT PK_Claim PRIMARY KEY CLUSTERED (ClaimID);
-ALTER TABLE healthcare_company.Claim
+ALTER TABLE healthcare.Claim
   ADD CONSTRAINT FK_Clm_Policy
       FOREIGN KEY (PolicyID)
-      REFERENCES healthcare_company.InsurancePolicy(PolicyID);
-ALTER TABLE healthcare_company.Claim
+      REFERENCES healthcare.InsurancePolicy(PolicyID);
+ALTER TABLE healthcare.Claim
   ADD CONSTRAINT FK_Clm_Patient
       FOREIGN KEY (PatientID)
-      REFERENCES healthcare_company.Patient(PatientID);
-ALTER TABLE healthcare_company.Claim
+      REFERENCES healthcare.Patient(PatientID);
+ALTER TABLE healthcare.Claim
   ADD CONSTRAINT FK_Clm_Prov
       FOREIGN KEY (ProviderID)
-      REFERENCES healthcare_company.Provider(ProviderID);
+      REFERENCES healthcare.Provider(ProviderID);
 -- Create an index for 'Claim' table
 CREATE INDEX IX_Clm_DateStatus
-  ON healthcare_company.Claim(ClaimDate, Status);
+  ON healthcare.Claim(ClaimDate, Status);
 
 -- Create 'Payment' table
-CREATE TABLE healthcare_company.Payment
+CREATE TABLE healthcare.Payment
 (
   PaymentID      BIGINT      IDENTITY(1,1),
   ClaimID        BIGINT      NOT NULL,
@@ -465,12 +469,12 @@ CREATE TABLE healthcare_company.Payment
   CreatedAt      DATETIME2   NOT NULL DEFAULT SYSUTCDATETIME(),
   CreatedBy      SYSNAME     NOT NULL DEFAULT SUSER_SNAME()
 );
-ALTER TABLE healthcare_company.Payment
+ALTER TABLE healthcare.Payment
   ADD CONSTRAINT PK_Payment PRIMARY KEY CLUSTERED (PaymentID);
-ALTER TABLE healthcare_company.Payment
+ALTER TABLE healthcare.Payment
   ADD CONSTRAINT FK_Pmt_Claim
       FOREIGN KEY (ClaimID)
-      REFERENCES healthcare_company.Claim(ClaimID);
+      REFERENCES healthcare.Claim(ClaimID);
 ```
 
 ## DML Syntax
@@ -512,7 +516,7 @@ DECLARE
 /* ===================================================================
    1) Address
    ===================================================================*/
-INSERT INTO healthcare_company.Address (Street, City, State, ZIP, Country)
+INSERT INTO healthcare.Address (Street, City, State, ZIP, Country)
 SELECT 
   CONCAT('No.', N.n, ' ', CASE N.n%6 WHEN 0 THEN 'Main' WHEN 1 THEN 'Oak' WHEN 2 THEN 'Maple'
                                      WHEN 3 THEN 'Pine' WHEN 4 THEN 'Cedar' ELSE 'Elm' END, ' St'),
@@ -526,12 +530,12 @@ FROM (
   FROM sys.all_objects a
 ) AS N;
 
-DECLARE @addrMax int = (SELECT MAX(AddressID) FROM healthcare_company.Address);
+DECLARE @addrMax int = (SELECT MAX(AddressID) FROM healthcare.Address);
 
 /* ===================================================================
    2) Department
    ===================================================================*/
-INSERT INTO healthcare_company.Department (Name, Floor, Location)
+INSERT INTO healthcare.Department (Name, Floor, Location)
 SELECT
   CONCAT('Dept-', RIGHT('000'+CONVERT(varchar(10), N.n),3)),
   1 + (N.n % 12),
@@ -541,12 +545,12 @@ FROM (
   FROM sys.all_objects
 ) AS N;
 
-DECLARE @deptMax int = (SELECT MAX(DepartmentID) FROM healthcare_company.Department);
+DECLARE @deptMax int = (SELECT MAX(DepartmentID) FROM healthcare.Department);
 
 /* ===================================================================
    3) Patient
    ===================================================================*/
-INSERT INTO healthcare_company.Patient
+INSERT INTO healthcare.Patient
 (FirstName, LastName, DOB, Gender, Phone, Email, AddressID, EmergencyContact)
 SELECT
   CONCAT('PatFirst', N.n),
@@ -562,12 +566,12 @@ FROM (
   FROM sys.all_objects a CROSS JOIN sys.all_objects b
 ) AS N;
 
-DECLARE @patientMax int = (SELECT MAX(PatientID) FROM healthcare_company.Patient);
+DECLARE @patientMax int = (SELECT MAX(PatientID) FROM healthcare.Patient);
 
 /* ===================================================================
    4) Provider (unique NPI, FK to Department)
    ===================================================================*/
-INSERT INTO healthcare_company.Provider
+INSERT INTO healthcare.Provider
 (FirstName, LastName, NPI_Number, Specialty, Phone, Email, DepartmentID)
 SELECT
   CONCAT('ProvFirst', N.n),
@@ -584,12 +588,12 @@ FROM (
   FROM sys.all_objects a CROSS JOIN sys.all_objects b
 ) AS N;
 
-DECLARE @providerMax int = (SELECT MAX(ProviderID) FROM healthcare_company.Provider);
+DECLARE @providerMax int = (SELECT MAX(ProviderID) FROM healthcare.Provider);
 
 /* ===================================================================
    5) Appointment (composite PK (AppointmentID, ApptDateTime) on partition scheme)
    ===================================================================*/
-INSERT INTO healthcare_company.Appointment
+INSERT INTO healthcare.Appointment
 (AppointmentID, PatientID, ProviderID, ApptDateTime, ApptType, Status, Location)
 SELECT
   6000000 + N.rn AS AppointmentID,
@@ -610,7 +614,7 @@ FROM (
 /* ===================================================================
    6) MedicalRecord (FK to Patient, AuthorID ~ Provider)
    ===================================================================*/
-INSERT INTO healthcare_company.MedicalRecord
+INSERT INTO healthcare.MedicalRecord
 (PatientID, RecordDate, RecordType, AuthorID)
 SELECT
   ((N.rn*9-4) % @patientMax) + 1,
@@ -624,12 +628,12 @@ FROM (
   FROM sys.all_objects a CROSS JOIN sys.all_objects b
 ) AS N;
 
-DECLARE @mrMax bigint = (SELECT MAX(RecordID) FROM healthcare_company.MedicalRecord);
+DECLARE @mrMax bigint = (SELECT MAX(RecordID) FROM healthcare.MedicalRecord);
 
 /* ===================================================================
    7) Diagnosis (~ @dxPerRecord per MedicalRecord)
    ===================================================================*/
-INSERT INTO healthcare_company.Diagnosis (RecordID, ICD10Code, Description, DiagnosedDate)
+INSERT INTO healthcare.Diagnosis (RecordID, ICD10Code, Description, DiagnosedDate)
 SELECT
   R.RecordID,
   CONCAT('I', RIGHT('00'+CONVERT(varchar(10), (R.rn*7)%99),2), '.', RIGHT('0'+CONVERT(varchar(10), (R.rn*11)%9),1)),
@@ -637,7 +641,7 @@ SELECT
   CAST(R.RecordDate AS date)
 FROM (
   SELECT RecordID, RecordDate, ROW_NUMBER() OVER (ORDER BY RecordID) AS rn
-  FROM healthcare_company.MedicalRecord
+  FROM healthcare.MedicalRecord
 ) AS R
 CROSS JOIN (
   SELECT TOP (@dxPerRecord) 1 AS t
@@ -647,7 +651,7 @@ CROSS JOIN (
 /* ===================================================================
    8) ProcedureRecord (~ @procPerRecord per MedicalRecord)
    ===================================================================*/
-INSERT INTO healthcare_company.ProcedureRecord (RecordID, CPTCode, Description, ProcedureDate)
+INSERT INTO healthcare.ProcedureRecord (RecordID, CPTCode, Description, ProcedureDate)
 SELECT
   R.RecordID,
   RIGHT('00000'+CONVERT(varchar(10), 10000 + (R.rn*37)%90000),5),
@@ -655,7 +659,7 @@ SELECT
   CAST(R.RecordDate AS date)
 FROM (
   SELECT RecordID, RecordDate, ROW_NUMBER() OVER (ORDER BY RecordID) AS rn
-  FROM healthcare_company.MedicalRecord
+  FROM healthcare.MedicalRecord
 ) AS R
 CROSS JOIN (
   SELECT TOP (@procPerRecord) 1 AS t
@@ -665,7 +669,7 @@ CROSS JOIN (
 /* ===================================================================
    9) Medication (master)
    ===================================================================*/
-INSERT INTO healthcare_company.Medication (Name, Form, Strength, NDC_Code)
+INSERT INTO healthcare.Medication (Name, Form, Strength, NDC_Code)
 SELECT
   CONCAT('Med-', RIGHT('0000'+CONVERT(varchar(10), N.n),4)),
   CASE N.n%5 WHEN 0 THEN 'Tablet' WHEN 1 THEN 'Capsule' WHEN 2 THEN 'Syrup' WHEN 3 THEN 'Injection' ELSE 'Ointment' END,
@@ -679,12 +683,12 @@ FROM (
   FROM sys.all_objects
 ) AS N;
 
-DECLARE @medMax int = (SELECT MAX(MedicationID) FROM healthcare_company.Medication);
+DECLARE @medMax int = (SELECT MAX(MedicationID) FROM healthcare.Medication);
 
 /* ===================================================================
    10) Prescription (FKs to Patient, Provider, Medication)
    ===================================================================*/
-INSERT INTO healthcare_company.Prescription
+INSERT INTO healthcare.Prescription
 (PatientID, ProviderID, MedicationID, Dosage, Frequency, StartDate, EndDate, Instructions)
 SELECT
   ((N.rn*5-1) % @patientMax) + 1,
@@ -705,7 +709,7 @@ FROM (
 /* ===================================================================
    11) LabOrder (FKs to Patient, Provider)
    ===================================================================*/
-INSERT INTO healthcare_company.LabOrder
+INSERT INTO healthcare.LabOrder
 (PatientID, ProviderID, OrderDate, Status, SpecimenType)
 SELECT
   ((N.rn*7-5) % @patientMax) + 1,
@@ -719,12 +723,12 @@ FROM (
   FROM sys.all_objects a CROSS JOIN sys.all_objects b
 ) AS N;
 
-DECLARE @labOrderMax bigint = (SELECT MAX(LabOrderID) FROM healthcare_company.LabOrder);
+DECLARE @labOrderMax bigint = (SELECT MAX(LabOrderID) FROM healthcare.LabOrder);
 
 /* ===================================================================
    12) LabResult (~ @labResultsPerOrder per LabOrder)
    ===================================================================*/
-INSERT INTO healthcare_company.LabResult
+INSERT INTO healthcare.LabResult
 (LabOrderID, TestCode, TestName, ResultValue, Units, ReferenceRange, ResultDate)
 SELECT
   LO.LabOrderID,
@@ -739,7 +743,7 @@ SELECT
   DATEADD(HOUR, 24 + (T.t % 24), LO.OrderDate)
 FROM (
   SELECT LabOrderID, OrderDate, ROW_NUMBER() OVER (ORDER BY LabOrderID) AS rn
-  FROM healthcare_company.LabOrder
+  FROM healthcare.LabOrder
 ) AS LO
 CROSS JOIN (
   SELECT TOP (@labResultsPerOrder) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS t
@@ -749,7 +753,7 @@ CROSS JOIN (
 /* ===================================================================
    13) InsurancePolicy (FK to Patient) + helpful indexes already added
    ===================================================================*/
-INSERT INTO healthcare_company.InsurancePolicy
+INSERT INTO healthcare.InsurancePolicy
 (PatientID, InsurerName, PolicyNumber, GroupNumber, EffectiveDate, ExpirationDate)
 SELECT
   ((N.rn*9-2) % @patientMax) + 1,
@@ -764,12 +768,12 @@ FROM (
   FROM sys.all_objects a CROSS JOIN sys.all_objects b
 ) AS N;
 
-DECLARE @policyMax bigint = (SELECT MAX(PolicyID) FROM healthcare_company.InsurancePolicy);
+DECLARE @policyMax bigint = (SELECT MAX(PolicyID) FROM healthcare.InsurancePolicy);
 
 /* ===================================================================
    14) Claim (FKs to Policy, Patient, Provider)
    ===================================================================*/
-INSERT INTO healthcare_company.Claim
+INSERT INTO healthcare.Claim
 (PolicyID, PatientID, ProviderID, ClaimDate, TotalCharge, Status)
 SELECT
   ((N.rn-1)%@policyMax)+1 AS PolicyID,
@@ -783,15 +787,15 @@ FROM (
   SELECT TOP (@claimCount) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS rn
   FROM sys.all_objects a CROSS JOIN sys.all_objects b
 ) AS N
-JOIN healthcare_company.InsurancePolicy IP
+JOIN healthcare.InsurancePolicy IP
   ON IP.PolicyID = ((N.rn-1)%@policyMax)+1;
 
-DECLARE @claimMax bigint = (SELECT MAX(ClaimID) FROM healthcare_company.Claim);
+DECLARE @claimMax bigint = (SELECT MAX(ClaimID) FROM healthcare.Claim);
 
 /* ===================================================================
    15) Payment (FK to Claim) — 1..@paymentsPerClaim per claim
    ===================================================================*/
-INSERT INTO healthcare_company.Payment
+INSERT INTO healthcare.Payment
 (ClaimID, PaymentDate, AmountPaid, PaymentMethod, CheckReference)
 SELECT
   C.ClaimID,
@@ -804,7 +808,7 @@ SELECT
   CONCAT('CHK', RIGHT('000000'+CONVERT(varchar(10), 100000 + ((C.ClaimID + P.t) % 900000)),6))
 FROM (
   SELECT ClaimID, ClaimDate, TotalCharge
-  FROM healthcare_company.Claim
+  FROM healthcare.Claim
 ) AS C
 CROSS JOIN (
   SELECT TOP (@paymentsPerClaim) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS t
@@ -816,43 +820,43 @@ CROSS JOIN (
    ===================================================================*/
 PRINT '=== HEALTHCARE BULK LOAD COMPLETE ===';
 SELECT
-  (SELECT COUNT(*) FROM healthcare_company.Address)          AS AddressCount,
-  (SELECT COUNT(*) FROM healthcare_company.Department)       AS DepartmentCount,
-  (SELECT COUNT(*) FROM healthcare_company.Patient)          AS PatientCount,
-  (SELECT COUNT(*) FROM healthcare_company.Provider)         AS ProviderCount,
-  (SELECT COUNT(*) FROM healthcare_company.Appointment)      AS AppointmentCount,
-  (SELECT COUNT(*) FROM healthcare_company.MedicalRecord)    AS MedicalRecordCount,
-  (SELECT COUNT(*) FROM healthcare_company.Diagnosis)        AS DiagnosisCount,
-  (SELECT COUNT(*) FROM healthcare_company.ProcedureRecord)  AS ProcedureRecordCount,
-  (SELECT COUNT(*) FROM healthcare_company.Medication)       AS MedicationCount,
-  (SELECT COUNT(*) FROM healthcare_company.Prescription)     AS PrescriptionCount,
-  (SELECT COUNT(*) FROM healthcare_company.LabOrder)         AS LabOrderCount,
-  (SELECT COUNT(*) FROM healthcare_company.LabResult)        AS LabResultCount,
-  (SELECT COUNT(*) FROM healthcare_company.InsurancePolicy)  AS InsurancePolicyCount,
-  (SELECT COUNT(*) FROM healthcare_company.Claim)            AS ClaimCount,
-  (SELECT COUNT(*) FROM healthcare_company.Payment)          AS PaymentCount;
+  (SELECT COUNT(*) FROM healthcare.Address)          AS AddressCount,
+  (SELECT COUNT(*) FROM healthcare.Department)       AS DepartmentCount,
+  (SELECT COUNT(*) FROM healthcare.Patient)          AS PatientCount,
+  (SELECT COUNT(*) FROM healthcare.Provider)         AS ProviderCount,
+  (SELECT COUNT(*) FROM healthcare.Appointment)      AS AppointmentCount,
+  (SELECT COUNT(*) FROM healthcare.MedicalRecord)    AS MedicalRecordCount,
+  (SELECT COUNT(*) FROM healthcare.Diagnosis)        AS DiagnosisCount,
+  (SELECT COUNT(*) FROM healthcare.ProcedureRecord)  AS ProcedureRecordCount,
+  (SELECT COUNT(*) FROM healthcare.Medication)       AS MedicationCount,
+  (SELECT COUNT(*) FROM healthcare.Prescription)     AS PrescriptionCount,
+  (SELECT COUNT(*) FROM healthcare.LabOrder)         AS LabOrderCount,
+  (SELECT COUNT(*) FROM healthcare.LabResult)        AS LabResultCount,
+  (SELECT COUNT(*) FROM healthcare.InsurancePolicy)  AS InsurancePolicyCount,
+  (SELECT COUNT(*) FROM healthcare.Claim)            AS ClaimCount,
+  (SELECT COUNT(*) FROM healthcare.Payment)          AS PaymentCount;
 ```
 
 ## DROP Syntax
 ```sql
-DROP TABLE IF EXISTS healthcare_company.Payment;
-DROP TABLE IF EXISTS healthcare_company.LabResult;
-DROP TABLE IF EXISTS healthcare_company.Claim;
-DROP TABLE IF EXISTS healthcare_company.LabOrder;
-DROP TABLE IF EXISTS healthcare_company.Prescription;
-DROP TABLE IF EXISTS healthcare_company.ProcedureRecord;
-DROP TABLE IF EXISTS healthcare_company.Diagnosis;
-DROP TABLE IF EXISTS healthcare_company.MedicalRecord;
-DROP TABLE IF EXISTS healthcare_company.Appointment;
-DROP TABLE IF EXISTS healthcare_company.InsurancePolicy;
-DROP TABLE IF EXISTS healthcare_company.Medication;
-DROP TABLE IF EXISTS healthcare_company.Provider;
-DROP TABLE IF EXISTS healthcare_company.Department;
-DROP TABLE IF EXISTS healthcare_company.Patient;
-DROP TABLE IF EXISTS healthcare_company.Address;
+DROP TABLE IF EXISTS healthcare.Payment;
+DROP TABLE IF EXISTS healthcare.LabResult;
+DROP TABLE IF EXISTS healthcare.Claim;
+DROP TABLE IF EXISTS healthcare.LabOrder;
+DROP TABLE IF EXISTS healthcare.Prescription;
+DROP TABLE IF EXISTS healthcare.ProcedureRecord;
+DROP TABLE IF EXISTS healthcare.Diagnosis;
+DROP TABLE IF EXISTS healthcare.MedicalRecord;
+DROP TABLE IF EXISTS healthcare.Appointment;
+DROP TABLE IF EXISTS healthcare.InsurancePolicy;
+DROP TABLE IF EXISTS healthcare.Medication;
+DROP TABLE IF EXISTS healthcare.Provider;
+DROP TABLE IF EXISTS healthcare.Department;
+DROP TABLE IF EXISTS healthcare.Patient;
+DROP TABLE IF EXISTS healthcare.Address;
 
 DROP PARTITION SCHEME PS_AppointmentYear;
 DROP PARTITION FUNCTION PS_AppointmentYear;
 
-DROP SCHEMA healthcare_company;
+DROP SCHEMA healthcare;
 ```
