@@ -699,3 +699,7 @@ DROP PARTITION FUNCTION PS_SalesYear;
 
 DROP SCHEMA retail_company;
 ```
+
+***
+| &copy; TINITIATE.COM |
+|----------------------|

@@ -4,8 +4,10 @@
 
 &copy; TINITIATE.COM
 
-# Credit Card Data Model
+# Credit Card Management Data Model
 This credit-card schema models the end-to-end lifecycle of plastic money: it begins by storing each cardholder’s profile in the `clients` table, then issues one or more `credit_cards` to each client—capturing card type, limits, issue/expiry dates, and status. Every swipe or refund flows into `card_transactions`, with merchant, date, amount, currency, and spending category, enabling spend-analysis by type or vendor. At month’s end, the `statements` table records each billing cycle’s opening/closing balances, due dates, and minimum dues for every card. Finally, the `payments` table tracks how and when customers settle those statements. Together these tables—linked via foreign keys—support robust reporting on balances, payment behavior, category spend, credit utilization, and aging, making it easy to build dashboards, alerts, or analytics for any credit-card platform.
+
+![Credit Card Management ER Diagram DBeaver](credit-card-management-er-diagram-dbeaver.png)
 
 ## Clients
 * **client_id (PK)** – Unique identifier for each cardholder.
@@ -32,13 +34,13 @@ This credit-card schema models the end-to-end lifecycle of plastic money: it beg
 * **currency** – ISO currency code (e.g. “USD”).
 * **category** – e.g. “Travel”, “Dining”, “Groceries”.
 ## Statements
-statement_id (PK) – Unique statement period.
-card_id (FK → credit_cards.card_id) – Card for this statement.
-statement_date – Date the statement was generated.
-due_date – Payment due date.
-opening_balance – Balance at the start of period.
-closing_balance – Balance at the end of period.
-minimum_due – Minimum payment required.
+* **statement_id (PK)** – Unique statement period.
+* **card_id (FK → credit_cards.card_id)** – Card for this statement.
+* **statement_date** – Date the statement was generated.
+* **due_date** – Payment due date.
+* **opening_balance** – Balance at the start of period.
+* **closing_balance** – Balance at the end of period.
+* **minimum_due** – Minimum payment required.
 ## Payments
 * **payment_id (PK)** – Unique identifier for each payment.
 * **statement_id (FK → statements.statement_id)** – Which statement this payment applies to.

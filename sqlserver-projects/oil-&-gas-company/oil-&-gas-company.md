@@ -896,3 +896,7 @@ DROP PARTITION FUNCTION PS_OilGasYear;
 
 DROP SCHEMA IF EXISTS oil_n_gas_company;
 ```
+
+***
+| &copy; TINITIATE.COM |
+|----------------------|

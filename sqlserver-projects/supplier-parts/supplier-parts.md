@@ -7,6 +7,8 @@
 # Supplier Parts Data Model
 The `suppliers` table stores information about the suppliers, including their contact details and address. The `parts` table stores information about the parts, including their description and price. The relationship between the two tables is established through the supplier_id foreign key in the parts table, which links each part to its supplier. This structure allows for easy retrieval of supplier information for each part.
 
+![Supplier Parts ER Diagram DBeaver](supplier-parts-er-diagram-dbeaver.png)
+
 ## Suppliers Table
 * **supplier_id**: A unique identifier for each supplier. It is the primary key of the table.
 * **supplier_name**: The name of the supplier.

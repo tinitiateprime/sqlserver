@@ -7,6 +7,8 @@
 # Billing Product Data Model
 The `products` table stores information about the products that can be billed. The `customers` table stores information about the customers who receive the bills. The `bill` table stores information about the bills, including which customer the bill is for and the total amount of the bill. The `billdetails` table stores detailed information about each line item in a bill, including which product is being billed, the quantity, and the total amount for that line item. The relationships between these tables are established through foreign keys, allowing for easy retrieval of related information across the tables.
 
+![Billing Product ER Diagram DBeaver](billing-product-er-diagram-dbeaver.png)
+
 ## Products Table
 * **product_id**: A unique identifier for each product. It is the primary key of the table.
 * **product_name**: The name of the product.

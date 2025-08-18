@@ -7,6 +7,8 @@
 # Loan Management Data Model
 The `borrowers` table holds personal and contact details for each loan customer. The `loans` table captures every loan’s key attributes—amount, rate, term, type, and status—linked to a borrower. The `loan_payments` table records each installment made against a loan, breaking it down into principal and interest portions. Together, these relationships (via foreign keys) enable comprehensive tracking of loan origination, repayment schedules, outstanding balances, and aging analyses.
 
+![Loan Management ER Diagram DBeaver](loan-management-er-diagram-dbeaver.png)
+
 ## Borrowers Table
 * **borrower_id**: A unique identifier for each borrower (primary key).
 * **full_name**: The borrower’s full name.

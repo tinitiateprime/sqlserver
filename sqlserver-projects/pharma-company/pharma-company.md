@@ -793,3 +793,7 @@ DROP PARTITION FUNCTION PF_PharmaYear;
 
 DROP SCHEMA pharma_company;
 ```
+
+***
+| &copy; TINITIATE.COM |
+|----------------------|

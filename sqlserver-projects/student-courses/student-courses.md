@@ -7,6 +7,8 @@
 # Student Courses Data Model
 The Student Courses Data Model organizes academic offerings and enrollments across four related tables. The `Semesters` table defines each academic term with its name and date range, while the `Courses` table lists every course—its title, credit value, and the semester in which it’s offered. The `Students` table captures each learner’s identity, contact information, and enrollment date. Finally, the `Student_Courses` junction table ties students to their chosen courses, enforcing a many-to-many relationship and ensuring that each student-course pairing is unique.
 
+![Student Courses ER Diagram DBeaver](student-courses-er-diagram-dbeaver.png)
+
 ## Semesters Table 
 * **semester_id**: A unique identifier for each semester. It is the primary key of the table.
 * **semester_name**: The name of the semester, such as "Fall 2023" or "Spring 2024".

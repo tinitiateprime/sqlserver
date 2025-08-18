@@ -671,3 +671,7 @@ DROP PARTITION FUNCTION PS_EnergyYear;
 
 DROP SCHEMA IF EXISTS energy_company;
 ```
+
+***
+| &copy; TINITIATE.COM |
+|----------------------|

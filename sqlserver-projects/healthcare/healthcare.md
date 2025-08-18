@@ -860,3 +860,7 @@ DROP PARTITION FUNCTION PS_AppointmentYear;
 
 DROP SCHEMA healthcare;
 ```
+
+***
+| &copy; TINITIATE.COM |
+|----------------------|
