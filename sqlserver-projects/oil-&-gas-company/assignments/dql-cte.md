@@ -4,7 +4,7 @@
 
 &copy; TINITIATE.COM
 
-# DQL - Common Table Expressions (CTEs) Assignments Solutions
+# DQL - Common Table Expressions (CTEs) Assignments
 
 ## CTE
 1. Last 30 days total oil per well

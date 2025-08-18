@@ -4,7 +4,7 @@
 
 &copy; TINITIATE.COM
 
-# DQL - Date Functions Assignments Solutions
+# DQL - Date Functions Assignments
 
 ## Current Date and time (GETDATE)
 1. Show current date/time (server local) and UTC

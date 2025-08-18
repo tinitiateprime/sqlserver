@@ -4,7 +4,7 @@
 
 &copy; TINITIATE.COM
 
-# DQL - Aggregate Functions Assignments Solutions
+# DQL - Aggregate Functions Assignments
 
 ## Count
 1. Total wells overall

@@ -4,7 +4,7 @@
 
 &copy; TINITIATE.COM
 
-# DQL - Analytical Functions Assignments Solutions
+# DQL - Analytical Functions Assignments
 
 ## Aggregate Functions
 1. Running total oil per well by ProductionDate

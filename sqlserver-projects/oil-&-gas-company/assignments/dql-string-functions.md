@@ -4,7 +4,7 @@
 
 &copy; TINITIATE.COM
 
-# DQL - String Functions Assignments Solutions
+# DQL - String Functions Assignments
 
 ## Length Function (LEN)
 1. Facility name lengths

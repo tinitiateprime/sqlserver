@@ -4,7 +4,7 @@
 
 &copy; TINITIATE.COM
 
-# DQL Assignments Solutions
+# DQL Assignments
 * Replace literal values as needed on your instance.
 ```sql
 DECLARE @RefStart date = '2025-07-01';
