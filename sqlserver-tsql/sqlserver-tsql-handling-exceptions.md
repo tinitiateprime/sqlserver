@@ -8,7 +8,7 @@
 # Handling Exceptions
 * In SQL Server, exceptions (also known as errors) can occur during the execution of SQL statements.
 * To handle these exceptions, you can use the `TRY...CATCH` block.
-### Example:
+### TRY...CATCH Example:
 Suppose you have an `emp` table with a primary key on the `empno` column. You want to insert a new employee, but you need to ensure that the employee ID does not already exist in the table.
 ```sql
 -- Preventing Insertion of Duplicate Employee IDs
