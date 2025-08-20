@@ -5,12 +5,12 @@
 
 ##### [Back To Contents](./README.md)
 
-# Introduction to SQL Server
+# Introduction To SQL Server
 * SQL Server is a comprehensive relational database management system (RDBMS) developed by Microsoft.
 * It serves as a reliable platform for efficiently storing, managing, and accessing data.
 * SQL Server is widely adopted in enterprises for use cases ranging from small databases to large-scale, business-critical systems.
 
-## Key Features of SQL Server
+## Key Features Of SQL Server
 * **Structured Data Storage and Control:**
     * SQL Server organizes data using structured tables, enabling efficient management and storage.
     * It supports diverse data types like strings, numbers, dates, and more, making it adaptable to various data requirements.
@@ -31,7 +31,7 @@
     * SQL Server integrates tools for BI and analytics, helping users analyze trends, generate reports, and derive insights.
     * It also supports machine learning, data mining, and advanced statistical analysis.
 
-## Use Cases for SQL Server
+## Use Cases For SQL Server
 - **Transactional Workloads:** SQL Server excels in scenarios requiring fast, reliable transactions such as online retail, banking, and logistics.
 
 - **Data Warehousing and BI:** Ideal for enterprise reporting and analytics, SQL Server manages large datasets and supports business intelligence operations.
