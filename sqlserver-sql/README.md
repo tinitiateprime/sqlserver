@@ -112,6 +112,7 @@
     * Recursive CTEs
     * Common Use Cases for CTEs
     * Benefits of Using CTEs
+
 ***
 | &copy; TINITIATE.COM |
 |----------------------|
