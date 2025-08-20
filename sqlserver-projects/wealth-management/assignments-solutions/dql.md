@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments Solutions
 
@@ -266,6 +267,7 @@ FROM wealth_management.assets
 ORDER BY name ASC;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

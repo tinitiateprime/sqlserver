@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -454,6 +455,7 @@ CROSS JOIN (SELECT DISTINCT PaymentMethod FROM energy_company.Payment) pm
 ORDER BY s.State, pm.PaymentMethod;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

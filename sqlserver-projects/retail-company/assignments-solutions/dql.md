@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments Solutions
 
@@ -509,6 +510,7 @@ WHERE rnk = 1
 ORDER BY CategoryID, ProductID;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

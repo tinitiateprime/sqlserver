@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments
 
@@ -138,6 +139,7 @@
 9. Show current datetimeoffset
 10. Convert end_date to Eastern Standard Time
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

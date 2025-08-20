@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments
 
@@ -198,6 +199,7 @@
 9. Show interest_component or 0.
 10. First non-null in borrower name or 'Guest'.
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

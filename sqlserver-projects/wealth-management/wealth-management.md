@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Wealth Management Data Model
 This Wealth Management model captures everything needed to support a full-service advisory platform: it begins by storing each client’s profile and contact details, then tracks all of the cash and investment accounts they hold. Clients can organize their holdings into named portfolios, and each portfolio links to specific financial assets (stocks, bonds, ETFs, etc.) along with purchase dates and prices. All cash movements and trades flow through a unified transactions ledger tied to the relevant account. Finally, the model includes financial goals—each with targets, deadlines and current progress—so advisors and clients can measure performance against personalized objectives. By weaving together clients, accounts, portfolios, assets, transactions and goals via carefully defined foreign‐key relationships, this schema enables rich analyses (e.g., performance attribution, goal‐tracking, cash flow reporting, and risk assessments) across the full spectrum of wealth management activities.
@@ -409,6 +410,11 @@ INSERT INTO wealth_management.financial_goals (goal_id, client_id, goal_name, ta
  (1020, 19,'Retirement Boost',750000.00,'2042-11-30',  200000.00,'In Progress');
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

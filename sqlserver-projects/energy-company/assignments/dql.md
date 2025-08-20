@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments
 * Replace literal values as needed on your instance.
@@ -95,6 +96,7 @@ DECLARE @RefDate       date = '2025-07-31';
 11. Top 10 assets by maintenance cost in the last year.
 12. Top 10 cities by customer count (WITH TIES).
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

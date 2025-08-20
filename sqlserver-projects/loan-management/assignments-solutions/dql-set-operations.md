@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments Solutions
 
@@ -167,6 +168,7 @@ EXCEPT
 SELECT payment_id FROM loan_management.loan_payments WHERE interest_component < 50;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

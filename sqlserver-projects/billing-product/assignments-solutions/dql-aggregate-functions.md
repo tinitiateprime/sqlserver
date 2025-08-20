@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Aggregate Functions Assignments Solutions
 
@@ -259,6 +260,7 @@ FROM billing_product.bill
 WHERE YEAR(bill_date) = 2023;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

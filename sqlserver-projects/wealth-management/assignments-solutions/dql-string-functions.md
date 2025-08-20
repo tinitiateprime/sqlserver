@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments Solutions
 
@@ -582,6 +583,7 @@ SELECT portfolio_id, asset_id, COALESCE(quantity,0) AS qty
 FROM wealth_management.portfolio_assets;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

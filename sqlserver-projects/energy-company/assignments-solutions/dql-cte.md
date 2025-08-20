@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs) Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -508,6 +509,7 @@ ORDER BY InvoiceID, CheckDate
 OPTION (MAXRECURSION 2000);
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

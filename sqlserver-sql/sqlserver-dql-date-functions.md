@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions
 * Date functions in SQL Server are used to perform various operations on date and timestamp data stored in the database.
@@ -178,7 +178,7 @@ SELECT
         120) AS ESTDateTime;
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

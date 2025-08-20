@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs)
 * In SQL Server, a Common Table Expression (CTE) is a temporary result set that you can reference within a SELECT, INSERT, UPDATE, or DELETE statement.
@@ -154,7 +154,7 @@ FROM EmpHierarchy;
 * Ability to reference the same CTE multiple times in a query.
 * Simplified complex queries by breaking them into smaller, logical components.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

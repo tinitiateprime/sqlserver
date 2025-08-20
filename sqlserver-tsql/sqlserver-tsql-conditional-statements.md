@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Conditional Statements
 * Conditional statements in SQL Server, such as `IF...ELSE`, `CASE`, and `IIF`, are useful for executing different SQL statements based on specific conditions.
@@ -50,7 +50,7 @@ FROM employees.emp;
 ```
 * In this example, we use the `IIF` function to check if each employee's salary is above the average salary in the emp table. The result is a column that indicates whether each employee's salary is 'Above Average' or 'Below Average'.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

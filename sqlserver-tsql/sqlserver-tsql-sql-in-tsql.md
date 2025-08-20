@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # SQL In TSQL
 * Embedding SQL in TSQL, here we demonstrate DQL and DML in TSQL
@@ -73,7 +73,7 @@ END;
 SELECT * FROM tinitiate.invoicing.products;
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

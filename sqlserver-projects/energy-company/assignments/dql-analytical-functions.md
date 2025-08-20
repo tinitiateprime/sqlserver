@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Analytical Functions Assignments
 * Replace literal values as needed on your instance.
@@ -121,6 +122,7 @@ DECLARE @RefMonthEnd   date = '2025-07-31';
 9. Last (latest) commission date per facility
 10. Last grid production day in July (broadcast)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

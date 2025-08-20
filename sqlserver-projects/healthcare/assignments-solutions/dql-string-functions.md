@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -783,6 +784,7 @@ SELECT AddressID, COALESCE(State, City, Country) AS Region
 FROM healthcare.Address;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments
 * Replace literal values as needed on your instance.
@@ -142,6 +143,7 @@ DECLARE @RefDate date = '2025-07-31';
 9. Orders where India-local date differs from UTC date (crossing midnight)
 10. Normalize any datetime2 to UTC datetimeoffset
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -516,6 +517,7 @@ WHERE ShipDate BETWEEN DATEADD(DAY, -90, @Today) AND @Today
 ORDER BY RevenueUSD DESC;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

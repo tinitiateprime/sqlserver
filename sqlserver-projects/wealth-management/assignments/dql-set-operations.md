@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments
 
@@ -42,6 +43,7 @@
 9. asset_ids with acquisition_price < 200 EXCEPT those with quantity > 50.
 10. Clients without any transaction history.
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

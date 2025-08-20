@@ -1,7 +1,7 @@
 /*******************************************************************************
 *  Organization : TINITIATE TECHNOLOGIES PVT LTD
 *  Website      : tinitiate.com
-*  Script Title : SQL Server
+*  Script Title : SQL Server Tutorial
 *  Description  : DQL - Joins
 *  Author       : Team Tinitiate
 *******************************************************************************/

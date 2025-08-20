@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # VIEWS
 * A view is a virtual table based on the result-set of an SQL statement.
@@ -133,7 +133,7 @@ WHERE empno = 7788;
 * In this scenario, vw_EmployeeDept includes a join, making it complex and typically not updatable directly.
 * The `INSTEAD OF` trigger, `trg_UpdateEmployeeDept`, intercepts update operations on the view and provides the necessary SQL commands to update the underlying emp table accordingly.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

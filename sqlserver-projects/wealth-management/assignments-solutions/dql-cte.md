@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs) Assignments Solutions
 
@@ -390,6 +391,7 @@ WITH dates AS (
 SELECT dt, DATENAME(weekday,dt) AS weekday FROM dates OPTION (MAXRECURSION 7);
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

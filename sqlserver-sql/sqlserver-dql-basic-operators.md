@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # DQL - Basic Operators
 * In SQL Server, operators are symbols or keywords used to perform operations on data, such as arithmetic operations, logical comparisons, and pattern matching.
@@ -160,7 +160,7 @@ WHERE NOT EXISTS (
 );
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

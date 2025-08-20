@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments
 * Replace literal values as needed on your instance.
@@ -96,6 +97,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 11. Top 10 longest drilling operations (by duration days)
 12. Top 1 percent shipments by revenue (last 90 days, WITH TIES)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

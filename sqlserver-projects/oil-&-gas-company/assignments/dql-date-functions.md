@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments
 
@@ -138,6 +139,7 @@
 9. Daily production counts by IST date
 10. Normalize any datetime2 to UTC using AT TIME ZONE (assume stored as local IST given)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

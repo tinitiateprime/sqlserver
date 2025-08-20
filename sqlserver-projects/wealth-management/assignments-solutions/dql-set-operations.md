@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments Solutions
 
@@ -270,6 +271,7 @@ JOIN wealth_management.accounts a ON c.client_id = a.client_id
 JOIN wealth_management.transactions t ON a.account_id = t.account_id;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Aggregate Functions Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -414,6 +415,7 @@ WHERE rp.EffectiveDate <= '2025-07-01'
   AND (rp.ExpirationDate IS NULL OR rp.ExpirationDate >= '2025-07-01');
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

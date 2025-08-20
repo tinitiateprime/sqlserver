@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Aggregate Functions Assignments
 * Replace literal values as needed on your instance.
@@ -72,6 +73,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 9. Minimum appointments per weekday in July (system-wide)
 10. Earliest diagnosis date per patient (patients with any diagnosis)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments Solutions
 
@@ -414,6 +415,7 @@ SELECT part_id, COALESCE(NULLIF(CHARINDEX('x',part_name),0),0) AS x_pos FROM sup
 SELECT part_id, COALESCE(NULLIF(REPLACE(part_name,'a',''),''),part_name) AS cleaned_name FROM supplier_parts.parts;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Variables & Operators
 ## Variables:
@@ -81,7 +81,7 @@ SELECT CASE WHEN 5 <= 10 THEN 'True' ELSE 'False' END AS Result;
 SELECT CASE WHEN 10 != 5 THEN 'True' ELSE 'False' END AS Result; 
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

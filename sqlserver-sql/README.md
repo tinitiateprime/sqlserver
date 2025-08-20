@@ -3,7 +3,7 @@
 # SQL Server Tutorial
 &copy; TINITIATE.COM
 
-## CONTEXT
+## CONTENTS
 * ### [Introduction](sqlserver-introduction.md)
 * ### [Database, Schema, and User](sqlserver-db-sch-user.md)
 * ### [Datatypes](sqlserver-datatypes.md)

@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # DDL - Constraints
 * In SQL Server, Data Definition Language (DDL) constraints are also used to enforce rules on the structure of a database table, ensuring data integrity and consistency by enforcing certain conditions on the data being inserted, updated, or deleted in the table.
@@ -123,7 +123,7 @@ CREATE TABLE orders (
 );
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

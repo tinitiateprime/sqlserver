@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Oil & Gas Company Data Model
 This model spans upstream (regions, fields, wells, drilling), midstream (pipelines and flows), and downstream/commercial (facilities, products, inventory, shipments, contracts, invoices, payments), plus cross-cutting maintenance.  
@@ -897,6 +898,11 @@ DROP PARTITION FUNCTION PS_OilGasYear;
 DROP SCHEMA IF EXISTS oil_n_gas_company;
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

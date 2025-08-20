@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments
 * Replace literal values as needed on your instance.
@@ -82,6 +83,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 11. Providers (top 3 by July appts) × next 5 dates (rolling)
 12. Departments × sample floor labels (template)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

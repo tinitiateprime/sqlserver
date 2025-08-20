@@ -1,7 +1,7 @@
 /*******************************************************************************
 *  Organization : TINITIATE TECHNOLOGIES PVT LTD
 *  Website      : tinitiate.com
-*  Script Title : SQL Server - TSQL
+*  Script Title : SQL Server - TSQL Tutorial
 *  Description  : Temp Tables
 *  Author       : Team Tinitiate
 *******************************************************************************/

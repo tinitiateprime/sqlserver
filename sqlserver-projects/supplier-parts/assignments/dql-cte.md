@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs) Assignments
 
@@ -42,6 +43,7 @@
 9. Generate powers of 2 up to 2^5.
 10. Build a breadcrumb trail of supplier IDs.
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

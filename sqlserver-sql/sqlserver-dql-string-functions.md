@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions
 * String functions in SQL Server are used to manipulate text data.
@@ -127,7 +127,7 @@ SELECT ename, COALESCE(commission , mgr, 0) AS compensation
 FROM employees.emp;
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

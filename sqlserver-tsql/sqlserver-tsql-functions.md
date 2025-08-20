@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Functions
 Functions are reusable routines that accept input parameters, perform an operation, and return a single value (scalar function) or a table (table-valued function).
@@ -136,7 +136,7 @@ BEGIN
 END
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

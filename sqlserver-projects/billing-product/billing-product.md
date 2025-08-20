@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Billing Product Data Model
 The `products` table stores information about the products that can be billed. The `customers` table stores information about the customers who receive the bills. The `bill` table stores information about the bills, including which customer the bill is for and the total amount of the bill. The `billdetails` table stores detailed information about each line item in a bill, including which product is being billed, the quantity, and the total amount for that line item. The relationships between these tables are established through foreign keys, allowing for easy retrieval of related information across the tables.
@@ -163,6 +164,11 @@ INSERT INTO billing_product.billdetails (
         (38, 12, 10, 3,   300.00);
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

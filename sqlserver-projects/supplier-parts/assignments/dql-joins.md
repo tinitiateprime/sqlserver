@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments
 
@@ -66,6 +67,7 @@
 9. List supplier_name and rightmost two digits of unit_price for all combinations.
 10. Show combinations where part_name LIKE 'G%' and supplier_name LIKE 'A%'.
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

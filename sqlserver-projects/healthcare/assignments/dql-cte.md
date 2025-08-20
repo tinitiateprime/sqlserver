@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs) Assignments
 * Replace literal values as needed on your instance.
@@ -54,6 +55,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 11. Quarter series for 2025 + claim totals by quarter
 12. Generate 1..N (N=25) and use to return top-N claims by amount
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

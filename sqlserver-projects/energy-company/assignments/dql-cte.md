@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs) Assignments
 * Replace literal values as needed on your instance.
@@ -55,6 +56,7 @@ DECLARE @RefMonthEnd   date = '2025-07-31';
 11. Generate month sequence from the earliest sale month to @RefDate month
 12. Rolling “next due check dates” every 15 days for all open invoices
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

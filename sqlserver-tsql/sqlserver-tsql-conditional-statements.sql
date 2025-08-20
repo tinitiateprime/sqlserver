@@ -1,7 +1,7 @@
 /*******************************************************************************
 *  Organization : TINITIATE TECHNOLOGIES PVT LTD
 *  Website      : tinitiate.com
-*  Script Title : SQL Server - TSQL
+*  Script Title : SQL Server - TSQL Tutorial
 *  Description  : Conditional Statements
 *  Author       : Team Tinitiate
 *******************************************************************************/

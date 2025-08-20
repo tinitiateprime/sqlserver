@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments Solutions
 
@@ -270,6 +271,7 @@ SELECT GETDATE() AT TIME ZONE 'Tokyo Standard Time' AS tokyo_time;
 SELECT part_name, GETDATE() AT TIME ZONE 'India Standard Time' AS ist_timestamp FROM supplier_parts.parts;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Energy Company Data Model
 This model covers the end-to-end energy lifecycle: customers and meters, facilities and assets, generation (production), consumption (meter readings), pricing (rate plans), sales, invoicing, payments, and asset maintenance.  
@@ -672,6 +673,11 @@ DROP PARTITION FUNCTION PS_EnergyYear;
 DROP SCHEMA IF EXISTS energy_company;
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Analytical Functions Assignments
 * Replace literal values as needed on your instance.
@@ -137,6 +138,7 @@ DECLARE @EndJuly   date = '2025-07-31';
 11. Last SOLD day per PRODUCT in July
 12. For each day of July: show the month’s LAST daily sales (same value on every row)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

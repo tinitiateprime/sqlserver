@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -554,6 +555,7 @@ CROSS  JOIN (SELECT TOP (4) * FROM oil_n_gas_company.Product  ORDER BY ProductID
 ORDER  BY c.CustomerID, p.ProductID;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Handling Exceptions
 * In SQL Server, exceptions (also known as errors) can occur during the execution of SQL statements.
@@ -72,7 +72,7 @@ SELECT ERROR_LINE() AS ErrorLine;
 ```
 These error functions can only be used within a `CATCH` block and are very useful for diagnosing and handling errors in SQL Server. They provide detailed information about the error, which can be logged or used to take corrective action.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

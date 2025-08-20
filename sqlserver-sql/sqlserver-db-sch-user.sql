@@ -1,7 +1,7 @@
 /*******************************************************************************
 *  Organization : TINITIATE TECHNOLOGIES PVT LTD
 *  Website      : tinitiate.com
-*  Script Title : SQL Server
+*  Script Title : SQL Server Tutorial
 *  Description  : Database, Schema, and User
 *  Author       : Team Tinitiate
 *******************************************************************************/

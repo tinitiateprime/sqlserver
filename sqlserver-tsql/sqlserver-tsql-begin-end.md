@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # BEGIN...END
 * In T-SQL, `BEGIN` and `END` are used to define a block of one or more statements as a single unit.
@@ -73,7 +73,7 @@ END;
 * **Transactions** - Mark the start and end of an explicit transaction.
 * **Stored Procedures & Triggers** - Enclose the body of a stored procedure, trigger, or script section.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

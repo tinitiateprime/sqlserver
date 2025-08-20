@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Cursors
 * In SQL Server, cursors are used to fetch and process rows from a result set one at a time.
@@ -116,7 +116,7 @@ FROM employees.dept_summary;
 ```
 * In this example, we use a cursor to iterate through all departments in the dept table and generate salary summary for each department. The cursor fetches the department number into the variable @DeptNo, which is then used to calculate the total amount for the employees salaries and insert a new record into the dept_summary table.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

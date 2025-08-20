@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # DQL Data Setup
 * Data Query Language (DQL) is a powerful tool used to retrieve and manipulate data within a database management system.
@@ -235,7 +235,7 @@ VALUES
     (24, 8010, 2, '1983-12-15', '1984-12-15');
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

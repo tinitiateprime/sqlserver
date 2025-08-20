@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments Solutions
 
@@ -391,6 +392,7 @@ SELECT payment_id, COALESCE(payment_date,CONVERT(DATE,'1900-01-01')) AS pay_or_d
 SELECT card_id, COALESCE(status,'Unknown') AS status_val FROM credit_card.credit_cards;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

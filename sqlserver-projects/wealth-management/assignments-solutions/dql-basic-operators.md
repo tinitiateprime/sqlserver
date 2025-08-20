@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Basic Operators Assignments Solutions
 
@@ -349,6 +350,7 @@ SELECT * FROM wealth_management.portfolios p
 WHERE NOT EXISTS (SELECT 1 FROM wealth_management.clients c WHERE c.client_id = p.client_id);
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

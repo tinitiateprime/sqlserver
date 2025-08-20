@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # DQL - Aggregate Functions
 * Aggregate functions in SQL Server are used to perform calculations on a set of values and return a single value as a result.
@@ -187,7 +187,7 @@ JOIN (
 AND (e.sal = salary_extremes.max_salary OR e.sal = salary_extremes.min_salary);
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

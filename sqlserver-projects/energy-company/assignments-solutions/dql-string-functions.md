@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -767,6 +768,7 @@ SELECT MaintenanceID, COALESCE(CONVERT(varchar(20),PerformedBy),'Vendor') AS Per
 FROM energy_company.AssetMaintenance;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

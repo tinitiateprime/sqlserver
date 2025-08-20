@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments
 * Replace literal values as needed on your instance.
@@ -96,6 +97,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 11. Top 10 diagnoses by frequency
 12. Per patient: top 1 most expensive claim (CROSS APPLY)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

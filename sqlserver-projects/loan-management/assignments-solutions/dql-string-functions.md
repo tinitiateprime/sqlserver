@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments Solutions
 
@@ -498,6 +499,7 @@ SELECT payment_id, COALESCE(interest_component,0) AS int_comp_co FROM loan_manag
 SELECT borrower_id, COALESCE(full_name,'Guest') AS name_co FROM loan_management.borrowers;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

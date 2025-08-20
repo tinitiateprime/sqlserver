@@ -1,7 +1,7 @@
 /*******************************************************************************
 *  Organization : TINITIATE TECHNOLOGIES PVT LTD
 *  Website      : tinitiate.com
-*  Script Title : SQL Server
+*  Script Title : SQL Server Tutorial
 *  Description  : Oil & Gas Company Data Model
 *  Author       : Team Tinitiate
 *******************************************************************************/

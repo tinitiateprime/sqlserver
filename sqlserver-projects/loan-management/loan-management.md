@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Loan Management Data Model
 The `borrowers` table holds personal and contact details for each loan customer. The `loans` table captures every loan’s key attributes—amount, rate, term, type, and status—linked to a borrower. The `loan_payments` table records each installment made against a loan, breaking it down into principal and interest portions. Together, these relationships (via foreign keys) enable comprehensive tracking of loan origination, repayment schedules, outstanding balances, and aging analyses.
@@ -148,6 +149,11 @@ VALUES
   ( 35, 10, '2021-06-15',1404.17,1041.67,362.50);
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -3,7 +3,7 @@
 # SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-## CONTEXT
+## CONTENTS
 * ### [Variables And Operators](sqlserver-tsql-variables-and-operators.md)
     * Variables
         * Declare variables

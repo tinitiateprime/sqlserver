@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Credit Card Management Data Model
 This credit-card schema models the end-to-end lifecycle of plastic money: it begins by storing each cardholder’s profile in the `clients` table, then issues one or more `credit_cards` to each client—capturing card type, limits, issue/expiry dates, and status. Every swipe or refund flows into `card_transactions`, with merchant, date, amount, currency, and spending category, enabling spend-analysis by type or vendor. At month’s end, the `statements` table records each billing cycle’s opening/closing balances, due dates, and minimum dues for every card. Finally, the `payments` table tracks how and when customers settle those statements. Together these tables—linked via foreign keys—support robust reporting on balances, payment behavior, category spend, credit utilization, and aging, making it easy to build dashboards, alerts, or analytics for any credit-card platform.
@@ -895,6 +896,11 @@ INSERT INTO credit_card.payments (payment_id, statement_id, payment_date, amount
  (3095, 2095, '2023-12-20', 447.76, 'Online');
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

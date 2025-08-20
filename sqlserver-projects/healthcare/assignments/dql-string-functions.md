@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments
 * Replace literal values as needed on your instance.
@@ -204,6 +205,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 9. Prescription notes: Instructions → Frequency
 10. Address region: State → City → Country
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Basic Operators Assignments
 * Replace literal values as needed on your instance.
@@ -168,6 +169,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 9. Patients without any insurance policy
 10. Appointments without a same-day medical record (per patient)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

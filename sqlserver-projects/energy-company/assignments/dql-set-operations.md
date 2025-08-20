@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments
 * Replace literal values as needed on your instance.
@@ -55,6 +56,7 @@ DECLARE @RefMonthEnd   date= '2025-07-31';
 11. For a chosen asset (e.g., AssetID = 1), days with production EXCEPT days with low output (<100 MWh)
 12. Customers with open invoices (as of @RefDate) EXCEPT those with any payment in the last 30 days
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

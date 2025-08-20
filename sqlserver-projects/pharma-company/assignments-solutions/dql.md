@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments Solutions
 
@@ -445,6 +446,7 @@ WHERE OrderDate >= '2025-07-01' AND OrderDate < '2025-08-01'
 ORDER BY CAST(TotalAmount / NULLIF(TotalUnits,0) AS DECIMAL(18,2)) DESC, SalesOrderID;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

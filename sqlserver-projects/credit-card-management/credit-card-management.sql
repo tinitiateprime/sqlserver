@@ -1,7 +1,7 @@
 /*******************************************************************************
 *  Organization : TINITIATE TECHNOLOGIES PVT LTD
 *  Website      : tinitiate.com
-*  Script Title : SQL Server
+*  Script Title : SQL Server Tutorial
 *  Description  : Credit Card Data Model
 *  Author       : Team Tinitiate
 *******************************************************************************/

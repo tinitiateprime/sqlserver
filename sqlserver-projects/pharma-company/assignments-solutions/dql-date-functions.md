@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments Solutions
 
@@ -548,6 +549,7 @@ WHERE CONVERT(date, (CAST(SnapshotDate AS datetime2) AT TIME ZONE 'India Standar
 SELECT (SYSDATETIMEOFFSET() AT TIME ZONE 'India Standard Time') AS NowIST_Offset;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

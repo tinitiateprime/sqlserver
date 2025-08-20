@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Analytical Functions Assignments
 * Replace literal values as needed on your instance.
@@ -120,6 +121,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 9. Last claim date per patient
 10. Last payment method per claim
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

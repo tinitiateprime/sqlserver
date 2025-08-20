@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments
 
@@ -72,6 +73,7 @@
 9. Demand scenarios: 3 multipliers × 5 customers' July totals
 10. Inventory drain tests: 3 daily decrements × 5 product-center pairs
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

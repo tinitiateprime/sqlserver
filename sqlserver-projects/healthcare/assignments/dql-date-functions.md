@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments
 * Replace literal values as needed on your instance.
@@ -144,6 +145,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 9. Next 12 hours appointments by IST clock
 10. Show IST local time fields split
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

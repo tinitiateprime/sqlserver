@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments Solutions
 
@@ -635,6 +636,7 @@ ORDER BY IST_Date DESC;
 SELECT ((CONVERT(datetime2, '2025-07-15 10:00:00', 120) AT TIME ZONE 'India Standard Time') AT TIME ZONE 'UTC') AS IST_Input_To_UTC;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

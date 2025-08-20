@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Date Functions Assignments
 * Replace literal values as needed on your instance.
@@ -147,6 +148,7 @@ DECLARE @NowUTC        datetime    = GETUTCDATE();
 9. Production date as datetime at 18:00 UTC → IST view
 10. IST midnight for InvoiceDate, then format
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

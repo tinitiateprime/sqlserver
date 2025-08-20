@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs) Assignments
 * Replace literal values as needed on your instance.
@@ -53,6 +54,7 @@ DECLARE @EndJuly   date = '2025-07-31';
 11. Recursively expand dates and union purchase-order counts
 12. Recursively compute a simple “sales momentum” (today vs prior day)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

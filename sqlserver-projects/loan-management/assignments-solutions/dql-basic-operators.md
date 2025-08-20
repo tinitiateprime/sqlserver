@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Basic Operators Assignments Solutions
 
@@ -318,6 +319,7 @@ SELECT * FROM loan_management.borrowers b WHERE NOT EXISTS (SELECT 1 FROM loan_m
 SELECT * FROM loan_management.loans l WHERE NOT EXISTS (SELECT 1 FROM loan_management.loan_payments p WHERE p.loan_id = l.loan_id AND p.principal_component = 833.33);
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

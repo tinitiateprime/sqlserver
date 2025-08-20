@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Basic Operators Assignments
 * Replace literal values as needed on your instance.
@@ -169,6 +170,7 @@ DECLARE @RefMonthEnd   date= '2025-07-31';
 9. Departments with no facilities in Zone-5
 10. Invoices that have no matching payment rows
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

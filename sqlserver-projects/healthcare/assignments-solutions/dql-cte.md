@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Common Table Expressions (CTEs) Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -529,6 +530,7 @@ ORDER BY c.TotalCharge DESC, c.ClaimID
 OPTION (MAXRECURSION 0);
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

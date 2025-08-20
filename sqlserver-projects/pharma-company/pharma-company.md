@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Pharma Company Data Model
 This data model supports end-to-end pharmaceutical operations: from raw material sourcing and formulation through manufacturing, quality control, inventory management, and distribution.  
@@ -794,6 +795,11 @@ DROP PARTITION FUNCTION PF_PharmaYear;
 DROP SCHEMA pharma_company;
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

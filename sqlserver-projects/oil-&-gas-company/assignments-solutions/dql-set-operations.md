@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -387,6 +388,7 @@ WHERE  FlowDate BETWEEN DATEADD(DAY,-7,@Today) AND @Today
 ORDER BY D DESC;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

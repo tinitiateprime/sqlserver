@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Database, Schema, and User
 * In SQL Server, a **database** represents a structured and organized collection of data.
@@ -70,7 +70,7 @@ CREATE SCHEMA employees AUTHORIZATION dbo;
 ALTER AUTHORIZATION ON SCHEMA::employees TO tiuser;
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

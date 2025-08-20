@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Healthcare Data Model
 This model covers a clinical workflow end-to-end: patients and providers, appointments and medical records, diagnoses/procedures, medications and prescriptions, labs (orders/results), insurance (policies/claims), and payments.  
@@ -861,6 +862,11 @@ DROP PARTITION FUNCTION PS_AppointmentYear;
 DROP SCHEMA healthcare;
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

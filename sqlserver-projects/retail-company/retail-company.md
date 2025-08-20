@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](../README.md)
 
 # Retail Company Data Model
 This model supports core retail operations: customers and addresses, catalog (categories, suppliers, products), inventory across warehouses, sales orders with line items, and procurement via purchase orders.  
@@ -700,6 +701,11 @@ DROP PARTITION FUNCTION PS_SalesYear;
 DROP SCHEMA retail_company;
 ```
 
+***
+### [Assignments](assignments/README.md)
+### [Assignments - Solutions](assignments-solutions/README.md)
+
+##### [Back To Contents](../README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

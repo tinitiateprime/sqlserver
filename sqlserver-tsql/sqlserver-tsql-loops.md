@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Loops
 * Loops are used to execute a block of code repeatedly based on a condition. 
@@ -58,7 +58,7 @@ END
 ```
 * In this example, we use a `WHILE` loop to simulate a `DO WHILE` loop by continuously adding new projects to the projects table until there are 10 projects. The loop checks the condition at the end of each iteration, ensuring that the code inside the loop is executed at least once.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

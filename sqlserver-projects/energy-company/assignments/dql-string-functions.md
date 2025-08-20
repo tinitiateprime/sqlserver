@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - String Functions Assignments
 * Replace literal values as needed on your instance.
@@ -205,6 +206,7 @@ DECLARE @RefMonthEnd   date= '2025-07-31';
 9. Invoice status or 'Open'
 10. AssetMaintenance performer or 'Vendor'
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

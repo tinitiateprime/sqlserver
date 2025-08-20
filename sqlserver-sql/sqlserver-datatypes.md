@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](sqlserver.png)
 
-# SQL Server
+# SQL Server Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # SQL Server Data Types
 * SQL Server provides a variety of data types, each with unique strengths and limitations.
@@ -73,7 +73,7 @@
     * **CURSOR** - Stores a cursor which is used to reference a cursor object for row-by-row operations.
         * **Example:** `cursor_data CURSOR`.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

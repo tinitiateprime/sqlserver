@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments
 * Replace literal values as needed on your instance.
@@ -54,6 +55,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 11. Rooms used in July EXCEPT rooms used after July
 12. July claims EXCEPT those Paid or Partially Paid (i.e., unpaid/denied/pending)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

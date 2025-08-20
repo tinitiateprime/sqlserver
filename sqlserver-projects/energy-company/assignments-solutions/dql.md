@@ -2,7 +2,10 @@
 
 # SQL Server Tutorial
 
+##### [Back To Contents](./README.md)
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL Assignments Solutions
 * To make date-based tasks reproducible, we’ll use a fixed reference date(Changeable as needed).
@@ -515,6 +518,7 @@ GROUP BY a.City
 ORDER BY CustomerCount DESC;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

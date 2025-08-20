@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments
 * Replace literal values as needed on your instance.
@@ -82,6 +83,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 11. Regions × two hypothetical tax rates (scenario matrix)
 12. First 5 customers × first 4 products (combinatorial grid)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

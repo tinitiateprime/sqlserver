@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments
 * Replace literal values as needed on your instance.
@@ -83,6 +84,7 @@ DECLARE @RefMonthEnd   date= '2025-07-31';
 11. Tiny numbers table × sample to build day offsets (0..6)
 12. Distinct States × PaymentMethod (method availability by state)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

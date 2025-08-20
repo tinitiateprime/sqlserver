@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Joins Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -608,6 +609,7 @@ CROSS JOIN (VALUES ('L1'),('L2'),('L3')) f(FloorLabel)
 ORDER BY d.Name, f.FloorLabel;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments Solutions
 * Replace literal values as needed on your instance.
@@ -390,6 +391,7 @@ JOIN energy_company.Invoice i2
 WHERE p.PaymentDate BETWEEN DATEADD(DAY,-30,@RefDate) AND @RefDate;
 ```
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

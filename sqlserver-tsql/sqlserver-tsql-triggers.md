@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Triggers
 * A trigger is a special kind of stored procedure that automatically runs (fires) in response to specific database events such as INSERT, UPDATE, or DELETE on a table or view.
@@ -318,7 +318,7 @@ DISABLE TRIGGER ALL ON dbo.trigger_test;
 DROP TRIGGER trg_tinitiate_ddl ON DATABASE;  
 ```
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Set Operations Assignments
 * Replace literal values as needed on your instance.
@@ -54,6 +55,7 @@ DECLARE @Today    date = CAST(GETDATE() AS date);
 11. Contracted products EXCEPT products present in Inventory
 12. Dates with production (7d) EXCEPT dates with pipeline flow (7d)
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

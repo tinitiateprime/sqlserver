@@ -1,8 +1,9 @@
 ![SQL Server Tinitiate Image](../../../sqlserver-sql/sqlserver.png)
 
 # SQL Server Tutorial
-
 &copy; TINITIATE.COM
+
+##### [Back To Contents](./README.md)
 
 # DQL - Aggregate Functions Assignments
 * Replace literal values as needed on your instance.
@@ -83,6 +84,7 @@ DECLARE @RefMonthEnd   date = '2025-07-31';
 11. Earliest invoice in 2025
 12. Lowest PricePerkWh among plans effective on 2025-07-01
 
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|

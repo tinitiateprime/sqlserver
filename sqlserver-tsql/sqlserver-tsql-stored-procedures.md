@@ -1,9 +1,9 @@
 ![SQL Server Tinitiate Image](../sqlserver-sql/sqlserver.png)
 
-# SQL Server - TSQL
+# SQL Server - TSQL Tutorial
 &copy; TINITIATE.COM
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 
 # Stored Procedures
 Stored procedures (SPs) are precompiled T-SQL routines stored in the database. They accept parameters, execute logic (queries, DML, control flow), and optionally return values or result sets.
@@ -163,7 +163,7 @@ EXEC employees.GetEmployees @Commission = 200, @DeptID = 30;
 * **Flexibility:** Allows the caller to specify only the parameters they are interested in, using defaults for others.
 * **Maintainability:** Makes the code easier to maintain and update since changes to default logic can be centralized in the procedure/function definition.
 
-##### [Back To Context](./README.md)
+##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
 |----------------------|
