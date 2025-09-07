@@ -11,60 +11,87 @@
 ## WHILE Loop
 * The `WHILE` loop executes a block of code repeatedly as long as a specified condition is true.
 ```sql
--- Increase salaries of employees by 10%
+
+While your example is a good introduction, the primary lesson for advanced T-SQL training is that you should almost always avoid WHILE loops for data manipulation. T-SQL is a set-based language, meaning it's optimized to process entire sets of data at once. Row-by-row processing (often called RBAR, or "Row-By-Agonizing-Row") is incredibly inefficient and can lead to major performance issues on large tables.
+
+The following examples illustrate the correct, set-based approach and provide a better use case for loops in T-SQL.
+
+###  Set-Based Alternative (The Correct Way) 🏆
+Your original example uses a WHILE loop to update salaries one employee at a time. The correct, set-based way to do this is with a single UPDATE statement. This one command performs the same operation on all rows simultaneously, which is exponentially faster and less resource-intensive.
+
+#### Inefficient RBAR Method (Your original example):
+
+```sql
+
 DECLARE @EmpID INT;
 
--- Get the first Employee ID
 SELECT @EmpID = MIN(empno) FROM employees.emp;
 
 WHILE @EmpID IS NOT NULL
 BEGIN
-    -- Increase salaries by 10%
     UPDATE employees.emp SET sal = sal * 1.10 WHERE empno = @EmpID;
-    -- Get the next Part ID
     SELECT @EmpID = MIN(empno) FROM employees.emp WHERE empno > @EmpID;
 END
+
 ```
+#### Efficient Set-Based Method:
 
 ```sql
 
-DECLARE @EmpName VARCHAR(10);
-DECLARE @Salary DECIMAL(10, 2);
-DECLARE @RunningTotal DECIMAL(10, 2) = 0;
+UPDATE employees.emp
+SET sal = sal * 1.10;
 
--- Declare a cursor
-DECLARE emp_cursor CURSOR FOR
-    SELECT ename, sal
-    FROM employees.emp
-    ORDER BY empno;
+```
+This single statement is the preferred method for updating all employee salaries.
 
--- Open the cursor
-OPEN emp_cursor;
+### Appropriate Use of WHILE Loops 💡
+A WHILE loop is best suited for tasks that are inherently iterative and cannot be easily performed with a single set-based statement. This includes administrative tasks, dynamic SQL generation, and handling certain types of hierarchical data.
 
--- Fetch the first row
-FETCH NEXT FROM emp_cursor INTO @EmpName, @Salary;
+* Example: Finding an Employee's Managerial Hierarchy
 
--- Loop through all rows
-WHILE @@FETCH_STATUS = 0
+This example uses a WHILE loop to find an employee's manager, then that manager's manager, and so on, all the way up the chain to the president. This task is difficult to do in a single, simple set-based query without using more advanced features like Recursive CTEs (Common Table Expressions), making a loop a viable solution.
+
+```sql
+DECLARE @CurrentEmpID INT = 7566; -- Start with employee JONES
+DECLARE @CurrentEmpName VARCHAR(10);
+DECLARE @MgrID INT;
+DECLARE @Level INT = 1;
+
+PRINT 'Hierarchy for Employee: JONES';
+PRINT '----------------------------';
+
+WHILE @CurrentEmpID IS NOT NULL
 BEGIN
-    SET @RunningTotal = @RunningTotal + @Salary;
-    PRINT @EmpName + ' - Salary: ' + CAST(@Salary AS VARCHAR) + ' | Running Total: ' + CAST(@RunningTotal AS VARCHAR);
+    -- Get the current employee's name and their manager's ID
+    SELECT @CurrentEmpName = ename, @MgrID = mgr
+    FROM employees.emp
+    WHERE empno = @CurrentEmpID;
     
-    -- Fetch the next row
-    FETCH NEXT FROM emp_cursor INTO @EmpName, @Salary;
-END;
+    -- Print the current level and employee name
+    PRINT 'Level ' + CAST(@Level AS VARCHAR) + ': ' + @CurrentEmpName;
 
--- Close and deallocate the cursor
-CLOSE emp_cursor;
-DEALLOCATE emp_cursor;
-GO
+    -- Move up the hierarchy
+    SET @CurrentEmpID = @MgrID;
+    SET @Level = @Level + 1;
+END
 
 ```
 * In this example, we use a `WHILE` loop to increase the salaries of all employees in the emp table by 10%. The loop continues until there are no more employees to update.
 
 ## FOR Loop
-* `FOR` loop executes a block of code a specific number of times.
-* SQL Server does not have a traditional `FOR` loop like some other programming languages. However, you can achieve similar functionality using a `WHILE` loop with a counter variable.
+* T-SQL doesn't have a native FOR loop construct, but you can effectively replicate its behavior using a WHILE loop combined with a counter variable. This is a common pattern in T-SQL programming.
+
+* Simulating a FOR Loop
+    The FOR loop in other languages typically has three parts:
+
+* Initialization: Setting a counter variable to a starting value.
+
+* Condition: The expression that is checked before each iteration to determine if the loop should continue.
+
+* Iteration: The action that modifies the counter variable (e.g., incrementing or decrementing it) after each iteration.
+
+You can combine these three elements within a T-SQL WHILE loop to create the same functionality. The initialization happens before the loop, the condition is part of the WHILE statement, and the iteration happens inside the loop's BEGIN...END block.
+
 ``` sql
 -- Print Names of First 3 Projects
 DECLARE @Counter INT = 1;
@@ -104,7 +131,15 @@ GO
 * In this example, we use a `WHILE` loop to print the names of the first 3 projects from the projects table. The loop runs as long as the @Counter variable is less than or equal to 3.
 
 ## DO WHILE Loop
-* SQL Server does not have a built-in `DO WHILE` loop, but you can simulate it using a `WHILE` loop with a `BEGIN...END` block.
+* T-SQL does not have a native DO WHILE loop. It can be simulated by using a standard WHILE loop and carefully placing the loop condition check at the end of the code block, ensuring the code inside the loop executes at
+  least once.
+* Simulating DO WHILE with WHILE
+    The core difference between a WHILE and a DO WHILE loop is the order of operations.
+    A standard WHILE loop first checks the condition and then executes the code block. If the condition is false from the start, the code block never runs.
+  
+* A DO WHILE loop, by contrast, first executes the code block, and then checks the condition. This guarantees that the code block will execute at least one time, regardless of the starting condition.
+
+To replicate this behavior in T-SQL, you simply structure your WHILE loop so that the action you want to perform is executed before the condition is evaluated.
 ```sql
 -- Add New Projects Until 10 Projects Exist
 DECLARE @Count INT;
