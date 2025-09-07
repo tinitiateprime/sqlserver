@@ -67,7 +67,68 @@ BEGIN
     PRINT @data2;    -- 20
 END;
 ```
+### BEGIN...END with IF...ELSE Statements
+This is a fundamental use case. The BEGIN...END block allows you to execute more than one statement within the IF or ELSE clauses.
 
+Example: Conditional Logic with Multiple Actions
+
+This code checks if a specific department name exists. If it does, it updates employee salaries and prints a success message. If not, it prints an error message.
+
+```sql
+DECLARE @DeptName NVARCHAR(100) = 'Sales';
+DECLARE @SalaryIncrease DECIMAL(10, 2) = 1.05; -- 5% increase
+
+IF EXISTS (SELECT 1 FROM employees.dept WHERE dname = @DeptName)
+BEGIN
+    -- This block executes if the condition is TRUE
+    PRINT 'Updating salaries for the ' + @DeptName + ' department...';
+    
+    UPDATE e
+    SET e.sal = e.sal * @SalaryIncrease
+    FROM employees.emp AS e
+    JOIN employees.dept AS d ON e.deptno = d.deptno
+    WHERE d.dname = @DeptName;
+    
+    PRINT 'Salaries updated successfully.';
+END
+ELSE
+BEGIN
+    -- This block executes if the condition is FALSE
+    PRINT 'Error: Department ' + @DeptName + ' does not exist.';
+    PRINT 'No updates were made.';
+END;
+GO
+
+```
+
+###  BEGIN...END with TRY...CATCH Blocks
+This is the standard for modern T-SQL error handling. The BEGIN...END block is used to define the section of code that you want to monitor for errors.
+
+Example: Error Handling During a DIVIDE BY ZERO Operation
+
+This code attempts a division that will cause an error. The TRY...CATCH block, defined by BEGIN...END, catches the error and executes the statements in the CATCH block to handle it gracefully.
+
+```sql
+BEGIN TRY
+    -- The BEGIN block encapsulates the code to be monitored for errors.
+    DECLARE @numerator INT = 100;
+    DECLARE @denominator INT = 0;
+    
+    PRINT 'Attempting division...';
+    
+    DECLARE @result INT = @numerator / @denominator; -- This will cause a divide-by-zero error.
+    
+    PRINT 'Division successful. Result: ' + CAST(@result AS VARCHAR);
+END TRY
+BEGIN CATCH
+    -- The CATCH block executes only if an error occurs in the TRY block.
+    -- BEGIN...END allows us to run multiple statements to handle the error.
+    PRINT 'An error occurred during the division.';
+    PRINT 'Error Number: ' + CAST(ERROR_NUMBER() AS VARCHAR);
+    PRINT 'Error Message: ' + ERROR_MESSAGE();
+END CATCH;
+GO
+```
 ## Common Use Cases
 * **Control-of-Flow** - Group statements under IF…ELSE or WHILE so they execute together.
 * **Transactions** - Mark the start and end of an explicit transaction.
