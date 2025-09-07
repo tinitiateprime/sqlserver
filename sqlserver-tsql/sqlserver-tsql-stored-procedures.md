@@ -158,6 +158,90 @@ EXEC employees.GetEmployees @DeptID = 30, @Commission = 500;
 ```sql
 EXEC employees.GetEmployees @Commission = 200, @DeptID = 30;
 ```
+
+### Procedure with RETURN Statement
+The RETURN statement is used to exit a procedure immediately and return an integer value back to the caller. This is often used to signal success, failure, or a specific status code. It is different from an OUTPUT parameter, which returns a data value. The return value is typically a status code and can be used for error checking.
+
+* Example: Procedure with a Status Code RETURN
+
+This procedure checks if a department exists. It returns 1 if the department is found and 0 if it is not.
+
+```sql
+
+CREATE PROCEDURE employees.CheckDepartmentExists
+    @DeptName VARCHAR(100)
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM employees.dept WHERE dname = @DeptName)
+        RETURN 1; -- Return 1 for "exists"
+    ELSE
+        RETURN 0; -- Return 0 for "does not exist"
+END
+GO
+
+-- How to execute and capture the return value
+DECLARE @Result INT;
+EXEC @Result = employees.CheckDepartmentExists @DeptName = 'ACCOUNTING';
+
+IF @Result = 1
+    PRINT 'Department exists.';
+ELSE
+    PRINT 'Department does not exist.';
+GO
+```
+
+###  EXECUTE AS Clause for Security
+This is an advanced security feature. The EXECUTE AS clause allows a stored procedure to run under the security context of a different user. This is useful for enforcing the principle of least privilege, as it allows a user to run a procedure without having direct permissions on the underlying tables.
+
+Example: Granting a User Permission to Run an SP but not Access the Data Directly
+
+Create a user without permissions on the emp table.
+
+Create a stored procedure with the EXECUTE AS OWNER clause. The owner of the procedure (e.g., dbo) has permissions on the emp table.
+
+Grant the user permission to execute the procedure.
+
+```sql
+
+-- Create a new user (for demonstration)
+CREATE USER GuestUser WITHOUT LOGIN;
+GO
+-- The user does NOT have SELECT permissions on the emp table
+-- REVOKE SELECT ON employees.emp FROM GuestUser;
+
+-- Create a procedure that executes as its owner (dbo), who has permissions
+CREATE PROCEDURE employees.GetEmployeeCount_Secured
+WITH EXECUTE AS OWNER
+AS
+BEGIN
+    SELECT COUNT(*) FROM employees.emp;
+END
+GO
+-- Grant the user permission to execute the procedure
+GRANT EXECUTE ON employees.GetEmployeeCount_Secured TO GuestUser;
+```
+-- Now, when GuestUser executes the procedure, it runs with dbo's permissions
+-- EXECUTE AS USER = 'GuestUser';
+-- EXEC employees.GetEmployeeCount_Secured;
+-- REVERT;
+This is a critical topic for production environments to ensure database security.
+
+### Recompiling Stored Procedures
+Over time, the query plans for stored procedures can become outdated as data changes. This can lead to poor performance. You can force SQL Server to recompile a stored procedure to get a fresh, optimized query plan.
+
+* Methods for Recompilation:
+
+* WITH RECOMPILE: This forces a single-use recompilation. The query plan is not saved to the plan cache. This is useful for procedures where the input parameters vary widely.
+
+```sql
+EXEC employees.GetEmployeesByDepartmentName @DeptName = 'Sales' WITH RECOMPILE;
+```
+* sp_recompile: This marks a stored procedure for recompilation the next time it runs.
+
+```sql
+EXEC sp_recompile 'employees.GetEmployeesByDepartmentName';
+```
+
 ### Benefits of Default Parameters
 * **Simplicity:** Reduces the number of overloaded procedures/functions needed to handle different scenarios.
 * **Flexibility:** Allows the caller to specify only the parameters they are interested in, using defaults for others.
