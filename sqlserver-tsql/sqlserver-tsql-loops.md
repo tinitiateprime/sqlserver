@@ -10,7 +10,6 @@
 
 ## WHILE Loop
 * The `WHILE` loop executes a block of code repeatedly as long as a specified condition is true.
-```sql
 
 While your example is a good introduction, the primary lesson for advanced T-SQL training is that you should almost always avoid WHILE loops for data manipulation. T-SQL is a set-based language, meaning it's optimized to process entire sets of data at once. Row-by-row processing (often called RBAR, or "Row-By-Agonizing-Row") is incredibly inefficient and can lead to major performance issues on large tables.
 
