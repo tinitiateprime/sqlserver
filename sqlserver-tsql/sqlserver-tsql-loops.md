@@ -11,12 +11,12 @@
 ## WHILE Loop
 * The `WHILE` loop executes a block of code repeatedly as long as a specified condition is true.
 
-While your example is a good introduction, the primary lesson for advanced T-SQL training is that you should almost always avoid WHILE loops for data manipulation. T-SQL is a set-based language, meaning it's optimized to process entire sets of data at once. Row-by-row processing (often called RBAR, or "Row-By-Agonizing-Row") is incredibly inefficient and can lead to major performance issues on large tables.
+    While your example is a good introduction, the primary lesson for advanced T-SQL training is that you should almost always avoid WHILE loops for data manipulation. T-SQL is a set-based language, meaning it's optimized     to process entire sets of data at once. Row-by-row processing (often called RBAR, or "Row-By-Agonizing-Row") is incredibly inefficient and can lead to major performance issues on large tables.
 
 The following examples illustrate the correct, set-based approach and provide a better use case for loops in T-SQL.
 
 ###  Set-Based Alternative (The Correct Way) 🏆
-Your original example uses a WHILE loop to update salaries one employee at a time. The correct, set-based way to do this is with a single UPDATE statement. This one command performs the same operation on all rows simultaneously, which is exponentially faster and less resource-intensive.
+    Your original example uses a WHILE loop to update salaries one employee at a time. The correct, set-based way to do this is with a single UPDATE statement. This one command performs the same operation on all rows          simultaneously, which is exponentially faster and less resource-intensive.
 
 #### Inefficient RBAR( "Row-By-Agonizing-Row") Method (Your original example):
 
