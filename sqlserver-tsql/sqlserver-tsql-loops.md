@@ -16,7 +16,7 @@
 The following examples illustrate the correct, set-based approach and provide a better use case for loops in T-SQL.
 
 ###  Set-Based Alternative (The Correct Way) 🏆
-    Your original example uses a WHILE loop to update salaries one employee at a time. The correct, set-based way to do this is with a single UPDATE statement. This one command performs the same operation on all rows          simultaneously, which is exponentially faster and less resource-intensive.
+ Your original example uses a WHILE loop to update salaries one employee at a time. The correct, set-based way to do this is with a single UPDATE statement. This one command performs the same operation on all rows          simultaneously, which is exponentially faster and less resource-intensive.
 
 #### Inefficient RBAR( "Row-By-Agonizing-Row") Method (Your original example):
 
