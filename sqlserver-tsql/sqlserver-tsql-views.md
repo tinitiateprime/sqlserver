@@ -5,67 +5,67 @@
 
 ##### [Back To Contents](./README.md)
 
-# VIEWS
-* A view is a virtual table based on the result-set of an SQL statement.
-* Views contain rows and columns, just like a real table, and the fields in a view are fields from one or more real tables in the database.
-* You can use views to simplify complex queries, enhance security by restricting access to underlying tables, and abstract data in a way that users find natural or intuitive.
+# Views
+A view is a virtual table that is based on the result set of a SQL query. Views contain rows and columns, just like a real table, but they do not physically store data. Instead, they act as a stored query that presents data from one or more underlying tables.
 
-## Key Characteristics of Views:
-* **Simplification of Complex Queries:** Views can encapsulate complex queries with joins, filters, and calculations, presenting a simple interface to the user or application.
-* **Data Abstraction:** Users can interact with data without needing to understand details about the underlying table structures.
-* **Security:** Views can limit the visibility of certain data within the database, thereby providing a security mechanism to restrict access to sensitive information.
-* **Updateability:**  Depending on the SQL Server version and the view’s complexity, some views are updateable, meaning you can perform INSERT, UPDATE, or DELETE operations on the view.
+Views are used to simplify complex queries, enhance security by restricting access to sensitive data, and abstract the underlying data structure from users and applications.
 
-## Creating Views
-* Here is how you can create a simple view
+<img width="570" height="92" alt="image" src="https://github.com/user-attachments/assets/ec73f67c-26aa-41c5-8f68-ad9e62fc5c0b" />
+
+## Creating and Using Views
+### Creating a Simple View
+Here's how to create a basic view that filters data from a single table.
+
 ```sql
+
 CREATE VIEW vw_EmployeeInfo
 AS
 SELECT empno, ename, job, deptno
 FROM employees.emp
 WHERE job LIKE '%Manager%';
 ```
-* This view vw_EmployeeInfo shows a list of employees who are managers.
 
-## Using Views
-* Once a view is created, you can use it just like you would use a table.
-* Here’s how you can query the view:
+### Querying a View
+Once a view is created, you can query it just like you would a regular table.
+
 ```sql
+
 SELECT * FROM vw_EmployeeInfo;
 ```
 
-## Modifying Views
-* To change a view after it has been created, you can use the ALTER VIEW statement:
+### Modifying and Dropping Views
+ 
+ALTER VIEW: Use this statement to change a view's definition.
+
+DROP VIEW: Use this statement to remove a view from the database.
+ 
+
 ```sql
+-- Altering a view to add a filter for salaries
 ALTER VIEW vw_EmployeeInfo
 AS
 SELECT empno, ename, job, deptno, sal
 FROM employees.emp
 WHERE job LIKE '%Manager%' AND sal > 2500;
-```
-* This modification adds a filter to display managers with salary greater than 2500.
 
-## Dropping Views
-* If you no longer need a view, you can remove it using the DROP VIEW statement:
-```sql
+-- Dropping a view
 DROP VIEW vw_EmployeeInfo;
 ```
 
-## Complex Views
-* Complex views in SQL Server that involve joining multiple tables is a common practice to encapsulate complex SQL queries into a simpler form that can be reused.
-* This is particularly useful in scenarios where you have normalized databases with data spread across multiple related tables, and you frequently need to aggregate this data for reporting or business logic purposes.
-* Here's an example of how to create a complex view in SQL Server that involves multiple joins across several tables. Suppose we have a typical business database with tables for employees (emp), departments (dept), projects (projects), and employee assignments to projects (emp_projects). We'll create a view that provides a comprehensive overview of employee details along with their department names and projects they are working on.
-### Scenario:
-* You want a view that shows the following for each employee: Employee ID and name, Department name, List of projects they are assigned to.
+### Complex Views
+Complex views are a common practice for encapsulating intricate queries that involve multiple joins and aggregations into a simple, reusable object.
+
+* Scenario: You want a single view that provides comprehensive employee details, including their department name and a list of all projects they are assigned to.
+
 ```sql
+
 CREATE VIEW vw_EmployeeDetails
 AS
 SELECT 
     e.empno,
     e.ename,
     d.dname,
-    STRING_AGG(p.project_name, ', ') WITHIN GROUP (ORDER BY p.project_name)
-    AS Projects
+    STRING_AGG(p.project_name, ', ') WITHIN GROUP (ORDER BY p.project_name) AS Projects
 FROM 
     employees.emp e
     INNER JOIN employees.dept d ON e.deptno = d.deptno
@@ -76,62 +76,85 @@ GROUP BY
     e.ename,
     d.dname;
 ```
-### Explanation:
-* **INNER JOIN** between emp and dept: This join ensures that we only get employees who are assigned to departments. It connects each employee with their respective department.
-* **LEFT JOIN** between emp and emp_project, and emp_project to project: These joins are used to gather project information for each employee. The use of LEFT JOIN ensures that employees who are not assigned to any project are also included in the results, with their project information being null.
-* **STRING_AGG** function aggregates the project names into a single comma-separated string for each employee. It is a convenient way to list all projects associated with an employee in a single row of the view. The WITHIN GROUP (ORDER BY p.project_name) clause orders the projects by name within each aggregated string.
-* **GROUP BY** clause is necessary because the STRING_AGG function is an aggregate function. We group by employee ID, name, and department name to ensure that our aggregate function (STRING_AGG) works across the correct grouping of data.
-### Usage:
-* To use this view to fetch employee details along with their department and projects:
-```sql
-SELECT * FROM vw_EmployeeDetails;
-```
 
-## Updating Using Simple View
-* Here is an example of creating a simple updatable view and using it to update data:
-```sql
--- Creating a simple view on the employees table
-CREATE VIEW vw_EmployeeBasicInfo AS
-SELECT empno, ename, job
-FROM employees.emp;
+* Joins: The joins connect employee data with their department and project information. LEFT JOIN is used to include employees who may not be assigned to any project.
 
--- Updating data through the view
-UPDATE vw_EmployeeBasicInfo
-SET job = 'Developer'
-WHERE empno = 7788;
-```
+* STRING_AGG: This function aggregates all project names for a single employee into a comma-separated list.
 
-## Updating Using Complex View
-* Here is an Example of a Complex View with an `INSTEAD OF` trigger
-* For complex views, you can use `INSTEAD OF` triggers to specify custom actions to take when an insert, update, or delete operation is attempted on the view:
+* GROUP BY: The GROUP BY clause is required because STRING_AGG is an aggregate function.
+
+## Advanced View Concepts
+
+### Updateable Views and INSTEAD OF Triggers
+
+A view is updatable only if it references a single base table and does not contain aggregates, joins, or other complex logic. For complex views, you must use an INSTEAD OF trigger to handle data modifications.
+
+An INSTEAD OF trigger intercepts a data modification command (INSERT, UPDATE, or DELETE) on a view and executes the logic defined within the trigger instead of the original command.
+
+* Example: Updating a Complex View with a Trigger
+
+This example shows how an INSTEAD OF UPDATE trigger on a joined view can correctly update data in the underlying base table.
+
 ```sql
+
 -- Creating a complex view with a join
 CREATE VIEW vw_EmployeeDept AS
 SELECT e.empno, e.ename, e.job, d.dname
 FROM employees.emp e
 JOIN employees.dept d ON e.deptno = d.deptno;
+GO
 
 -- Creating an INSTEAD OF UPDATE trigger on the view
 CREATE TRIGGER trg_UpdateEmployeeDept ON vw_EmployeeDept
 INSTEAD OF UPDATE
 AS
 BEGIN
-    -- Update the emp table based on the view update
-    UPDATE employees.emp
-    SET ename = INSERTED.ename,
-    job = INSERTED.job
-    FROM INSERTED
-    WHERE emp.empno = INSERTED.empno;
-    -- Update logic for dept could also be included if needed
+    -- Update the emp table based on the data provided to the view
+    UPDATE e
+    SET 
+        e.ename = i.ename,
+        e.job = i.job
+    FROM employees.emp e
+    JOIN inserted i ON e.empno = i.empno;
 END;
-
--- Updating data through the view
-UPDATE vw_EmployeeDept
-SET job = 'analyst'
-WHERE empno = 7788;
+GO
 ```
-* In this scenario, vw_EmployeeDept includes a join, making it complex and typically not updatable directly.
-* The `INSTEAD OF` trigger, `trg_UpdateEmployeeDept`, intercepts update operations on the view and provides the necessary SQL commands to update the underlying emp table accordingly.
+
+## Indexed Views (Materialized Views)
+For complex views that are used frequently for reporting or analytics, a standard view's performance can be a bottleneck. An indexed view, also known as a materialized view, solves this by physically storing the view's result set on disk.
+
+* How it works: You create a view with the WITH SCHEMABINDING option, and then you create a UNIQUE CLUSTERED INDEX on it. This action forces SQL Server to persist the data.
+
+* Benefits: Queries on the view are much faster because the data is pre-calculated. The query optimizer can also use the indexed view to speed up queries on the base tables, even if the view is not directly referenced.
+
+* Drawbacks: There is a performance overhead on INSERT, UPDATE, and DELETE operations on the base tables, as the indexed view must be kept in sync.
+
+* Example: Creating an Indexed View
+
+```sql
+
+-- Step 1: Create a view with SCHEMABINDING to bind it to the base tables
+CREATE VIEW vw_ProductSales
+WITH SCHEMABINDING
+AS
+SELECT 
+    p.ProductID,
+    SUM(s.SalesAmount) AS TotalSales,
+    COUNT_BIG(*) AS NumberOfSales -- COUNT_BIG is required for indexed views
+FROM 
+    dbo.Products AS p
+JOIN 
+    dbo.Sales AS s ON p.ProductID = s.ProductID
+GROUP BY 
+    p.ProductID;
+GO
+
+-- Step 2: Create a unique clustered index to materialize the view
+CREATE UNIQUE CLUSTERED INDEX idx_ProductSales_ProductID
+ON vw_ProductSales (ProductID);
+GO
+```
+ 
 
 ##### [Back To Contents](./README.md)
 ***
