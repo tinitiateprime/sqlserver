@@ -40,7 +40,32 @@ CREATE TABLE trigger_test_log (
     ,eventval      XML
 );
 ```
+## Handling Multiple Rows (Crucial Concept)
+Triggers in SQL Server operate on an entire set of rows, not just one at a time. The inserted and deleted virtual tables can contain multiple rows if the triggering statement (e.g., INSERT, UPDATE, or DELETE) affected more than one record. Failing to account for multi-row operations will lead to bugs.
 
+Your examples like UPDATE ... SET test_string = (SELECT UPPER(test_string) FROM inserted) are vulnerable to this. If an INSERT statement adds multiple rows, this code will fail because the subquery (SELECT ... FROM inserted) returns more than one value.
+
+### Example of Multi-Row Safe Code:
+
+The correct way to handle multi-row operations is with a set-based join.
+
+```sql
+-- Multi-row safe UPDATE trigger
+CREATE OR ALTER TRIGGER trg_multi_row_safe
+ON trigger_test
+FOR INSERT, UPDATE
+AS
+BEGIN
+  -- Use a set-based UPDATE with a JOIN to handle multiple rows
+  UPDATE T
+  SET    T.test_string = I.test_string
+  FROM   trigger_test AS T
+  JOIN   inserted AS I ON T.test_id = I.test_id;
+END;
+```
+-- This will now work correctly
+
+INSERT INTO trigger_test (test_id, test_string) VALUES (10, 'abc'), (11, 'def');
 ## DML `FOR` Triggers
 * A "FOR" trigger is executed before the data modification operation (INSERT, UPDATE, DELETE) takes place.
 * It can be used to modify the data to be inserted, updated, or deleted before the operation is carried out. 
