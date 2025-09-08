@@ -6,7 +6,30 @@
 ##### [Back To Contents](./README.md)
 
 # Functions
-Functions are reusable routines that accept input parameters, perform an operation, and return a single value (scalar function) or a table (table-valued function).
+Functions are powerful, reusable database objects that encapsulate business logic and data processing. They are designed to compute a value or return a result set, and they are a key component of modular, efficient database design. Unlike stored procedures, which are executed as standalone statements, functions are typically called from within a query, allowing them to be seamlessly integrated into SELECT, WHERE, JOIN, and other clauses.
+
+## Key Characteristics and Types
+Scalar Functions: These functions return a single data value, such as an integer, string, or date. They are commonly used to perform calculations, data conversions, or complex logical operations on a single value. Scalar functions can be used in almost any place where an expression is allowed within a query.
+
+### Table-Valued Functions (TVFs): 
+These functions return a result set (a virtual table). TVFs are highly flexible and can be used in the FROM clause of a query, much like a regular table or view. They are particularly useful for encapsulating complex joins or data filtering logic that can then be reused in multiple queries.
+
+### Inline TVFs (ITVFs): 
+These are the most performant type of TVF. They consist of a single SELECT statement, and the query optimizer can "inline" their logic directly into the calling query. This allows for efficient, cost-based optimization and is the preferred method for creating TVFs.
+
+### Multi-Statement TVFs (MTVF): 
+These functions can contain multiple T-SQL statements, including BEGIN...END blocks and other procedural logic. However, they are less performant than ITVFs because the query optimizer cannot see the logic inside the function, treating it as a "black box" with a fixed row count. They should be used only when the logic cannot be expressed in a single SELECT statement.
+
+## Advantages and Best Practices
+* Reusability: Functions centralize complex logic, allowing developers to call a single function instead of rewriting code, which improves code consistency and reduces errors.
+
+* Modularity: They break down complex problems into smaller, manageable, and reusable components.
+
+* Query Integration: Functions can be used directly within a query, making the SQL code more expressive and easier to read.
+
+* Determinism: Understanding whether a function is deterministic (always returns the same result for the same input) is crucial for performance. Only deterministic functions can be used in indexed computed columns, which can dramatically speed up query performance.
+
+* Performance: A key best practice is to prioritize ITVFs over MTVFs whenever possible due to the significant performance difference. The APPLY operator is an advanced tool that can be used with TVFs to achieve powerful, dynamic joins that might be cumbersome with standard JOIN syntax.
 
 ## Function with Input Parameter
 * In SQL Server, you can create functions that accept input parameters, allowing you to pass values to the function and perform operations based on those values.
@@ -107,6 +130,21 @@ END
 -- Use the function
 SELECT * FROM employees.GetAllEmployees();
 ```
+
+### Combining Scalar Functions with APPLY
+The APPLY operator is a more advanced way to use functions. It is similar to a join but allows you to invoke a table-valued function for each row of an outer table expression. This is a common and powerful pattern.
+
+* Example: Using CROSS APPLY
+
+Suppose you have a function that returns the employees for a given department. You can use CROSS APPLY to dynamically join the dept and emp tables using the function, which is useful for complex scenarios.
+
+```sql
+-- This assumes GetEmployeesByDepartment is an inline TVF.
+SELECT d.dname, e.ename, e.job
+FROM employees.dept AS d
+CROSS APPLY employees.GetEmployeesByDepartment(d.deptno) AS e;
+```
+
 ### Key Points
 * In scalar functions, the `RETURN` statement specifies the single value to be returned.
 * In table-valued functions, the `RETURN` statement is used to return a result set or a table variable.
