@@ -6,8 +6,22 @@
 ##### [Back To Contents](./README.md)
 
 # Handling Exceptions
-* In SQL Server, exceptions (also known as errors) can occur during the execution of SQL statements.
-* To handle these exceptions, you can use the `TRY...CATCH` block.
+The core of T-SQL exception handling revolves around the TRY...CATCH block. This structure allows you to gracefully manage errors that occur during query execution, preventing the entire batch from failing and enabling you to take corrective action.
+
+Error Functions
+When an error occurs in the TRY block, control immediately transfers to the CATCH block. Within this block, a set of system functions can be used to retrieve detailed information about the error. These are crucial for building robust error-handling routines.
+
+* ERROR_NUMBER(): Returns the error number (e.g., 2627 for a duplicate key violation).
+
+* ERROR_MESSAGE(): Returns the full text of the error message.
+
+* ERROR_SEVERITY(): Indicates the seriousness of the error.
+
+* ERROR_LINE(): Returns the line number within the code where the error occurred.
+
+* ERROR_PROCEDURE(): Returns the name of the stored procedure or function where the error occurred.
+  
+  
 ### TRY...CATCH Example:
 Suppose you have an `emp` table with a primary key on the `empno` column. You want to insert a new employee, but you need to ensure that the employee ID does not already exist in the table.
 ```sql
@@ -171,6 +185,34 @@ BEGIN CATCH
     -- Re-throw the original error
     THROW;
 END CATCH;
+```
+
+```sql
+
+-- Assume you have an 'errors_log' table for logging
+CREATE TABLE errors_log (
+    log_id INT IDENTITY(1,1) PRIMARY KEY,
+    error_number INT,
+    error_message NVARCHAR(4000),
+    error_time DATETIME DEFAULT GETDATE()
+);
+
+BEGIN TRY
+    -- This statement will cause an error
+    INSERT INTO employees.emp (empno) VALUES (NULL); 
+END TRY
+BEGIN CATCH
+    -- Use the error functions to capture details and log them
+    INSERT INTO errors_log (error_number, error_message)
+    VALUES (ERROR_NUMBER(), ERROR_MESSAGE());
+
+    -- Display a custom, user-friendly message
+    PRINT 'An error occurred. The details have been logged for review.';
+
+    -- Optional: Re-throw the original error with THROW
+    THROW;
+END CATCH;
+
 ```
 ##### [Back To Contents](./README.md)
 ***
