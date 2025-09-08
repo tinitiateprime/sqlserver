@@ -72,6 +72,106 @@ SELECT ERROR_LINE() AS ErrorLine;
 ```
 These error functions can only be used within a `CATCH` block and are very useful for diagnosing and handling errors in SQL Server. They provide detailed information about the error, which can be logged or used to take corrective action.
 
+##  Error Handling with Transactions
+Using TRY...CATCH with transactions is essential for maintaining data integrity. If an error occurs within a transaction, you must check for an active transaction and roll it back to prevent a partial or corrupted commit.
+
+### Example: Transaction Control with TRY...CATCH
+
+This example demonstrates how to perform a series of operations in a transaction. If any operation fails, the CATCH block ensures the entire transaction is rolled back, and a meaningful error message is returned.
+
+```sql
+BEGIN TRY
+    -- Start a transaction
+    BEGIN TRANSACTION;
+
+    -- Attempt to insert a new employee
+    INSERT INTO employees.emp (empno, ename, job, hiredate, sal, deptno)
+    VALUES (9999, 'JANE DOE', 'CLERK', GETDATE(), 1000, 10);
+
+    -- This will cause a foreign key violation, triggering the CATCH block
+    INSERT INTO employees.emp (empno, ename, job, hiredate, sal, deptno)
+    VALUES (9998, 'JOHN SMITH', 'CLERK', GETDATE(), 1000, 99);
+
+    -- If no error occurred, commit the transaction
+    COMMIT TRANSACTION;
+    PRINT 'Transaction committed successfully.';
+END TRY
+BEGIN CATCH
+    -- Check if a transaction is active and needs to be rolled back
+    IF @@TRANCOUNT > 0
+    BEGIN
+        ROLLBACK TRANSACTION;
+    END;
+
+    -- Log the error details
+    DECLARE @ErrorMsg NVARCHAR(2048) = ERROR_MESSAGE();
+    DECLARE @ErrorNum INT = ERROR_NUMBER();
+    
+    PRINT 'Transaction rolled back due to an error.';
+    PRINT 'Error Number: ' + CAST(@ErrorNum AS VARCHAR);
+    PRINT 'Error Message: ' + @ErrorMsg;
+    
+    -- Optional: Re-raise the error for the calling application
+    THROW;
+END CATCH;
+```
+
+### Re-throwing Errors with THROW
+The THROW statement is the modern and preferred way to re-raise an exception in a CATCH block. It maintains the original error information (like line number and severity) and returns it to the calling application or a higher-level CATCH block. This is a significant improvement over the older RAISERROR statement.
+
+```sql
+
+THROW [ { error_number | @local_variable } , { message | @local_variable } , { state | @local_variable } ];
+```
+
+### Example: Using THROW
+
+The CATCH block above already uses THROW to demonstrate this. The THROW statement, when used without parameters inside a CATCH block, re-throws the original exception.
+
+```sql
+BEGIN TRY
+    -- A statement that will cause an error
+    SELECT 1 / 0;
+END TRY
+BEGIN CATCH
+    -- The THROW command will re-raise the original error
+    -- preserving its error number, severity, state, etc.
+    THROW;
+END CATCH;
+```
+### XACT_STATE() Function
+The XACT_STATE() function provides valuable information about the state of the current transaction. It can be used in a CATCH block to determine if a transaction is committable, uncommittable, or if there is no active transaction. This is a more robust alternative to just checking @@TRANCOUNT.
+
+* 1: The transaction is active and committable.
+
+* -1: The transaction is active but uncommittable. An error has occurred, but it has not been rolled back yet.
+
+* 0: There is no active transaction.
+
+Example: Using XACT_STATE() in a CATCH block
+
+```sql
+
+BEGIN TRY
+    BEGIN TRANSACTION;
+
+    -- This statement will cause an uncommittable transaction
+    SELECT 1 / 0; 
+    
+    COMMIT TRANSACTION;
+END TRY
+BEGIN CATCH
+    -- Check the state of the transaction
+    IF XACT_STATE() <> 0
+    BEGIN
+        ROLLBACK TRANSACTION;
+        PRINT 'Transaction rolled back.';
+    END;
+    
+    -- Re-throw the original error
+    THROW;
+END CATCH;
+```
 ##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
