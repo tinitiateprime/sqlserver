@@ -100,7 +100,76 @@ BEGIN
   PRINT 'Rows Affected ' + CAST(@@rowcount AS VARCHAR)
 END;
 ```
+## Parameterization and Security
+The biggest distinction between EXEC() and sp_executesql is how they handle parameters. This directly impacts security and performance.
 
+EXEC() handles parameters through string concatenation. You build the entire SQL statement as a single string, embedding all values directly. This approach is highly vulnerable to SQL injection attacks, where a malicious user can insert rogue code into a parameter to modify the query's behavior. For example, a user could enter ''; DROP TABLE dynsql_test;-- into an input field, which would get concatenated into your query and execute a dangerous command.
+
+sp_executesql uses true parameterization. You pass the SQL string and the parameters separately. The procedure handles them as distinct data values, not executable code. This prevents SQL injection attacks because the database engine recognizes the parameter's value as data, not as a command to be executed. Always prefer sp_executesql for security.
+
+## Execution Plan Caching
+Query plan caching is a major performance consideration for dynamic SQL.
+
+EXEC() creates a new, separate SQL string for every unique combination of parameter values. The query optimizer treats each unique string as a new query and generates a new execution plan every time. This constant recompilation is resource-intensive and can severely degrade performance, especially in high-volume applications.
+
+sp_executesql allows the query optimizer to reuse execution plans. If you execute the same parameterized query string with different parameter values, SQL Server can reuse the previously cached plan, avoiding the need for a new compilation. This significantly improves performance and reduces server overhead.
+
+* Examples with sp_executesql
+The following examples demonstrate the power and safety of sp_executesql over the simple EXEC() method.
+
+### Parameterized INSERT
+This is the secure and efficient way to insert data using dynamic SQL. The N prefix on the string literal is crucial, as sp_executesql requires a Unicode string (NVARCHAR).
+
+```sql
+
+DECLARE  @test_id      INT = 1
+        ,@test_date    DATE = GETDATE()
+        ,@test_string  NVARCHAR(1000) = 'TEST'
+        ,@test_decimal DECIMAL(10,2) = 10.2
+        ,@sql          NVARCHAR(3000)
+        ,@params       NVARCHAR(500);
+
+-- Define the parameterized SQL statement
+SET @sql = N'INSERT INTO dynsql_test (test_id, test_date, test_string, test_decimal) 
+               VALUES (@p_test_id, @p_test_date, @p_test_string, @p_test_decimal);';
+
+-- Define the parameter declarations for sp_executesql
+SET @params = N'@p_test_id INT, @p_test_date DATE, @p_test_string NVARCHAR(1000), @p_test_decimal DECIMAL(10,2)';
+
+-- Execute with parameters
+EXECUTE sp_executesql @sql, @params,
+                      @p_test_id      = @test_id,
+                      @p_test_date    = @test_date,
+                      @p_test_string  = @test_string,
+                      @p_test_decimal = @test_decimal;
+
+PRINT 'Rows Affected ' + CAST(@@rowcount AS VARCHAR);
+```
+
+### Parameterized SELECT with WHERE Clause
+This is a common, and secure, use case where you need a flexible WHERE clause. It protects against SQL injection and allows for query plan reuse.
+
+```sql
+
+DECLARE @sql        NVARCHAR(MAX);
+DECLARE @params     NVARCHAR(500);
+DECLARE @deptName   VARCHAR(100) = 'ACCOUNTING';
+DECLARE @minSal     DECIMAL(10,2) = 2000.00;
+
+-- SQL with placeholders
+SET @sql = N'SELECT e.ename, e.job, e.sal, d.dname
+             FROM employees.emp e
+             JOIN employees.dept d ON e.deptno = d.deptno
+             WHERE d.dname = @p_deptName AND e.sal > @p_minSal;';
+
+-- Parameter definitions
+SET @params = N'@p_deptName VARCHAR(100), @p_minSal DECIMAL(10,2)';
+
+-- Execute
+EXEC sp_executesql @sql, @params,
+                   @p_deptName = @deptName,
+                   @p_minSal   = @minSal;
+```
 ##### [Back To Contents](./README.md)
 ***
 | &copy; TINITIATE.COM |
