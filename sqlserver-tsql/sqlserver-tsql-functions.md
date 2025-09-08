@@ -130,6 +130,44 @@ END
 -- Use the function
 SELECT * FROM employees.GetAllEmployees();
 ```
+### Multi-Statement Table-Valued Functions (MTVF)::
+MIVF are less performant because they are treated as black boxes. The query optimizer cannot see the logic inside the function and therefore cannot generate an efficient plan. It assumes a fixed number of rows will be returned, which can lead to poor performance on large datasets. They are useful only when the logic requires multiple steps that cannot be expressed in a single SELECT statement.
+
+* Example: The Performance Cost of an MTVF
+
+```sql
+-- Create a multi-statement TVF (MTVF)
+CREATE FUNCTION employees.GetEmployeeByDept_MTVF (@DeptID INT)
+RETURNS @EmpTable TABLE (ename VARCHAR(10), job VARCHAR(9))
+AS
+BEGIN
+    INSERT INTO @EmpTable
+    SELECT ename, job
+    FROM employees.emp
+    WHERE deptno = @DeptID;
+    
+    RETURN;
+END;
+GO
+-- Create an inline TVF (ITVF)
+CREATE FUNCTION employees.GetEmployeeByDept_ITVF (@DeptID INT)
+RETURNS TABLE
+AS
+RETURN (
+    SELECT ename, job
+    FROM employees.emp
+    WHERE deptno = @DeptID
+);
+GO
+-- The ITVF will have a much more efficient query plan than the MTVF,
+-- especially when joined with other tables.
+-- The query optimizer can 'see' the ITVF logic and optimize it.
+SELECT T1.ename, T2.dname
+FROM employees.GetEmployeeByDept_ITVF(20) AS T1
+JOIN employees.dept AS T2 ON T1.deptno = T2.deptno; -- This is just a hypothetical example
+-- The MTVF will be treated as a fixed-row-count object, leading to a
+-- less optimal plan when joined.
+```
 
 ### Combining Scalar Functions with APPLY
 The APPLY operator is a more advanced way to use functions. It is similar to a join but allows you to invoke a table-valued function for each row of an outer table expression. This is a common and powerful pattern.
