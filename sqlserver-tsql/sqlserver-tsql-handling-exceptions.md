@@ -129,6 +129,8 @@ BEGIN CATCH
     THROW;
 END CATCH;
 ```
+### Raise Error
+.....
 
 ### Re-throwing Errors with THROW
 The THROW statement is the modern and preferred way to re-raise an exception in a CATCH block. It maintains the original error information (like line number and severity) and returns it to the calling application or a higher-level CATCH block. This is a significant improvement over the older RAISERROR statement.
