@@ -12,114 +12,100 @@
 &copy; TINITIATE.COM
 
 ## CONTEXT
-* ### [Introduction](sqlserver-introduction.md)
-* ### [Database, Schema, and User](sqlserver-db-sch-user.md)
-* ### [Datatypes](sqlserver-datatypes.md)
-* ### [DDL](sqlserver-ddl.md)
-    * Create
-    * Alter
-    * Drop
-* ### [DDL - Constraints](sqlserver-ddl-constraints.md)
-    * Not Null
-    * Unique
-    * Check
-    * Primary key
-    * Foreign key
-* ### [DML](sqlserver-dml.md)
-    * Insert
-    * Update
-    * Delete
-* ### [DQL Data Setup](sqlserver-dql-data-setup.md)
-* ### [DQL](sqlserver-dql.md)
-    * Select
-    * Where
-    * Group By
-    * Having
-    * Order By
-    * Top
-* ### [DQL - Basic Operators](sqlserver-dql-basic-operators.md)
-    * Equality Operator (=)
-    * Inequality Operator (<>)
-    * IN Operator
-    * NOT IN Operator
-    * LIKE Operator
-    * NOT LIKE Operator
-    * BETWEEN Operator
-    * Greater Than (>)
-    * Greater Than or Equal To (>=)
-    * Less Than (<)
-    * Less Than or Equal To (<=)
-    * EXISTS Operator
-    * NOT EXISTS Operator
-* ### [DQL - Set Operations](sqlserver-dql-set-operations.md)
-    * Union
-    * Intersect
-    * Except
-* ### [DQL - Joins](sqlserver-dql-joins.md)
-    * Inner Join
-    * Left Join (or Left Outer Join)
-    * Right Join (or Right Outer Join)
-    * Full Join (or Full Outer Join)
-    * Cross Join
-* ### [DQL - String Functions](sqlserver-dql-string-functions.md)
-    * Length Function (LEN)
-    * Substring Function (SUBSTRING)
-    * Concatenation Operator (+)
-    * Lower Function (LOWER)
-    * Upper Function (UPPER)
-    * Trim Function (TRIM)
-    * Ltrim Function (LTRIM)
-    * Rtrim Function (RTRIM)
-    * Charindex Function (CHARINDEX)
-    * Left Function (LEFT)
-    * Right Function (RIGHT)
-    * Reverse Function (REVERSE)
-    * Replace Function (REPLACE)
-    * Case Statement (CASE)
-    * ISNULL Function (ISNULL)
-    * Coalesce Function (COALESCE)
-* ### [DQL - Date Functions](sqlserver-dql-date-functions.md)
-    * Current Date and time (GETDATE)
-    * Date Part Function (DATEPART)
-    * Date Difference Function (DATEDIFF)
-    * Date Addition/Subtraction
-    * Date Formatting (FORMAT)
-    * Weekday Function (DATEPART)
-    * Date to String (Various formats)
-    * DateTime to String (Various formats)
-    * String to Date (Various formats)
-    * String to DateTime (Various formats)
-    * DateTime and TimeZone
-        * Date, Timezones, UTC, and Offsets
-            * Date and Time
-            * Timezones
-            * UTC
-            * Offsets
-            * Applying an Offset to a Date Datatype Column
-        * Cast a DateTime to DateTime with Timezone (in UTC, EST and IST TimeZones)
-        * Cast a DateTime Timezone to another TimeZone
-* ### [DQL - Aggregate Functions](sqlserver-dql-aggregate-functions.md)
-    * Count
-    * Sum
-    * Avg
-    * Max
-    * Min
-* ### [DQL - Analytical Functions](sqlserver-dql-analytical-functions.md)
-    * Aggregate Functions
-    * ROW_NUMBER()
-    * RANK()
-    * DENSE_RANK()
-    * NTILE(n)
-    * LAG()
-    * LEAD()
-    * FIRST_VALUE()
-    * LAST_VALUE()
-* ### [DQL - Common Table Expressions (CTEs)](sqlserver-dql-cte.md)
-    * Creating a CTE
-    * Using Multiple CTEs
-    * Recursive CTEs
-    * Common Use Cases for CTEs
-    * Benefits of Using CTEs
+# 📘 SQL Server Performance Tuning – Training Program
+
+Welcome to the **SQL Server Performance Tuning Training**!  
+This program is designed for students and professionals who want to learn how to identify, analyze, and resolve performance issues in SQL Server.  
+
+The training is structured over **5 days** with a mix of theory and hands-on labs.  
+
+---
+
+## 🗓 Training Outline  
+
+### Day 1 – Introduction & Performance Fundamentals  
+- SQL Server query processing lifecycle  
+- Execution plans (estimated vs. actual)  
+- Role of statistics in query performance  
+- Identifying performance bottlenecks  
+
+**Hands-On Labs:**  
+- View execution plans in SSMS  
+- Compare query performance with/without statistics  
+- Find the slowest query in a sample workload  
+
+---
+
+### Day 2 – Indexing Strategies  
+- Clustered vs. Non-clustered indexes  
+- Covering and filtered indexes  
+- Columnstore indexes  
+- Index fragmentation & maintenance  
+
+**Hands-On Labs:**  
+- Create and test indexes  
+- Optimize queries using covering indexes  
+- Rebuild vs. reorganize indexes  
+
+---
+
+### Day 3 – Query Optimization Techniques  
+- Writing SARGable queries  
+- Avoiding SELECT * and implicit conversions  
+- Parameter sniffing issues  
+- Temp tables vs. table variables  
+- Common query anti-patterns  
+
+**Hands-On Labs:**  
+- Rewrite non-SARGable queries  
+- Demonstrate parameter sniffing and apply fixes  
+- Compare performance between temp tables and table variables  
+
+---
+
+### Day 4 – Monitoring & Troubleshooting  
+- SQL Profiler & Extended Events  
+- Using DMVs for performance tuning  
+- Query Store basics  
+- Deadlocks & blocking  
+- Wait statistics  
+
+**Hands-On Labs:**  
+- Capture slow queries with Extended Events  
+- Find top resource-consuming queries using DMVs  
+- Simulate and resolve blocking  
+- Analyze wait statistics  
+
+---
+
+### Day 5 – Advanced Tuning & Best Practices  
+- Table partitioning  
+- Parallelism (MAXDOP, cost threshold tuning)  
+- TempDB optimization  
+- Adaptive query processing (SQL Server 2017+)  
+- Best practices for performance baselining  
+
+**Hands-On Labs:**  
+- Partition a large table and run queries  
+- Test different MAXDOP settings  
+- Optimize TempDB configuration  
+- Generate a performance baseline with Query Store  
+
+---
+
+## ✅ Learning Outcomes  
+By the end of this training, you will be able to:  
+- Read and analyze execution plans  
+- Design and maintain efficient indexing strategies  
+- Optimize poorly written queries  
+- Monitor SQL Server performance using built-in tools  
+- Troubleshoot real-world performance issues  
+- Apply best practices for long-term performance tuning  
+
+---
+
+## 📂 Repository Structure  
+
 ***
 | &copy; TINITIATE.COM |
 |----------------------|
