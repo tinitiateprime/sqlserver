@@ -14,10 +14,45 @@
 ## CONTEXT
 # 📘 SQL Server Performance Tuning – Training Program
 
-Welcome to the **SQL Server Performance Tuning Training**!  
-This program is designed for students and professionals who want to learn how to identify, analyze, and resolve performance issues in SQL Server.  
+## Welcome to the **SQL Server Performance Tuning Training**!  
 
-The training is structured over **5 days** with a mix of theory and hands-on labs.  
+Performance tuning is one of the most critical skills for a database professional. Even the best-designed applications can suffer from slow queries, blocking, and inefficient resource usage if the database layer is not optimized.
+
+In this training, we focus on:
+
+•	Understanding how SQL Server works internally – how queries are parsed, optimized, and executed.
+
+•	Identifying performance bottlenecks using execution plans, statistics, and monitoring tools.
+
+•	Applying tuning techniques such as indexing strategies, query rewrites, and configuration adjustments.
+
+•	Troubleshooting real-world issues like blocking, deadlocks, and slow-running queries.
+
+•	Building best practices for long-term performance and scalability.
+
+### Why Learn Performance Tuning?
+
+•	🕒 Save time – Queries that take minutes can often be tuned to run in seconds.
+
+•	💰 Save costs – Optimized databases require fewer hardware resources.
+
+•	🚀 Improve scalability – Applications can handle more users and more data.
+
+•	🔍 Gain deeper insight – Learn how SQL Server makes decisions behind the scenes.
+
+•	🎯 Boost your career – Performance tuning is one of the most in-demand skills for DBAs and developers.
+
+## What You’ll Get From This Training
+
+•	Hands-on practice with real-world tuning scenarios.
+
+•	The ability to read and understand execution plans.
+
+•	Knowledge of when and how to use indexes effectively.
+
+•	Skills to optimize queries and database design.
+
+•	Confidence in using SQL Server tools (DMVs, Query Store, Profiler, Extended Events) to monitor and troubleshoot issues.
 
 ---
 
