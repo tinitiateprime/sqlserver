@@ -56,33 +56,33 @@ In this training, we focus on:
 
 ---
 
-### ![Introduction & Performance Fundamentals](Introductions.md)  
+### [Introduction & Performance Fundamentals](Introductions.md)  
 - SQL Server query processing lifecycle  
 - Execution plans (estimated vs. actual)  
 - Role of statistics in query performance  
 - Identifying performance bottlenecks  
 
-### ![Indexing Strategies ](Indexing-Strategies.md) 
+### [Indexing Strategies ](Indexing-Strategies.md) 
 - Clustered vs. Non-clustered indexes  
 - Covering and filtered indexes  
 - Columnstore indexes  
 - Index fragmentation & maintenance  
 
-### ![Query Optimization Techniques](Query-Optimization.md)  
+### [Query Optimization Techniques](Query-Optimization.md)  
 - Writing SARGable queries  
 - Avoiding SELECT * and implicit conversions  
 - Parameter sniffing issues  
 - Temp tables vs. table variables  
 - Common query anti-patterns  
 
-### ![Monitoring & Troubleshooting](Monitoring-troubleshooting.md)  
+### [Monitoring & Troubleshooting](Monitoring-troubleshooting.md)  
 - SQL Profiler & Extended Events  
 - Using DMVs for performance tuning  
 - Query Store basics  
 - Deadlocks & blocking  
 - Wait statistics  
 
-### ![Advanced Tuning & Best Practices](sqlserver-advanced-tuning.md)  
+### [Advanced Tuning & Best Practices](sqlserver-advanced-tuning.md)  
 - Table partitioning  
 - Parallelism (MAXDOP, cost threshold tuning)  
 - TempDB optimization  
