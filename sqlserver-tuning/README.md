@@ -62,7 +62,7 @@ In this training, we focus on:
 - Role of statistics in query performance  
 - Identifying performance bottlenecks  
 
-### Indexing Strategies  
+### ![Indexing Strategies ](Indexing-Strategies.md) 
 - Clustered vs. Non-clustered indexes  
 - Covering and filtered indexes  
 - Columnstore indexes  
