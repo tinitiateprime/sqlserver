@@ -12,7 +12,7 @@
 &copy; TINITIATE.COM
 
 ## CONTEXT
-# 📘 SQL Server Performance Tuning – Training Program
+# SQL Server Performance Tuning – Training Program
 
 ## Welcome to the **SQL Server Performance Tuning Training**!  
 
