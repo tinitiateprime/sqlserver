@@ -89,9 +89,6 @@ In this training, we focus on:
 - Adaptive query processing (SQL Server 2017+)  
 - Best practices for performance baselining  
 
----
-
-## 📂 Repository Structure  
 
 ***
 | &copy; TINITIATE.COM |
