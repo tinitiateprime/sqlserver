@@ -3,3 +3,5 @@
 # SQLServer Tutorial
 
 &copy; TINITIATE.COM
+
+# Indexing Strategies
