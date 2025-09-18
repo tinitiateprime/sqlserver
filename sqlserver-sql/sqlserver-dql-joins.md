@@ -24,8 +24,6 @@ INNER JOIN employees.dept d ON e.deptno = d.deptno;
 ```
 ### LEFT JOIN (or LEFT OUTER JOIN):
 
-
-
 * A LEFT JOIN returns all rows from the left table (the first table in the JOIN clause) and the matched rows from the right table.
 * If there is no match for a row in the left table, NULL values are filled in for the columns of the right table.
 
@@ -38,6 +36,7 @@ FROM employees.emp e
 LEFT JOIN employees.dept d ON e.deptno = d.deptno;
 ```
 ### RIGHT JOIN (or RIGHT OUTER JOIN):
+
 * A RIGHT JOIN returns all rows from the right table (the second table in the JOIN clause) and the matched rows from the left table.
 * If there is no match for a row in the right table, NULL values are filled in for the columns of the left table.
 <img width="171" height="183" alt="image" src="https://github.com/user-attachments/assets/e646dbd4-b848-4a49-b347-5eeeea5fc842" />
