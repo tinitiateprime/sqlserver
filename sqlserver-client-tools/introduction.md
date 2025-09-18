@@ -1,3 +1,9 @@
+![SQLServer Tinitiate Image](sqlserver.png)
+
+# SQLServer Tutorial
+
+&copy; TINITIATE.COM
+
 
 * SQL Server provides multiple command-line tools that are essential for automation, ETL, and DevOps:
 
