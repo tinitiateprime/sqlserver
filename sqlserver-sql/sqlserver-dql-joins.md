@@ -15,7 +15,9 @@
 
 * An INNER JOIN returns rows from both tables where there is a match based on the join condition.
 * If there is no match between the tables, the rows are not included in the result set.
+  
 <img width="174" height="161" alt="image" src="https://github.com/user-attachments/assets/290d2989-0ec4-4997-9702-ec2e36146b71" />
+
 ```sql
 -- Retrieve employee information along with their department names
 SELECT e.*, d.dname
