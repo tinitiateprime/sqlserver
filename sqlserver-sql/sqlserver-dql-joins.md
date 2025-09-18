@@ -40,7 +40,6 @@ LEFT JOIN employees.dept d ON e.deptno = d.deptno;
 ### RIGHT JOIN (or RIGHT OUTER JOIN):
 * A RIGHT JOIN returns all rows from the right table (the second table in the JOIN clause) and the matched rows from the left table.
 * If there is no match for a row in the right table, NULL values are filled in for the columns of the left table.
-
 <img width="171" height="183" alt="image" src="https://github.com/user-attachments/assets/e646dbd4-b848-4a49-b347-5eeeea5fc842" />
 
 ```sql
@@ -51,7 +50,6 @@ FROM employees.emp e
 RIGHT JOIN employees.dept d ON e.deptno = d.deptno;
 ```
 ### FULL JOIN (or FULL OUTER JOIN):
-<img width="526" height="189" alt="image" src="https://github.com/user-attachments/assets/37b6dea3-caf6-4191-a258-0282c73e4049" />
 
 * A FULL JOIN returns all rows from both tables, including rows where there is no match based on the join condition.
 * If a row in one table has no matching row in the other table, NULL values are filled in for the columns of the table without a match.
