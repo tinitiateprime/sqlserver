@@ -37,6 +37,7 @@ SELECT e.*, d.dname
 FROM employees.emp e
 LEFT JOIN employees.dept d ON e.deptno = d.deptno;
 ```
+
 ### RIGHT JOIN (or RIGHT OUTER JOIN):
 
 * A RIGHT JOIN returns all rows from the right table (the second table in the JOIN clause) and the matched rows from the left table.
