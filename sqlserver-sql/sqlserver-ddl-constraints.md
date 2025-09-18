@@ -9,6 +9,9 @@
 * In SQL Server, Data Definition Language (DDL) constraints are also used to enforce rules on the structure of a database table, ensuring data integrity and consistency by enforcing certain conditions on the data being inserted, updated, or deleted in the table.
 * These constraints are applied to columns when the table is created or altered.
 
+<img width="210" height="142" alt="image" src="https://github.com/user-attachments/assets/2f2e2a44-f592-4233-b332-8b5cb089105a" />
+
+
 ## Here are the common types of DDL constraints in SQL Server:
 ### NOT NULL Constraint:
 * This constraint ensures that a column cannot contain NULL values.
