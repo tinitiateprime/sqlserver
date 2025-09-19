@@ -24,6 +24,9 @@ SELECT e.*, d.dname
 FROM employees.emp e
 INNER JOIN employees.dept d ON e.deptno = d.deptno;
 ```
+<img width="424" height="90" alt="image" src="https://github.com/user-attachments/assets/086d05ce-12fd-4fbf-a1ae-b32008755562" />
+
+
 ### LEFT JOIN (or LEFT OUTER JOIN):
 
 * A LEFT JOIN returns all rows from the left table (the first table in the JOIN clause) and the matched rows from the right table.
@@ -38,6 +41,9 @@ FROM employees.emp e
 LEFT JOIN employees.dept d ON e.deptno = d.deptno;
 ```
 
+<img width="425" height="101" alt="image" src="https://github.com/user-attachments/assets/ef1e2924-cf65-4032-a87b-4a9773eaf172" />
+
+
 ### RIGHT JOIN (or RIGHT OUTER JOIN):
 
 * A RIGHT JOIN returns all rows from the right table (the second table in the JOIN clause) and the matched rows from the left table.
@@ -51,6 +57,9 @@ SELECT e.*, d.dname
 FROM employees.emp e
 RIGHT JOIN employees.dept d ON e.deptno = d.deptno;
 ```
+<img width="420" height="103" alt="image" src="https://github.com/user-attachments/assets/2dfdeaaa-bbca-4429-aac8-92a1b607df2a" />
+
+
 ### FULL JOIN (or FULL OUTER JOIN):
 
 * A FULL JOIN returns all rows from both tables, including rows where there is no match based on the join condition.
@@ -65,6 +74,10 @@ SELECT e.*, d.dname
 FROM employees.emp e
 FULL JOIN employees.dept d ON e.deptno = d.deptno;
 ```
+
+<img width="416" height="113" alt="image" src="https://github.com/user-attachments/assets/bfab16a3-7127-40ce-9494-a59407e17fe3" />
+
+
 ### CROSS JOIN:
 * A CROSS JOIN, also known as a Cartesian join, is a join operation that returns the Cartesian product of the two tables involved.
 * In other words, it generates all possible combinations of rows from the tables without any condition or predicate.
@@ -78,6 +91,8 @@ SELECT e.*, d.*
 FROM employees.emp e
 CROSS JOIN employees.dept d;
 ```
+
+
 
 ##### [Back To Contents](./README.md)
 ***
