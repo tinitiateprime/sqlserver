@@ -38,10 +38,10 @@ WHERE d.dname = @DeptName AND e.sal > @MinSalary;
 * This query will return a list of employees who work in the Sales department and whose salary is greater than $1500,000, displaying their names, job titles, and salaries.
 ### Step 4: Using SET vs. SELECT for Variable Assignment: 
 * This step can focus on the difference between the two methods, especially how they handle multiple rows. This is a common point of confusion for beginners and a great topic for an advanced section.
-  ```sql
+```sql
   -- This will cause an error because the subquery returns multiple rows
    DECLARE @EmployeeCount INT;
--- SET @EmployeeCount = (SELECT COUNT(*) FROM Employees.emp GROUP BY deptno);
+  SET @EmployeeCount = (SELECT COUNT(*) FROM Employees.emp GROUP BY deptno);
 ```
 -- Msg 512, Subquery returned more than 1 value. This is not permitted...
  
