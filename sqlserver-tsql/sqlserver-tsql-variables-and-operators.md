@@ -40,10 +40,11 @@ WHERE d.dname = @DeptName AND e.sal > @MinSalary;
 * This step can focus on the difference between the two methods, especially how they handle multiple rows. This is a common point of confusion for beginners and a great topic for an advanced section.
   ```sql
   -- This will cause an error because the subquery returns multiple rows
-DECLARE @EmployeeCount INT;
+   DECLARE @EmployeeCount INT;
 -- SET @EmployeeCount = (SELECT COUNT(*) FROM Employees.emp GROUP BY deptno);
--- Msg 512, Subquery returned more than 1 value. This is not permitted...
 ```
+-- Msg 512, Subquery returned more than 1 value. This is not permitted...
+ 
 * SELECT with Multiple Rows (Will Assign NULL or the Last Value)
 ```sql
 -- SELECT will work, but it will only assign the last value returned by the subquery,
