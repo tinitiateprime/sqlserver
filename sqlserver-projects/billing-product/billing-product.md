@@ -163,7 +163,72 @@ INSERT INTO billing_product.billdetails (
         (37, 12,  9, 2,   800.00),
         (38, 12, 10, 3,   300.00);
 ```
+**Bulk load**
+* To insert bulk records in these tables
+```sql
 
+-- 1) Insert sample products
+WITH N AS (
+    SELECT TOP (10000) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS n
+    FROM sys.objects a CROSS JOIN sys.objects b
+)
+INSERT INTO billing_product.products (product_id, product_name, price)
+SELECT n, CONCAT('Product-', n), CAST(RAND(CHECKSUM(NEWID())) * 500 + 10 AS DECIMAL(10,2))
+FROM N;
+
+-- 2) Insert sample customers
+;WITH N AS (
+    SELECT TOP (100000) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS n
+    FROM sys.objects a CROSS JOIN sys.objects b
+)
+INSERT INTO billing_product.customers (customer_id, customer_name, contact_info)
+SELECT n, CONCAT('Customer-', n), CONCAT('customer', n, '@email.com')
+FROM N;
+
+-- 3) Insert bills (100k bills, random customer)
+;WITH N AS (
+    SELECT TOP (100000) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS n
+    FROM sys.objects a CROSS JOIN sys.objects b
+)
+INSERT INTO billing_product.bill (bill_id, customer_id, bill_date, total_amount)
+SELECT n,
+       CAST(RAND(CHECKSUM(NEWID())) * 100000 AS INT) + 1,  -- random customer_id
+       DATEADD(DAY, -ABS(CHECKSUM(NEWID())) % 365, GETDATE()), -- random past 1 year
+       0.00
+FROM N;
+
+-- 4) Insert billdetails (~1M rows, 10 per bill)
+;WITH B AS (
+    SELECT bill_id
+    FROM billing_product.bill
+),
+N AS (
+    SELECT TOP (10) ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS n
+    FROM sys.objects
+)
+INSERT INTO billing_product.billdetails (billdetail_id, bill_id, product_id, quantity, line_total)
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS billdetail_id,
+    b.bill_id,
+    CAST(RAND(CHECKSUM(NEWID())) * 10000 AS INT) + 1, -- random product
+    CAST(RAND(CHECKSUM(NEWID())) * 5 + 1 AS INT),     -- qty 1-5
+    CAST(RAND(CHECKSUM(NEWID())) * 200 + 20 AS DECIMAL(10,2)) -- line_total
+FROM B
+CROSS JOIN N;
+
+-- 5) (Optional) Update total_amount in bills
+UPDATE b
+SET b.total_amount = d.sum_total
+FROM billing_product.bill b
+JOIN (
+    SELECT bill_id, SUM(line_total) AS sum_total
+    FROM billing_product.billdetails
+    GROUP BY bill_id
+) d ON b.bill_id = d.bill_id;
+
+
+
+```
 ***
 ### [Assignments](assignments/README.md)
 ### [Assignments - Solutions](assignments-solutions/README.md)
