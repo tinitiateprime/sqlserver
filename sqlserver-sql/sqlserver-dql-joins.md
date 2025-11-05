@@ -33,6 +33,7 @@ INNER JOIN employees.dept d ON e.deptno = d.deptno;
 * If there is no match for a row in the left table, NULL values are filled in for the columns of the right table.
 
 <img width="171" height="175" alt="image" src="https://github.com/user-attachments/assets/b45edb73-874b-4749-9480-5a401402ea10" />
+
 ```sql
 -- Retrieve all employees along with their department names,
 -- including employees without a department
