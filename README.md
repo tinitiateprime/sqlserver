@@ -4,7 +4,8 @@
 &copy; TINITIATE.COM
 
 ## CONTENTS
-### [SQL Server SQL](sqlserver-client-tools/README.md)
-### [SQL Server TSQL](sqlserver-db-sch-user.md)
+### [SQL Server SQL](sqlserver-sql/README.md)
+### [SQL Server TSQL](sqlserver-tsql/README.md)
 ### [SQL Server Client Tools](sqlserver-client-tools/README.md)
-### [SQL Server SQL](sqlserver-ddl.md)
+### [sqlserver-tuning](sqlserver-tuning/README.md)
+### [sqlserver-internals](sqlserver-internals/README.md)
