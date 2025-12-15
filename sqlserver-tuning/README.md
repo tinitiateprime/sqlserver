@@ -1,12 +1,22 @@
 ![SQLServer Tinitiate Image](sqlserver.png)
 
 
-
-
-
-
-
-
+## To DOs
+* Create 6 tables,
+   * **No Indexes**
+   * <table_small>_no_index small (100 rows)
+   * <table_medium>_no_index small (100k rows)
+   * <table_large>_no_index small (1m rows)
+   * **Indexes only on PK/FK**
+   * <table_small>_index small (100 rows)
+   * <table_medium>_index small (100k rows)
+   * <table_large>_index small (1m rows)
+   * **Indexes on PK/FK and Filter/Aggregate columns**
+   * <table_small>_index small (100 rows)
+   * <table_medium>_index small (100k rows)
+   * <table_large>_index small (1m rows)
+   
+   
 # SQLServer Tutorial
 
 &copy; TINITIATE.COM
