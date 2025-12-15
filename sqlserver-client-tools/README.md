@@ -1,4 +1,4 @@
-![SQLServer Tinitiate Image](../sqlservericon.jpg)
+![SQLServer Tinitiate Image](../sqlserver.png)
 
 # SQLServer Tutorial
 
