@@ -22,6 +22,7 @@
     * Update
     * Delete
 * ### [DQL Data Setup](sqlserver-dql-data-setup.md)
+    * Run the SQL file [sqlserver-dql-data-setup.sql](sqlserver-dql-data-setup.sql) for data setup, that will be used in the DQL training topics.
 * ### [DQL](sqlserver-dql.md)
     * Select
     * Where
