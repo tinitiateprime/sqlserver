@@ -30,6 +30,42 @@ Indexes are the backbone of performance tuning in SQL Server. The right index ca
 
 * **Filtered Index** → covers a subset of rows (saves space, speeds up queries).
 
+* **Table with No Index**
+```sql
+CREATE TABLE table_small_no_index (
+    emp_id INT,
+    dept_id INT,
+    emp_name VARCHAR(100),
+    salary DECIMAL(10,2),
+    hire_date DATE,
+    is_active BIT
+);
+```
+
+```sql
+CREATE TABLE table_medium_no_index (
+    emp_id INT,
+    dept_id INT,
+    emp_name VARCHAR(100),
+    salary DECIMAL(10,2),
+    hire_date DATE,
+    is_active BIT
+);
+
+```
+
+```sql
+CREATE TABLE table_large_no_index (
+    emp_id INT,
+    dept_id INT,
+    emp_name VARCHAR(100),
+    salary DECIMAL(10,2),
+    hire_date DATE,
+    is_active BIT
+);
+
+```
+
 ## Clustered Index
 
 * Every table should ideally have a clustered index (usually the primary key).
