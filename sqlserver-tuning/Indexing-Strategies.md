@@ -30,7 +30,13 @@ Indexes are the backbone of performance tuning in SQL Server. The right index ca
 
 * **Filtered Index** → covers a subset of rows (saves space, speeds up queries).
 
-## lets create Tables with No Index ,  Index Tables(Primary Key/Foriegn Key) and Fully Optimized tables
+* Create three versions of the tables:
+
+tables without indexes,
+
+tables with primary and foreign key indexes, and
+
+tables fully optimized with all recommended indexing and performance enhancements.
 
 * **Table with No Index**
 ```sql
